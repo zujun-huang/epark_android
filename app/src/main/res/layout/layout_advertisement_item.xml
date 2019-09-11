@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/other_plate_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text=""
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/other_plate_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_other_plate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/colorAppBlack"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_other_plate_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_other_plate_title"
+            android:paddingTop="6dp"
+            android:text=""
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/other_plate_img"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_margin="15dp"
+        android:src="@color/colorParkBlue"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAppBackground" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="查看更多"
+        android:textColor="@color/park_more_color_selector"
+        android:textSize="16sp"/>
+</LinearLayout>

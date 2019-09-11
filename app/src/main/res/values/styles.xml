@@ -1,0 +1,41 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/animAct</item>
+    </style>
+
+    <!--A打开B页面-->
+    <style name="animAct" parent="@android:style/Animation">
+        <!--页面A进入B，B进入-->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <!--A退出-->
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <!--页面B退回A，A出现-->
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <!--B消失-->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <!--弹出框style-->
+    <style name="dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item> <!--设置dialog的背景-->
+        <item name="android:windowFrame">@null</item> <!--是否有边框-->
+        <item name="android:windowIsFloating">true</item> <!--是否是浮动的-->
+        <item name="android:windowIsTranslucent">false</item> <!--是否半透明-->
+        <item name="android:windowNoTitle">true</item> <!--是否显示标题-->
+        <item name="android:backgroundDimEnabled">true</item>  <!--是否充许对话框的背景变暗-->
+        <item name="android:windowContentOverlay">@null</item> <!--是否有覆盖-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item> <!--设置Activity出现方式-->
+    </style>
+
+    <!--圆的选中-->
+    <style name="RadioBtnMyIcon"> 
+        <item name="android:button">@drawable/radiobutton_icon</item> 
+    </style>
+
+</resources>

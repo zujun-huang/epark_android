@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_all_white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingEnd="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingStart="10dp">
+
+    <ImageView
+        android:id="@+id/iv_search"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_weight="1"
+        android:src="@mipmap/park_search_normal" />
+
+    <AutoCompleteTextView
+        android:id="@+id/aet_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:background="@null"
+        android:hint="@string/main_page_search_tip"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:lines="1"
+        android:imeOptions="actionSearch"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/iv_remove"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_remove"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/iv_voice"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_weight="1"
+        android:background="@drawable/selector_main_voice"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>

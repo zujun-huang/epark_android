@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--状态栏占位-->
+    <declare-styleable name="StatusBarHeightView">
+        <attr name="use_type" format="integer">
+            <enum name="use_height" value="0" />
+            <enum name="use_padding_top" value="1" />
+        </attr>
+        <!-- use_type
+          => use_height         无子View时的占位
+          => use_padding_top    有子View时的占位
+        -->
+    </declare-styleable>
+
+    <!--首页活动板块-->
+    <declare-styleable name="OtherActPlateView">
+        <attr name="icon" format="reference"/>
+        <attr name="show_type" format="integer">
+            <enum name="text" value="0"/>
+            <enum name="image" value="1"/>
+        </attr>
+        <attr name="icon_txt" format="string"/>
+        <attr name="txt_title" format="string"/>
+        <attr name="txt_tip" format="string"/>
+        <attr name="imgRes" format="reference"/>
+    </declare-styleable>
+
+    <!--搜索框-->
+    <declare-styleable name="SearchView">
+        <attr name="isVoice" format="boolean"/>
+        <attr name="hint_txt" format="string|reference"/>
+    </declare-styleable>
+
+    <!-- 圆形图 -->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_color" format="reference|color"/>
+        <attr name="civ_fill_color" format="reference|color"/>
+        <attr name="civ_border_overlay" format="boolean"/>
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_radius" format="dimension"/>
+    </declare-styleable>
+
+</resources>

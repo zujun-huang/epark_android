@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="color_e1e1e1">#e1e1e1</color>
+    <color name="color_def_cancel">#b3b3b3</color>
+    <color name="color_btn_press">#88eaeaea</color>
+    <color name="gf4f4f4">#f4f4f4</color>
+    <color name="gffffff">#ffffff</color>
+    <color name="g999999">#999999</color>
+    <color name="gf35334">#f35334</color>
+    <color name="gb2b2b2">#b2b2b2</color>
+    <color name="g1090F0">#1090F0</color>
+    <color name="g333333">#333333</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorB2White">#B2FFFFFF</color>
+    <color name="colorParkBlue">#1a81e2</color>
+    <color name="colorTopBlue">#E51a81e2</color>
+    <color name="colorParkBluePressed">#B21a81e2</color>
+    <color name="colorDefaultToolsBarText">#757575</color>
+    <color name="colorAppBackground">#ebecf0</color>
+    <color name="colorAppWhite">#fdfdfe</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorTip999">#999</color>
+    <color name="colorAppBlack">#383838</color>
+    <color name="color90PCTBlack">#19000000</color>
+    <color name="color60PCTBlack">#66000000</color>
+    <color name="f2f2f2">#f2f2f2</color>
+    <color name="c999999">#999999</color>
+    <color name="c222222">#222222</color>
+    <color name="f5282b">#f5282b</color>
+    <color name="c666666">#666666</color>
+    <color name="c3D98FF">#3D98FF</color>
+    <color name="gEEF2F5">#EEF2F5</color>
+
+    <!--导航模态item文字-->
+    <color name="modal_nav_baidu">#ff4e40</color>
+    <color name="modal_nav_autonavi">#0092fe</color>
+    <color name="modal_nav_tencent">#00c463</color>
+
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <!--/storage/emulated/0/Android/data/${applicationId}/cache/-->
+    <external-path name="ep_img_cache" path="Android/data/"/>
+
+</paths>

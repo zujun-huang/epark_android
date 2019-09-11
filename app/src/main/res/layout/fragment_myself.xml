@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDF1F5"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    tools:context=".fragments.MyselfFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/my_background"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:background="@mipmap/my_background"
+            android:contentDescription="@string/my_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/notify_my"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/notice_cd"
+            android:padding="10dp"
+            android:src="@mipmap/notice_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <park.bika.com.parkapplication.view.CircleImageView
+            android:id="@+id/head_img"
+            android:layout_width="111dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="66dp"
+            android:src="@mipmap/default_icon"
+            app:civ_border_color="#B21a81e2"
+            app:civ_border_overlay="true"
+            app:civ_border_width="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="登录/注册"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/head_img" />
+
+        <RelativeLayout
+            android:id="@+id/rl_qd"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_background"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/left_qd_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:drawableLeft="@drawable/ic_qd_my_vector"
+                android:drawablePadding="10dp"
+                android:text="每日签到"
+                android:textColor="@color/c222222"
+                android:textSize="15sp"
+                android:drawableStart="@drawable/ic_qd_my_vector" />
+
+            <ImageView
+                android:id="@+id/notify_red_qd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
+                android:src="@drawable/notice_red_background"
+                android:paddingTop="10dp"
+                android:layout_toRightOf="@id/left_qd_txt"
+                android:layout_toEndOf="@id/left_qd_txt"/>
+
+            <TextView
+                android:id="@+id/right_qd_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/right_icon_qd"
+                android:layout_toStartOf="@id/right_icon_qd"
+                android:text="每日签到送优惠券"
+                android:textColor="@color/c999999"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/right_icon_qd"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/f2f2f2"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_wdqb"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_qd"
+            >
+
+            <TextView
+                android:id="@+id/left_wdqb_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_qd_vector"
+                android:drawablePadding="13dp"
+                android:paddingStart="3dp"
+                android:drawableStart="@drawable/ic_my_wallet"
+                android:gravity="center"
+                android:text="我的钱包"
+                android:textColor="@color/c222222"
+                android:textSize="15sp"
+                tools:ignore="RtlSymmetry"
+                android:paddingLeft="3dp" />
+
+            <ImageView
+                android:id="@+id/notify_red_wdqb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/left_wdqb_txt"
+                android:layout_toRightOf="@id/left_wdqb_txt"
+                android:paddingTop="10dp"
+                android:src="@drawable/notice_red_background" />
+
+            <TextView
+                android:id="@+id/right_wdqb_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/right_icon_wdqb"
+                android:layout_toStartOf="@id/right_icon_wdqb"
+                android:text="余额 ￥0.00"
+                android:textColor="@color/c999999"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_wdqb"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/f2f2f2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_zd"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_wdqb">
+
+            <TextView
+                android:id="@+id/left_zd_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_zd_vector"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_zd_vector"
+                android:gravity="center"
+                android:text="停车记录"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/notify_red_zd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/left_zd_txt"
+                android:layout_toRightOf="@id/left_zd_txt"
+                android:paddingTop="10dp"
+                android:src="@drawable/notice_red_background" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/right_zd_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/right_icon_zd"
+                android:layout_toStartOf="@id/right_icon_zd"
+                android:text=""
+                android:textColor="@color/c999999"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_zd"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/f2f2f2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_clgl"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_zd">
+
+            <TextView
+                android:id="@+id/left_clgl_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_clgl_vector"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_clgl_vector"
+                android:gravity="center"
+                android:text="车辆管理"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/notify_red_clgl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/left_clgl_txt"
+                android:layout_toRightOf="@id/left_clgl_txt"
+                android:paddingTop="10dp"
+                android:src="@drawable/notice_red_background" />
+
+            <TextView
+                android:id="@+id/right_clgl_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/right_icon_clgl"
+                android:layout_toStartOf="@id/right_icon_clgl"
+                android:text="1 辆"
+                android:textColor="@color/c999999"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_clgl"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+        </RelativeLayout>
+
+        <!--意见反馈-->
+        <RelativeLayout
+            android:id="@+id/rl_yjfk"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_clgl">
+
+            <TextView
+                android:id="@+id/left_yjfk_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_yjfk_vector"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/ic_yjfk_vector"
+                android:gravity="center"
+                android:text="意见反馈"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_yjfk"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/f2f2f2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_yqhy"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_yjfk">
+
+            <TextView
+                android:id="@+id/left_yqhy_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_yqhy_vector"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/ic_yqhy_vector"
+                android:gravity="center"
+                android:text="邀请好友"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/right_yqhy_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/right_icon_yqhy"
+                android:layout_toStartOf="@id/right_icon_yqhy"
+                android:text="邀请送红包"
+                android:textColor="@color/c999999"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/notify_red_yqhy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/right_yqhy_txt"
+                android:layout_toRightOf="@id/right_yqhy_txt"
+                android:paddingTop="12dp"
+                android:src="@drawable/notice_red_background" />
+
+            <ImageView
+                android:id="@+id/right_icon_yqhy"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:src="@mipmap/more_icon" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/f2f2f2" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_gywm"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_yqhy">
+
+            <TextView
+                android:id="@+id/left_gywm_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_gywm_vector"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/ic_gywm_vector"
+                android:gravity="center"
+                android:text="关于我们"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_gywm"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+        </RelativeLayout>
+
+        <!--设置-->
+        <RelativeLayout
+            android:id="@+id/rl_set"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/select_method_white2gray"
+            android:gravity="center"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_gywm">
+
+            <TextView
+                android:id="@+id/left_set_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_set_vector"
+                android:drawablePadding="12dp"
+                android:drawableStart="@drawable/ic_set_vector"
+                android:gravity="center"
+                android:text="设置"
+                android:textColor="@color/c222222"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/right_icon_set"
+                android:layout_width="5dp"
+                android:layout_height="11dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@mipmap/more_icon" />
+
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v4.widget.NestedScrollView>

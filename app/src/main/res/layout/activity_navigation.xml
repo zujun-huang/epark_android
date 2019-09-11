@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <park.bika.com.parkapplication.view.StatusBarHeightView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/mv_nav_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!--顶部导航栏-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color60PCTBlack"/>
+
+        <ImageView
+            android:id="@+id/icon_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_back" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
