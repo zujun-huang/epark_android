@@ -75,13 +75,15 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation 'com.android.support:design:28.0.0'
+    implementation 'com.zaaach:citypicker:2.0.3'
+    //地址选择器
     implementation files('libs/EventBus.jar')
-//    implementation files('libs/galaxy_lite_lbs_v2.3.jar')
+    //    implementation files('libs/galaxy_lite_lbs_v2.3.jar')
     implementation files('libs/galaxy_lite_v2.3.jar')
     implementation files('libs/httpmime-4.1.2.jar')
     implementation files('libs/intellij_annotations.jar')
     implementation files('libs/javapoet-1.9.0.jar')
-//    implementation files('libs/lbsCoreSDK.jar')
+    //    implementation files('libs/lbsCoreSDK.jar')
     implementation files('libs/protobuf-java-2.3.0-micro.jar')
     implementation files('libs/req_head.jar')
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'

@@ -38,7 +38,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDNotifyListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -67,6 +66,7 @@ import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.search.sug.SuggestionSearchOption;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -85,11 +85,9 @@ import park.bika.com.parkapplication.main.SafePaymentActivity;
 import park.bika.com.parkapplication.utils.BdAndGcjUtil;
 import park.bika.com.parkapplication.utils.CalcUtil;
 import park.bika.com.parkapplication.utils.InputMethodUtils;
-import park.bika.com.parkapplication.utils.LogUtil;
 import park.bika.com.parkapplication.utils.NetworkConnectUtil;
 import park.bika.com.parkapplication.utils.ShareUtil;
 import park.bika.com.parkapplication.utils.StringUtil;
-import park.bika.com.parkapplication.utils.ThreadUtil;
 import park.bika.com.parkapplication.utils.ToastUtil;
 import park.bika.com.parkapplication.view.ChildListView;
 import park.bika.com.parkapplication.view.MapFrameLayout;
@@ -105,14 +103,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     public static final int MAX_PAGE_PARK_INFO_NUMBER = 100;
     public static final int PERMISSIONS_REQUEST_LOCATION = 0x000700;
     public static final int SHOW_TIME_COUNT = 0x000001;//计时
-    public static String curCity = "重庆市";
 
     private MainActivity mainAct;
     private SearchView search_content;
     private ImageView mIVMainAdd, iv_main_map_refresh;
     private TextView tv_main_park_address, main_park_more,
             tv_main_park_count, main_navigation, tv_main_park_tip,
-            main_park_name, main_park_pay, main_park_num, tv_park_time;
+            main_park_name, main_park_pay, main_park_num, main_park_price, tv_park_time;
     private ChildListView lv_advertisement;
     private FloatingActionButton mFloatBtn;
     private NestedScrollView mNSVScroll;
@@ -121,14 +118,15 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private AutoCompleteTextView keyWorldsView; //搜索词提示视图
 
     private int mCurrentDirection = 0,//定位方向信息
-                searchPosition = 0; //搜索候选下标
+            searchPosition = 0; //搜索候选下标
     private Integer locationRadius = Constant.SEARCH_RADIUS; //搜索半径300m内的
     private boolean isChooseAddress = false; //是否自选地址
     private boolean isMapLoaded = false;      //地图是否加载完成
     private double lastX = 0;
     private Integer curParkCount = 0,
-            parkingSecond = 0,//停车总时长，单位秒
-            chooseParkingDistance;//选择的停车点距离
+            parkingSecond = 0;//停车总时长，单位秒
+    private double chooseParkingDistance,//选择的停车点距离
+            parkPrice = 3.00; //停车价格/小时
     private MyLocationListener mLocationListener = new MyLocationListener();
     private ArrayAdapter<String> sugAdapter = null; //搜索Adapter
     public LocationClient mLocationClient;
@@ -138,7 +136,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private PoiInfo toPoiInfo;     //目的信息（包含经纬度）
     private double chooseLat;    //自选纬度
     private double chooseLon;    //自选经度
-    private String mCurAddress = "";
+    private String mCurAddress = "", curCity = "重庆";
     private MyNotifyLister notifyLister = new MyNotifyLister();
     private float mCurrentAccracy;
     private MyLocationData locData;
@@ -225,17 +223,17 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void initListener() {
-        search_content.setSearchIconClickListener(searchTxt ->{
+        search_content.setSearchIconClickListener(searchTxt -> {
             InputMethodUtils.hide(context);
-            if (suggestionInfos != null && suggestionInfos.size() > 0){
+            if (suggestionInfos != null && suggestionInfos.size() > 0) {
                 SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(searchPosition);
                 if (suggestionInfo != null &&
                         chooseLat != suggestionInfo.getPt().latitude &&
-                        chooseLon != suggestionInfo.getPt().longitude){
+                        chooseLon != suggestionInfo.getPt().longitude) {
                     showSearchAddress(suggestionInfos.get(searchPosition));
                 } else ToastUtil.showToast(mainAct, "已显示" + searchTxt + "周边停车位置~");
             } else {
-                ToastUtil.showToast(mainAct, "候选词获取失败，请检查网络状态后重试~");
+                ToastUtil.showToast(mainAct, "获取候选词失败，请检查网络状态后重试~");
             }
         });
         search_content.setVoiceIconTouchListener(editText -> ToastUtil.showToast(mainAct, "录音中……"));
@@ -247,13 +245,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         main_park_more.setOnClickListener(this);
         //滑动监听
         mNSVScroll.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener)
-                (view, scrollX , scrollY, oldScrollX , oldScrollY ) -> {
-                    if (scrollY > 30){ //上滑30
+                (view, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    if (scrollY > 30) { //上滑30
                         mFloatBtn.setVisibility(View.VISIBLE);
                     } else {
                         mFloatBtn.setVisibility(View.GONE);
                     }
-        });
+                });
         //地图加载完成监听
         mBaiduMap.setOnMapLoadedCallback(() -> isMapLoaded = true);
         //地图单击
@@ -311,7 +309,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             marker.setIcon(bitmapSelector);
             preMarker = marker;
             updateParkInfo(poiInfo, true);
-//                ToastUtil.showToast(mainAct, "点击标记：" + poiInfo.address);
             return false;
         });
         initLocation();//初始化定位
@@ -383,13 +380,14 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         toPoiInfo = poiInfo;
         main_park_name.setText(poiInfo.getName());
         main_park_pay.setText(Constant.PAYS[(int) (Math.random() * 3)]);
-        main_park_num.setText(String.valueOf((int) (Math.random() * 99 + 1)));
-        double distance = CalcUtil.getLatLngDistance(mCurrentLat, mCurrentLon, poiInfo.location.latitude, poiInfo.location.longitude);
-        chooseParkingDistance = (int) (distance * 1000 + 0.5f);
-        if (distance < 1) {
-            main_navigation.setText(String.format("%1dm", chooseParkingDistance));
+        main_park_num.setText(String.format(getString(R.string.main_park_num), String.valueOf((int) (Math.random() * 99 + 1))));
+        main_park_price.setText(String.format(getString(R.string.main_park_price), String.valueOf((int) parkPrice)));
+        chooseParkingDistance = DistanceUtil.getDistance(new LatLng(mCurrentLat, mCurrentLon), poiInfo.location);
+        if (chooseParkingDistance / 1000 < 1) {
+            main_navigation.setText(String.format("%1dm", (int) Math.ceil(chooseParkingDistance)));
         } else {
-            main_navigation.setText(String.format("%1dkm", (int) (distance + 0.5f)));
+
+            main_navigation.setText(String.format("%1dkm", (int) Math.ceil(chooseParkingDistance / 1000)));
         }
     }
 
@@ -440,6 +438,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         tv_main_park_tip = view.findViewById(R.id.tv_main_park_tip);
         tv_main_park_count = view.findViewById(R.id.tv_main_park_count);
         main_park_num = view.findViewById(R.id.main_park_num);
+        main_park_price = view.findViewById(R.id.main_park_price);
         main_park_pay = view.findViewById(R.id.main_park_pay);
         main_park_name = view.findViewById(R.id.main_park_name);
         main_navigation = view.findViewById(R.id.main_navigation);
@@ -657,12 +656,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             if (location == null || mMapView == null) {
                 return;
             }
-            if (location.getLocationWhere() == BDLocation.LOCATION_WHERE_OUT_CN) {
-                ToastUtil.showToast(mainAct, "目前EP智慧停只支持国内定位，国外车位推荐敬请期待！");
+            if (location.getLocationWhere() == BDLocation.LOCATION_WHERE_OUT_CN
+                    || location.getLocationWhere() == BDLocation.LOCATION_WHERE_UNKNOW) {
+                ToastUtil.showToast(mainAct, "目前EP智慧停只支持国内定位，国外车位推荐敬请期待~");
                 return;
             }
             if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                ToastUtil.showToast(mainAct, "网络不通会导致定位精准度不高，请保持网络通畅！");
+                ToastUtil.showToast(mainAct, "网络不通会导致定位精准度不高，请保持网络通畅~");
             }
             if (!isMapLoaded) {
                 if ((System.currentTimeMillis() - loaderTime) >= 5000) {
@@ -694,10 +694,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 chooseLat = mCurrentLat = curLat;
                 chooseLon = mCurrentLon = curLon;
                 String curAddress = location.getAddrStr();
-                if (!curAddress.equals(mCurAddress)) {
+                if (!curAddress.equals(mCurAddress) && mainAct != null) {
                     mCurAddress = curAddress;
                     showAddress(mCurAddress);
                     curCity = location.getCity().trim(); //获取城市
+                    mainAct.currentDistrict = location.getDistrict();
                 }
             }
         }
@@ -707,22 +708,27 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     class MyNotifyLister extends BDNotifyListener {
         @Override
         public void onNotify(BDLocation bdLocation, float distance) { //已到达设置监听位置附近
-            showAlertDialog(getString(R.string.modal_dialog_tip), "您已到达目的地附近，是否立即停车？\n（立即停车即开始计时）",
-                    "立即停车", v -> {
-                        ShareUtil.newInstance().getShared(context).edit()
-                                .putString("parkingStartTime", StringUtil.getCurrentTime())
-                                .apply();
-                        handler.postDelayed(countRunnable, 1000);
-                        dismiss();
-                    }, "重选车位", v -> {
-                        requestLocation(MyLocationConfiguration.LocationMode.COMPASS);
-                        dismiss();
-                    }
-            );
+            arrivedPark();
             if (mLocationClient != null) {
                 mLocationClient.removeNotifyEvent(notifyLister);
             }
         }
+    }
+
+    //已到达目的地
+    private void arrivedPark() {
+        showAlertDialog(getString(R.string.modal_dialog_tip), "您已到达目的地附近，是否立即停车？\n（注意：立即停车即开始计时）",
+                "立即停车", v -> {
+                    ShareUtil.newInstance().getShared(context).edit()
+                            .putString("parkingStartTime", StringUtil.getCurrentTime())
+                            .apply();
+                    handler.postDelayed(countRunnable, 1000);
+                    dismiss();
+                }, "重选车位", v -> {
+                    requestLocation(MyLocationConfiguration.LocationMode.COMPASS);
+                    dismiss();
+                }
+        );
     }
 
     //设置到达附近监听
@@ -800,9 +806,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 }
                 break;
             case R.id.ll_park_time://暂停计时
-                if (parkingSecond >= 3600){
-                    showAlertDialog("当前停车时长\n" + StringUtil.formatTime(parkingSecond), new stopListener());
-                }else if (parkingSecond < 3600 ) {
+                if (parkingSecond >= 3600) {
+                    showAlertDialog("订单结算", "您当前停车时长\n" + StringUtil.formatTime(parkingSecond) + "\n确定要结算吗？", "结算", new stopListener(), v -> dismiss());
+                } else if (parkingSecond < 3600) {
                     showAlertDialog("您当前停车时长小于1小时，\n按1小时计算，确定要结算吗？",
                             new stopListener(),
                             v -> dismiss()
@@ -827,11 +833,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         modal_lv.setOnItemClickListener((parent, v, position, id) -> {
             Intent it = null;
             int requestCode = -1;
-            // TODO: 2019/9/10
             switch (position) {
                 case 0:
                     if (StringUtil.isInstalled(context, ThirdPartyMapType.BAIDUMAP_PACKAGENAME)) {
-                        LogUtil.i(TAG, " ---之前：" + toPoiInfo.location.toString() + " from:" + mCurrentLat);
                         it = new Intent();
                         it.setData(Uri.parse("baidumap://map/direction?destination=name:" + toPoiInfo.getName() +
                                 "|latlng:" + toPoiInfo.location.latitude + "," + toPoiInfo.location.longitude +
@@ -895,10 +899,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         public void onClick(View v) {
             dismiss();
             Intent it = new Intent(context, SafePaymentActivity.class);
-            if (parkingSecond < 3600 ){ //小于1小时 按1小时算
-                it.putExtra("orderPrice", 1.5);
+            if (parkingSecond < 3600) { //小于1小时 按1小时算
+                it.putExtra("orderPrice", parkPrice);
             } else {
-                it.putExtra("orderPrice", parkingSecond / 60 / 60 * 1.5);
+                it.putExtra("orderPrice", parkingSecond / 60 / 60 * parkPrice);
             }
             handler.removeCallbacks(countRunnable);
             startActivity(it);
@@ -1012,20 +1016,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ThirdPartyMapType.TENCENTMAP_REQUSTCODE:
-
-                LogUtil.i(TAG, toPoiInfo.location.toString() + " from:" + mCurrentLat);
-                break;
-            case ThirdPartyMapType.BAIDUMAP_REQUSTCODE:
-
-                LogUtil.i(TAG, " ---之后：" + toPoiInfo.location.toString() + " from:" + mCurrentLat);
-                break;
-            case ThirdPartyMapType.GDMAP_REQUSTCODE:
-
-                break;
+        if (requestCode == ThirdPartyMapType.TENCENTMAP_REQUSTCODE ||
+                requestCode == ThirdPartyMapType.BAIDUMAP_REQUSTCODE ||
+                requestCode == ThirdPartyMapType.GDMAP_REQUSTCODE) {
+            arrivedPark();
         }
-        setNearbyListener();
         super.onActivityResult(requestCode, resultCode, data);
     }
 

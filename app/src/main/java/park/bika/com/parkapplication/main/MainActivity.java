@@ -19,13 +19,16 @@ import park.bika.com.parkapplication.utils.ToolBarUtil;
 public class MainActivity extends BaseAct {
 
     private LinearLayout mLLToolBar;
-//    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "社交", "我的"};
+    //    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "社交", "我的"};
     private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
     private final int[] iconArr = {
             R.drawable.selector_toolbar_index,
             R.drawable.selector_toolbar_nearby,
 //            R.drawable.selector_toolbar_social,
             R.drawable.selector_toolbar_myself};
+
+    public String currentDistrict;
+
     private ToolBarUtil toolBarUtil;
     private int curViewId = -1;
     public MainFragment mainFragment;

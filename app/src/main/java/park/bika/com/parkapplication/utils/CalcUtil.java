@@ -27,22 +27,4 @@ public class CalcUtil {
         return spValue * context.getResources().getDisplayMetrics().scaledDensity + 0.5f;
     }
 
-    /**
-     * 计算两经纬度之间真实距离
-     *
-     * @param latitude1  纬度1
-     * @param longitude1 经度1
-     * @param latitude2  纬度2
-     * @param longitude2 经度1
-     * @return m/km <br>
-     * 返回Km
-     */
-    public static double getLatLngDistance(double latitude1, double longitude1, double latitude2, double longitude2) {
-        double lat1 = (Math.PI / 180) * latitude1;
-        double lat2 = (Math.PI / 180) * latitude2;
-        double lon1 = (Math.PI / 180) * longitude1;
-        double lon2 = (Math.PI / 180) * longitude2;
-        final double earthRadius = 6371.004;
-        return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) * earthRadius;
-    }
 }

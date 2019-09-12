@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <!--顶部-->
         <park.bika.com.parkapplication.view.StatusBarHeightView
+            android:id="@+id/status_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorParkBlue" />
@@ -32,9 +34,12 @@
                 android:layout_weight="1"
                 android:drawableRight="@drawable/ic_down"
                 android:gravity="center"
+                android:maxLines="1"
                 android:text="永川"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:drawableEnd="@drawable/ic_down"
+                android:layout_marginEnd="10dp" />
 
             <park.bika.com.parkapplication.view.SearchView
                 android:id="@+id/search_content"
@@ -43,9 +48,25 @@
                 android:layout_weight="4"
                 android:layout_marginRight="10dp"
                 app:isVoice="false"
-                app:hint_txt="@string/near_page_search_tip"/>
+                app:hint_txt="@string/near_page_search_tip"
+                android:layout_marginEnd="10dp" />
 
         </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/select_nearby_tab"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            app:tabIndicatorColor="@color/colorParkBlue"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorParkBlue"
+            app:tabTextColor="@color/g333333" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/select_nearby_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     </LinearLayout>
 
 </FrameLayout>

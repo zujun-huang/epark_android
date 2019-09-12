@@ -17,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import park.bika.com.parkapplication.R;
+import park.bika.com.parkapplication.utils.StatusBarUtil;
+import park.bika.com.parkapplication.utils.StringUtil;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
 
 /**
@@ -78,7 +80,12 @@ public class BaseFragment extends Fragment {
 
     //显示警示框(有取消按钮，有默认标题，可设置确认文字)
     public void showAlertDialog(String msg, String positive_txt, View.OnClickListener positive_listener, View.OnClickListener negative_listener) {
-        textDialog = TextDialogUtil.createDialog(context).setMessage(getString(R.string.modal_dialog_tip), msg)
+        showAlertDialog(getString(R.string.modal_dialog_tip), msg, positive_txt, positive_listener, negative_listener);
+    }
+
+    //显示警示框(有取消按钮，自定义标题，可设置确认文字)
+    public void showAlertDialog(String title, String msg, String positive_txt, View.OnClickListener positive_listener, View.OnClickListener negative_listener) {
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title , msg)
                 .setPositiveButton(positive_txt, positive_listener)
                 .setNegativeButton(negative_listener);
         textDialog.show();
@@ -86,14 +93,14 @@ public class BaseFragment extends Fragment {
 
     //显示警示框(没有取消按钮，没有事件监听)
     public void showAlertDialog(String title, String msg, View.OnClickListener listener) {
-        textDialog=TextDialogUtil.createDialog(context).setMessage(title, msg)
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(listener);
         textDialog.show();
     }
 
     //显示警示框(没有取消按钮，没有事件监听, 设置空白区域取消)
     public void showAlertDialog(String title, String msg, View.OnClickListener listener, boolean cancel) {
-        textDialog=TextDialogUtil.createDialog(context).setMessage(title, msg)
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(listener);
         textDialog.setCancelable(cancel);
         textDialog.show();
@@ -116,7 +123,7 @@ public class BaseFragment extends Fragment {
     }
 
     //显示警示框（可设置按钮颜色，使用默认监听）
-    public void showAlertDialog(String title, String msg, @ColorInt int positiveColor,@ColorInt int negativeColor, View.OnClickListener positive_listener) {
+    public void showAlertDialog(String title, String msg, @ColorInt int positiveColor, @ColorInt int negativeColor, View.OnClickListener positive_listener) {
         textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(positiveColor, null, positive_listener)
                 .setNegativeButton(negativeColor, null, null);
@@ -134,22 +141,23 @@ public class BaseFragment extends Fragment {
         textDialog.show();
     }
 
-    public void dismiss(){
-        if (textDialog != null){
+    public void dismiss() {
+        if (textDialog != null) {
             textDialog.dismiss();
         }
     }
 
-    public Dialog modal(View layout){
+    public Dialog modal(View layout) {
         return modal(null, layout);
     }
 
     /**
      * 模态框--默认位置在底部，需手动调 show方法
+     *
      * @param gravity 显示位置，如 Gravity.BOTTOM
-     * @param layout 视图，可参考layout_modal.xml编写,使用 View.inflate(context, R.layout.layout_modal, null) 获取
+     * @param layout  视图，可参考layout_modal.xml编写,使用 View.inflate(context, R.layout.layout_modal, null) 获取
      */
-    public Dialog modal(Integer gravity, View layout){
+    public Dialog modal(Integer gravity, View layout) {
         if (gravity == null) gravity = Gravity.BOTTOM;
         modalDialog = new Dialog(context);
         Window dialogWindow = modalDialog.getWindow();
@@ -162,15 +170,15 @@ public class BaseFragment extends Fragment {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialogWindow.setAttributes(lp);
         View cancel = layout.findViewById(R.id.cancel_tv);
-        if (cancel != null){
+        if (cancel != null) {
             cancel.setOnClickListener(v -> modalDialog.dismiss());//取消
         }
         modalDialog.setContentView(layout);
         return modalDialog;
     }
 
-    public void dismissModal(){
-        if (modalDialog != null){
+    public void dismissModal() {
+        if (modalDialog != null) {
             modalDialog.dismiss();
         }
     }
