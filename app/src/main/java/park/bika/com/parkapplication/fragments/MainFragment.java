@@ -53,6 +53,8 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.navi.BaiduMapNavigation;
+import com.baidu.mapapi.navi.NaviParaOption;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
@@ -81,6 +83,7 @@ import park.bika.com.parkapplication.adapters.ModalAdapter;
 import park.bika.com.parkapplication.bean.Advertisement;
 import park.bika.com.parkapplication.bean.ModalBean;
 import park.bika.com.parkapplication.main.MainActivity;
+import park.bika.com.parkapplication.main.OnlineNavigationActivity;
 import park.bika.com.parkapplication.main.SafePaymentActivity;
 import park.bika.com.parkapplication.utils.BdAndGcjUtil;
 import park.bika.com.parkapplication.utils.CalcUtil;
@@ -214,11 +217,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     private void showPermissionToast() {
         showAlertDialog(getString(R.string.modal_dialog_tip), "获取定位权限失败,\n请授权后重试~", "去设置", v -> {
+            dismiss();
             Intent settingIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.parse("package:" + context.getPackageName());
             settingIntent.setData(uri);
             startActivity(settingIntent);
-            dismiss();
         });
     }
 
@@ -883,7 +886,18 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                     }
                     break;
                 case 3:
-
+                    if (mLocationClient != null && mLocationClient.isStarted()) mLocationClient.stop();
+                    NaviParaOption paraOption = new NaviParaOption();
+                    paraOption.startName("我的位置");
+                    paraOption.startPoint(new LatLng(mCurrentLat, mCurrentLon));
+                    paraOption.endName(toPoiInfo.getName());
+                    paraOption.endPoint(toPoiInfo.location);
+                    BaiduMapNavigation.openBaiduMapNavi(paraOption, context);
+//                    it = new Intent(context, OnlineNavigationActivity.class);
+//                    it.putExtra("toName" ,toPoiInfo.getName());
+//                    it.putExtra("toLatLng", toPoiInfo.location);
+//                    it.putExtra("fromLatLng", new LatLng(mCurrentLat, mCurrentLon));
+//                    requestCode = ThirdPartyMapType.BAIDUMAP_REQUSTCODE;
                     dismissModal();
                     break;
             }
@@ -950,7 +964,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (mBaiduMap == null) {
             mBaiduMap = mMapView.getMap();
         }
-        String parkingStartTime = ShareUtil.newInstance().getShared(context).getString("parkingStartTime", null);
+        String parkingStartTime = ShareUtil.newInstance().getShared(context).getString("parkingStartTime", "");
         parkingSecond = StringUtil.getSeconds(parkingStartTime);
         if (!TextUtils.isEmpty(parkingStartTime)) {
             handler.postDelayed(countRunnable, 1000);

@@ -213,6 +213,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
      */
     private void showNoPermissionsToast(){
         showAlertDialog(getString(R.string.modal_dialog_tip), "获取拍摄权限失败,\n请授权后重试~", "去设置", v -> {
+            dismiss();
             //用户手动授权
             Intent settingIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.parse("package:" + context.getPackageName());

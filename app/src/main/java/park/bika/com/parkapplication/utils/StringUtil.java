@@ -60,6 +60,7 @@ public class StringUtil {
     //获取日期与当前日期的秒数差
     @SuppressLint("SimpleDateFormat")
     public static int getSeconds(String time) {
+        if (time.trim().length() < 1) return 0;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         int formatDate = -1;
         try {

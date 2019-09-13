@@ -30,12 +30,17 @@
         <item name="android:windowNoTitle">true</item> <!--是否显示标题-->
         <item name="android:backgroundDimEnabled">true</item>  <!--是否充许对话框的背景变暗-->
         <item name="android:windowContentOverlay">@null</item> <!--是否有覆盖-->
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item> <!--设置Activity出现方式-->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog
+        </item> <!--设置Activity出现方式-->
     </style>
 
     <!--圆的选中-->
     <style name="RadioBtnMyIcon"> 
         <item name="android:button">@drawable/radiobutton_icon</item> 
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

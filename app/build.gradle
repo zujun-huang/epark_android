@@ -7,15 +7,15 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "v1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
         multiDexEnabled true //避免"64K 引用限制"
         vectorDrawables.useSupportLibrary = true //增加对Vector兼容性的支持
     }
 
-    signingConfigs{
-        epark{
+    signingConfigs {
+        epark {
             keyAlias 'com.bika.epark'
             keyPassword 'bk1234'
             storeFile file('com.bika.epark.jks')
@@ -35,6 +35,12 @@ android {
             signingConfig signingConfigs.epark
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "epark_" + defaultConfig.versionName + ".apk"
         }
     }
 
