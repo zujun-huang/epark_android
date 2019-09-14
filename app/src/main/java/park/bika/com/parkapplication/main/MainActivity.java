@@ -28,6 +28,8 @@ public class MainActivity extends BaseAct {
             R.drawable.selector_toolbar_myself};
 
     public String currentDistrict;
+    public String baidu_ak = "acQjw8XOIXifYG1PYfNqxs5Y0n22egBg";
+    public int baidu_geoTableId = 16913964;
 
     private ToolBarUtil toolBarUtil;
     private int curViewId = -1;

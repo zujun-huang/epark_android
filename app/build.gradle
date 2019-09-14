@@ -7,7 +7,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "v1.0.0"
+        versionName "v1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
         multiDexEnabled true //避免"64K 引用限制"
@@ -92,5 +92,5 @@ dependencies {
     //    implementation files('libs/lbsCoreSDK.jar')
     implementation files('libs/protobuf-java-2.3.0-micro.jar')
     implementation files('libs/req_head.jar')
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+    implementation 'com.android.volley:volley:1.1.0'
 }

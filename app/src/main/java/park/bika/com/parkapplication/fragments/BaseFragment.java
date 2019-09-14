@@ -2,6 +2,7 @@ package park.bika.com.parkapplication.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class BaseFragment extends Fragment {
     protected Context context;
     private Dialog modalDialog;
     private TextDialogUtil textDialog;
+    private ProgressDialog progressDialog;
     protected String TAG;
     @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
@@ -45,6 +47,23 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         TAG = getClass().getSimpleName();
+    }
+
+    public void dismissProgressDialog(){
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    //显示加载进度
+    public void showProgressDialog(String title, String message) {
+        if (progressDialog == null) {
+            progressDialog = ProgressDialog.show(context, title, message, true, false);
+        } else if (progressDialog.isShowing()) {
+            progressDialog.setTitle(title);
+            progressDialog.setMessage(message);
+        }
+        progressDialog.show();
     }
 
     //获取resId对应组件的资源文本

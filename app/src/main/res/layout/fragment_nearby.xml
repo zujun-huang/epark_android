@@ -58,7 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="44dp"
             app:tabIndicatorColor="@color/colorParkBlue"
-            app:tabMode="scrollable"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorParkBlue"
             app:tabTextColor="@color/g333333" />
 

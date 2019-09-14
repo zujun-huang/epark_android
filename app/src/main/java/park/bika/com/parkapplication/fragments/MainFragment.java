@@ -83,7 +83,6 @@ import park.bika.com.parkapplication.adapters.ModalAdapter;
 import park.bika.com.parkapplication.bean.Advertisement;
 import park.bika.com.parkapplication.bean.ModalBean;
 import park.bika.com.parkapplication.main.MainActivity;
-import park.bika.com.parkapplication.main.OnlineNavigationActivity;
 import park.bika.com.parkapplication.main.SafePaymentActivity;
 import park.bika.com.parkapplication.utils.BdAndGcjUtil;
 import park.bika.com.parkapplication.utils.CalcUtil;
@@ -129,7 +128,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private Integer curParkCount = 0,
             parkingSecond = 0;//停车总时长，单位秒
     private double chooseParkingDistance,//选择的停车点距离
-            parkPrice = 3.00; //停车价格/小时
+            parkPrice = 2.00; //停车价格/小时
     private MyLocationListener mLocationListener = new MyLocationListener();
     private ArrayAdapter<String> sugAdapter = null; //搜索Adapter
     public LocationClient mLocationClient;
@@ -233,7 +232,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 if (suggestionInfo != null &&
                         chooseLat != suggestionInfo.getPt().latitude &&
                         chooseLon != suggestionInfo.getPt().longitude) {
-                    showSearchAddress(suggestionInfos.get(searchPosition));
+                    showSearchAddress(suggestionInfo);
                 } else ToastUtil.showToast(mainAct, "已显示" + searchTxt + "周边停车位置~");
             } else {
                 ToastUtil.showToast(mainAct, "获取候选词失败，请检查网络状态后重试~");
@@ -897,7 +896,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 //                    it.putExtra("toName" ,toPoiInfo.getName());
 //                    it.putExtra("toLatLng", toPoiInfo.location);
 //                    it.putExtra("fromLatLng", new LatLng(mCurrentLat, mCurrentLon));
-//                    requestCode = ThirdPartyMapType.BAIDUMAP_REQUSTCODE;
+                    requestCode = ThirdPartyMapType.BAIDUMAP_REQUSTCODE;
                     dismissModal();
                     break;
             }

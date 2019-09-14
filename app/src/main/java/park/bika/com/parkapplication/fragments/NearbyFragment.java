@@ -3,6 +3,10 @@ package park.bika.com.parkapplication.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import park.bika.com.parkapplication.R;
+import park.bika.com.parkapplication.adapters.ListFragmentAdapter;
 import park.bika.com.parkapplication.main.MainActivity;
 import park.bika.com.parkapplication.utils.CalcUtil;
 import park.bika.com.parkapplication.utils.InputMethodUtils;
@@ -43,13 +47,19 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
     private TextView tv_near_area;
     private AutoCompleteTextView keyWorldsView;
     private SearchView search_content;
+    private TabLayout nearby_tab;
+    private ViewPager nearby_vp;
 
     private ArrayAdapter<String> sugAdapter;
     private SuggestionSearch mSuggestionSearch;
     private List<SuggestionResult.SuggestionInfo> suggestionInfos;
     private List<HotCity> hotCities = new ArrayList<>();
+    private List<Fragment> fragments = new ArrayList<>();
+    private ListFragmentAdapter fragmentAdapter;
+    private String[] tabTitles = {"美食", "酒店", "玩乐", "生活"};
     private City chooseCity;
     private LocatedCity locatedCity;
+    private int searchPosition = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +85,7 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         hotCities.add(new HotCity("广州", "广东", "101280101"));
         hotCities.add(new HotCity("深圳", "广东", "101280601"));
         hotCities.add(new HotCity("杭州", "浙江", "101210101"));
-        chooseCity = new City(mainAct != null ? mainAct.currentDistrict : "重庆", null, null, null);
+        chooseCity = new City(mainAct != null ? mainAct.currentDistrict : "重庆", "重庆", null, "101040100");
         List<City> cities = new DBManager(context).searchCity(chooseCity.getName());
         locatedCity = new LocatedCity(chooseCity.getName(), "重庆", "101040100");
         if (cities != null && cities.size() > 0) {
@@ -93,7 +103,8 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         keyWorldsView.setDropDownVerticalOffset(CalcUtil.dp2px(context, 3));
         keyWorldsView.setDropDownAnchor(R.id.search_content);
 
-        //
+        //显示附近吃喝玩乐
+        showCityNearby();
     }
 
     private void initListener() {
@@ -103,28 +114,51 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         search_content.setSetTxtOnChangedListener(searchTxt ->
                 mSuggestionSearch.requestSuggestion(new SuggestionSearchOption().city(chooseCity.getName()).keyword(searchTxt))
         );
-
+        //搜索图标点击
         search_content.setSearchIconClickListener(searchTxt -> {
             InputMethodUtils.hide(context);
-            ToastUtil.showToast(getContext(), "搜索：" + searchTxt);
+            if (suggestionInfos != null && suggestionInfos.size() > 0) {
+                SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(searchPosition);
+                if (suggestionInfo != null) {
+                    chooseCity.setName(suggestionInfo.getCity());
+                    chooseCity.setProvince(suggestionInfo.getDistrict());
+                    showCityNearby();
+                }
+            } else {
+                ToastUtil.showToast(mainAct, "获取候选词失败，请检查网络状态后重试~");
+            }
         });
-
+        //候选词点击
+        keyWorldsView.setOnItemClickListener((parent, view, position, id) -> {
+            InputMethodUtils.hide(context);
+            chooseCity.setName(suggestionInfos.get(position).getCity());
+            chooseCity.setProvince(suggestionInfos.get(position).getDistrict());
+            searchPosition = position;
+            showCityNearby();
+        });
     }
 
     private void init(View view) {
         tv_near_area = view.findViewById(R.id.tv_near_area);
         search_content = view.findViewById(R.id.search_content);
-
+        nearby_tab = view.findViewById(R.id.select_nearby_tab);
+        nearby_vp = view.findViewById(R.id.select_nearby_vp);
+        fragmentAdapter = new ListFragmentAdapter(getChildFragmentManager());
         if (mainAct != null) {
             tv_near_area.setText(mainAct.currentDistrict);
         }
     }
 
-    private LatLng getLatLngByCityName(String cityName) {
-
-        return null;
+    private void showCityNearby(){
+        fragments.clear();
+        for (String tabTitle : tabTitles) {
+            nearby_tab.addTab(nearby_tab.newTab().setText(tabTitle));
+            fragments.add(NearbyItemFragment.newInstance(tabTitle, chooseCity.getName()));
+        }
+        fragmentAdapter.setData(fragments, tabTitles);
+        nearby_vp.setAdapter(fragmentAdapter);
+        nearby_tab.setupWithViewPager(nearby_vp);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -138,6 +172,7 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
                                 chooseCity = data;
                                 if (chooseCity != null) {
                                     tv_near_area.setText(chooseCity.getName());
+                                    showCityNearby();
                                 }
                             }
 
