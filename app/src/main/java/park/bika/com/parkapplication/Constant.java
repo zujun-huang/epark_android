@@ -46,4 +46,20 @@ public interface Constant {
      * 用户本地头像
      */
     String USER_HEAD_IMG = "head_img";
+
+    /**
+     * 百度 AK tableId
+     */
+    String BAIDU_AK = "acQjw8XOIXifYG1PYfNqxs5Y0n22egBg";
+    int BAIDU_GEOTABLEID = 16913964;
+
+    /**
+     * 高德 key
+     */
+    String AMAP_KEY = "13acae4efeb2ca8add837d33d1a58b1d";
+
+    /**
+     * 附近关键词
+     */
+    String[] tabTitles = {"美食", "酒店", "玩乐", "生活"};
 }

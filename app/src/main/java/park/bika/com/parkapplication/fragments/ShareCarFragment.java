@@ -14,19 +14,17 @@ import park.bika.com.parkapplication.R;
  * @日期 2019/7/16
  * @描述 社交 Fragment
  */
-public class SocialFragment extends Fragment {
+public class ShareCarFragment extends Fragment {
 
 
-    public SocialFragment() {
-        // Required empty public constructor
+    public ShareCarFragment() {
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social, container, false);
+        return inflater.inflate(R.layout.fragment_share_car, container, false);
     }
 
 }

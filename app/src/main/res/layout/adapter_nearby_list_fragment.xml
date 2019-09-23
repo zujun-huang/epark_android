@@ -8,181 +8,113 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:background="@drawable/selector_choose_course_detail"
-        android:minHeight="155dp">
+        android:minHeight="155dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <park.bika.com.parkapplication.view.CircleImageView
+            android:id="@+id/civ_img"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:minHeight="80dp"
+            app:civ_radius="4dp" />
 
         <LinearLayout
-            android:id="@+id/ll_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
 
-            <park.bika.com.parkapplication.view.CircleImageView
-                android:id="@+id/civ_img"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                app:civ_radius="8dp"
-                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/g333333"
+                android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/g333333"
-                    android:textSize="18sp"
-                    android:text="花甲"/>
+                <CheckBox
+                    android:id="@+id/id_check_one"
+                    style="@style/MyCheckBox"
+                    android:enabled="false"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_star"
+                    android:button="@null" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/id_check_two"
+                    style="@style/MyCheckBox"
+                    android:enabled="false"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_star"
+                    android:button="@null"/>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1.8">
+                <CheckBox
+                    android:id="@+id/id_check_three"
+                    style="@style/MyCheckBox"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_star"
+                    android:button="@null"
+                    android:enabled="false" />
 
-                        <CheckBox
-                            android:id="@+id/id_check_one"
-                            style="@style/MyCheckBox"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/selector_star"
-                            android:button="@null"
-                            android:checked="false"/>
+                <CheckBox
+                    android:id="@+id/id_check_four"
+                    style="@style/MyCheckBox"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_star"
+                    android:button="@null"
+                    android:enabled="false"/>
 
-                        <CheckBox
-                            android:id="@+id/id_check_two"
-                            style="@style/MyCheckBox"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/selector_star"
-                            android:button="@null"/>
-
-                        <CheckBox
-                            android:id="@+id/id_check_three"
-                            style="@style/MyCheckBox"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/selector_star"
-                            android:button="@null"
-                            android:checked="false"/>
-
-                        <CheckBox
-                            android:id="@+id/id_check_four"
-                            style="@style/MyCheckBox"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/selector_star"
-                            android:button="@null"
-                            android:checked="false"/>
-
-                        <CheckBox
-                            android:id="@+id/id_check_five"
-                            style="@style/MyCheckBox"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/selector_star"
-                            android:button="@null"
-                            android:checked="false" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_price"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="￥0.00/人"/>
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_tip"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="营业时间："/>
-
-                <TextView
-                    android:id="@+id/tv_pl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="评论数："/>
-
-                <TextView
-                    android:id="@+id/tv_discount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="优惠数："/>
-
+                <CheckBox
+                    android:id="@+id/id_check_five"
+                    style="@style/MyCheckBox"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/selector_star"
+                    android:button="@null"
+                    android:enabled="false" />
             </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:visibility="gone"
-            android:id="@+id/h_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gf4f4f4"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="8dp"/>
-
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/ll_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
             <TextView
+                android:id="@+id/tv_tell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/shape_bg_gray"
-                android:text="免费车位" />
+                android:text="电话：" />
 
             <TextView
+                android:id="@+id/tv_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:background="@drawable/shape_bg_gray"
-                android:text="服务评价 5.0" />
+                android:layout_marginTop="4dp"
+                android:text="营业时间："/>
 
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:text="地址："/>
         </LinearLayout>
 
     </LinearLayout>

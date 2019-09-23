@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,8 @@ import park.bika.com.parkapplication.utils.InputMethodUtils;
 import park.bika.com.parkapplication.utils.ToastUtil;
 import park.bika.com.parkapplication.view.SearchView;
 
+import static park.bika.com.parkapplication.Constant.tabTitles;
+
 /**
  * @作者 hzj
  * @日期 2019/7/16
@@ -56,10 +57,9 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
     private List<HotCity> hotCities = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
     private ListFragmentAdapter fragmentAdapter;
-    private String[] tabTitles = {"美食", "酒店", "玩乐", "生活"};
-    private City chooseCity;
     private LocatedCity locatedCity;
     private int searchPosition = 0;
+    public static City chooseCity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,10 +151,11 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
 
     private void showCityNearby(){
         fragments.clear();
-        for (String tabTitle : tabTitles) {
-            nearby_tab.addTab(nearby_tab.newTab().setText(tabTitle));
-            fragments.add(NearbyItemFragment.newInstance(tabTitle, chooseCity.getName()));
+        for (int i = 0; i < tabTitles.length; i++) {
+            nearby_tab.addTab(nearby_tab.newTab().setText(tabTitles[i]));
+            fragments.add(NearbyItemFragment.newInstance(i));
         }
+        nearby_tab.getTabAt(1).select();//解决默认当前不刷新
         fragmentAdapter.setData(fragments, tabTitles);
         nearby_vp.setAdapter(fragmentAdapter);
         nearby_tab.setupWithViewPager(nearby_vp);

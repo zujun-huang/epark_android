@@ -19,8 +19,14 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import java.util.HashMap;
+
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
+import park.bika.com.parkapplication.utils.VolleyHttpUtil;
 
 /**
  * created huangzujun on 2019/8/31
@@ -31,6 +37,7 @@ public class BaseFragment extends Fragment {
     protected Context context;
     private Dialog modalDialog, loadingDialog;
     private TextDialogUtil textDialog;
+    private VolleyHttpUtil volleyHttp;
     protected String TAG;
     @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
@@ -46,6 +53,15 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         TAG = getClass().getSimpleName();
+        volleyHttp = VolleyHttpUtil.newInstance(context);
+    }
+
+    public void httpGet(String url, HashMap<String, String> maps, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        volleyHttp.httpRequest(Request.Method.GET, url, maps, listener, errorListener);
+    }
+
+    public void httpPost(String url, HashMap<String, String> maps, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        volleyHttp.httpRequest(Request.Method.POST, url, maps, listener, errorListener);
     }
 
     public void dismissLoadingDialog(){
@@ -60,6 +76,7 @@ public class BaseFragment extends Fragment {
 
     //显示加载进度
     public void showLoadingDialog(String message) {
+        if (context == null) return;
         TextView tipTextView;
         if (loadingDialog == null) {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);

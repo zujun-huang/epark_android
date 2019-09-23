@@ -12,14 +12,14 @@ import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.fragments.MainFragment;
 import park.bika.com.parkapplication.fragments.MyselfFragment;
 import park.bika.com.parkapplication.fragments.NearbyFragment;
-import park.bika.com.parkapplication.fragments.SocialFragment;
+import park.bika.com.parkapplication.fragments.ShareCarFragment;
 import park.bika.com.parkapplication.utils.ToastUtil;
 import park.bika.com.parkapplication.utils.ToolBarUtil;
 
 public class MainActivity extends BaseAct {
 
     private LinearLayout mLLToolBar;
-    //    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "社交", "我的"};
+    //    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "共享", "我的"};
     private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
     private final int[] iconArr = {
             R.drawable.selector_toolbar_index,
@@ -28,14 +28,12 @@ public class MainActivity extends BaseAct {
             R.drawable.selector_toolbar_myself};
 
     public String currentDistrict;
-    public String baidu_ak = "acQjw8XOIXifYG1PYfNqxs5Y0n22egBg";
-    public int baidu_geoTableId = 16913964;
 
     private ToolBarUtil toolBarUtil;
     private int curViewId = -1;
     public MainFragment mainFragment;
     public NearbyFragment nearbyFragment;
-    public SocialFragment socialFragment;
+    public ShareCarFragment shareCarFragment;
     public MyselfFragment myselfFragment;
 
     @Override
@@ -53,9 +51,6 @@ public class MainActivity extends BaseAct {
             toolBarUtil.changeChoosedState(position);
             //选择内容页面
             getContentView(position);
-//                if (position != 0) {
-//                    ToastUtil.showToast(MainActivity.this, "功能还未完善，敬请期待~");
-//                }
         });
     }
 

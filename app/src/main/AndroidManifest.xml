@@ -96,6 +96,9 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <!--高德地图-->
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="13acae4efeb2ca8add837d33d1a58b1d"/>
+
         <!-- <service android:name=".services.ForegroundService" /> -->
 
 

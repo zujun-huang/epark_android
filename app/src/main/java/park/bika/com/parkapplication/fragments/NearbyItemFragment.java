@@ -3,24 +3,15 @@ package park.bika.com.parkapplication.fragments;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
-import com.baidu.mapapi.search.poi.PoiIndoorResult;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import park.bika.com.parkapplication.R;
@@ -31,17 +22,18 @@ import park.bika.com.parkapplication.utils.ToastUtil;
  * Created by huangzujun on 2019/9/13.
  * Describe: 附近item页面
  */
-public class NearbyItemFragment extends BaseFragment {
+public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiSearchListener {
 
     public static final int REFRESH_ADAPTER = 0x000001;
-    private static final String CURRENT_KEY_WORD = "current_key_word";
-    private static final String CHOOSE_CITY = "choose_city";
+    private static final String CURRENT_TAB_POSITION = "current_key_word";
 
     private ListView listView;
 
-    private String currentKey, city;
+    private String ctgr; //ctgr POI 类型的组合:餐馆|景点
+    private int tabPosition = 0;
     private PoiSearch mPoiSearch;
-    private List<PoiDetailResult> poiDetailResults;
+    private Integer pageNum = 1, pageSize = 15;//第1页，每页15条
+    private List<PoiItem> poiItems;
     private View view;
     private boolean isUIVisiable = false,//页面是否可见
             isInitView = false;//初始化view是否完成
@@ -49,11 +41,10 @@ public class NearbyItemFragment extends BaseFragment {
     public NearbyItemFragment() {
     }
 
-    public static NearbyItemFragment newInstance(String currentKey, String chooseCity) {
+    public static NearbyItemFragment newInstance(int tabPosition) {
         NearbyItemFragment fragment = new NearbyItemFragment();
         Bundle args = new Bundle();
-        args.putString(CURRENT_KEY_WORD, currentKey);
-        args.putString(CHOOSE_CITY, chooseCity);
+        args.putInt(CURRENT_TAB_POSITION, tabPosition);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,11 +53,21 @@ public class NearbyItemFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentKey = getArguments().getString(CURRENT_KEY_WORD);
-            if ("玩乐".equals(currentKey)){
-                currentKey = "游";
+            tabPosition = getArguments().getInt(CURRENT_TAB_POSITION);
+            switch (tabPosition){
+                case 0:
+                    ctgr = "餐饮服务";
+                    break;
+                case 1:
+                    ctgr = "住宿服务";
+                    break;
+                case 2:
+                    ctgr = "风景名胜|医疗保健服务|节日庆典|公众活动|体育休闲服务";
+                    break;
+                case 3:
+                    ctgr = "生活服务|购物服务";
+                    break;
             }
-            city = getArguments().getString(CHOOSE_CITY);
         }
     }
 
@@ -92,56 +93,22 @@ public class NearbyItemFragment extends BaseFragment {
     private void setParams() {
         if (isInitView && isUIVisiable) {
             initData();
-            showNearbyByKeyWord(currentKey);
+            showNearbyByKeyWord();
         }
     }
 
-    private OnGetPoiSearchResultListener searchResultListener = new OnGetPoiSearchResultListener() {
-        @Override
-        public void onGetPoiResult(PoiResult poiResult) {
-            if (poiResult == null || poiResult.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-                dismissLoadingDialog();
-                ToastUtil.showToastInUIThread(context, context.getResources().getString(R.string.nearby_no_found_msg));
-            } else if (poiResult.error == SearchResult.ERRORNO.NO_ERROR && mPoiSearch != null) {
-                poiDetailResults = new ArrayList<>();
-                for(PoiInfo poiInfo: poiResult.getAllPoi()){
-                    mPoiSearch.searchPoiDetail(new PoiDetailSearchOption().poiUid(poiInfo.getUid()));
-                }
-            }
-        }
-
-        @Override
-        public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-            poiDetailResults.add(poiDetailResult);
-            if (poiDetailResults.size() == 15){
-                handler.sendEmptyMessage(REFRESH_ADAPTER);
-            }
-        }
-        @Override
-        public void onGetPoiDetailResult(PoiDetailSearchResult poiDetailSearchResult) {
-
-        }
-        @Override
-        public void onGetPoiIndoorResult(PoiIndoorResult poiIndoorResult) {
-
-        }
-    };
-
     private void initData() {
-        mPoiSearch = PoiSearch.newInstance();
-        mPoiSearch.setOnGetPoiSearchResultListener(searchResultListener);
+        PoiSearch.Query query = new PoiSearch.Query(null, ctgr, NearbyFragment.chooseCity.getName());
+        query.setPageNum(pageNum); query.setPageSize(pageSize);
+        mPoiSearch = new PoiSearch(context, query);
+        mPoiSearch.setOnPoiSearchListener(this);
     }
 
     //根据kwyWord显示数据
-    private void showNearbyByKeyWord(String kewWord) {
+    private void showNearbyByKeyWord() {
         if (mPoiSearch != null){
-            if (TextUtils.isEmpty(kewWord)) kewWord = "美食";
             showLoadingDialog();
-            mPoiSearch.searchInCity(new PoiCitySearchOption()
-                    .city(city)
-                    .keyword(kewWord)
-                    .pageCapacity(15)//每页数据
-            );
+            mPoiSearch.searchPOIAsyn();
         }
     }
 
@@ -154,7 +121,7 @@ public class NearbyItemFragment extends BaseFragment {
     public void handleMessage(Message msg) {
         switch (msg.what){
             case REFRESH_ADAPTER:
-                listView.setAdapter(new NearbyItemFragmentAdapter(poiDetailResults));
+                listView.setAdapter(new NearbyItemFragmentAdapter(poiItems));
                 dismissLoadingDialog();
                 break;
         }
@@ -163,9 +130,23 @@ public class NearbyItemFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPoiSearch != null) {
-            mPoiSearch.destroy();
-        }
         dismissLoadingDialog();
+    }
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int errorCode) {
+        dismissLoadingDialog();
+        if (errorCode == 1000){
+            poiItems = poiResult.getPois();
+            handler.sendEmptyMessage(REFRESH_ADAPTER);
+        } else {
+            ToastUtil.showToast(context, context.getResources().getString(R.string.nearby_no_found_msg));
+        }
+    }
+
+    //poi id搜索的结果回调
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
     }
 }

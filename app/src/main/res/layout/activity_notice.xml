@@ -2,17 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/cEDF1F5"
     android:layout_height="match_parent">
 
     <park.bika.com.parkapplication.view.StatusBarHeightView
         android:id="@+id/statusBarHeightView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
+        android:background="@color/colorWhite"
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="44dp"

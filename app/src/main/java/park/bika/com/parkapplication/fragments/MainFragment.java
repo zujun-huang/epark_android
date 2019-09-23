@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -382,8 +384,18 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         toPoiInfo = poiInfo;
         main_park_name.setText(poiInfo.getName());
         main_park_pay.setText(Constant.PAYS[(int) (Math.random() * 3)]);
-        main_park_num.setText(String.format(getString(R.string.main_park_num), String.valueOf((int) (Math.random() * 99 + 1))));
-        main_park_price.setText(String.format(getString(R.string.main_park_price), String.valueOf((int) parkPrice)));
+        String str = String.format(getString(R.string.main_park_num), String.valueOf((int) (Math.random() * 99 + 1)));
+        SpannableString ss = new SpannableString(str);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorParkBlue)),
+                str.indexOf("：") + 1, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new RelativeSizeSpan(1.5f), str.indexOf("：") + 1, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        main_park_num.setText(ss);
+        str = String.format(getString(R.string.main_park_price), String.valueOf((int) parkPrice));
+        SpannableString ss2 = new SpannableString(str);
+        ss2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.gf35334)),
+                str.indexOf("：") + 1, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss2.setSpan(new RelativeSizeSpan(1.3f), str.indexOf("：") + 1, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        main_park_price.setText(ss2);
         chooseParkingDistance = DistanceUtil.getDistance(new LatLng(mCurrentLat, mCurrentLon), poiInfo.location);
         if (chooseParkingDistance / 1000 < 1) {
             main_navigation.setText(String.format("%1dm", (int) Math.ceil(chooseParkingDistance)));

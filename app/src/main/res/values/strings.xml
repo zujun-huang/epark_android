@@ -6,7 +6,7 @@
     <string name="main_page_search_tip">请输入您的目的地</string>
     <string name="main_page_park_recommend">推荐</string>
     <string name="main_park_no_found_msg">亲！当前位置未找到合适停车位，努力扩大范围搜索中…\n建议您重新选择地点。</string>
-    <string name="nearby_no_found_msg">亲！当前位置未找到相关信息…\n建议您重新选择地点~</string>
+    <string name="nearby_no_found_msg">亲！当前位置未找到相关信息…\n建议您重新选择区域~</string>
     <string name="main_park_marker_recommend">为您推荐</string>
     <string name="main_page_park_choose">选择</string>
     <string name="other_plate_qd">每日签到</string>
@@ -14,7 +14,7 @@
     <string name="main">主页面</string>
     <string name="main_park_count">附近 %1$d 个停车场</string>
     <string name="main_park_num">剩余车位：%s</string>
-    <string name="main_park_price">参考收费：%s/小时</string>
+    <string name="main_park_price">参考收费(/小时)：\n￥%s</string>
     <string name="system_dialog_tip">系统提示</string>
     <string name="modal_dialog_tip">温馨提示</string>
     <string name="modal_dialog_permission_msg">为了您获得更好的体验，\n请授予位置权限~</string>
