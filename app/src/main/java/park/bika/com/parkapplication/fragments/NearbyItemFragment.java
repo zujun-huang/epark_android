@@ -100,7 +100,7 @@ public class NearbyItemFragment extends BaseFragment {
         @Override
         public void onGetPoiResult(PoiResult poiResult) {
             if (poiResult == null || poiResult.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-                dismissProgressDialog();
+                dismissLoadingDialog();
                 ToastUtil.showToastInUIThread(context, context.getResources().getString(R.string.nearby_no_found_msg));
             } else if (poiResult.error == SearchResult.ERRORNO.NO_ERROR && mPoiSearch != null) {
                 poiDetailResults = new ArrayList<>();
@@ -136,7 +136,7 @@ public class NearbyItemFragment extends BaseFragment {
     private void showNearbyByKeyWord(String kewWord) {
         if (mPoiSearch != null){
             if (TextUtils.isEmpty(kewWord)) kewWord = "美食";
-            showProgressDialog(null, "正在加载...");
+            showLoadingDialog();
             mPoiSearch.searchInCity(new PoiCitySearchOption()
                     .city(city)
                     .keyword(kewWord)
@@ -155,7 +155,7 @@ public class NearbyItemFragment extends BaseFragment {
         switch (msg.what){
             case REFRESH_ADAPTER:
                 listView.setAdapter(new NearbyItemFragmentAdapter(poiDetailResults));
-                dismissProgressDialog();
+                dismissLoadingDialog();
                 break;
         }
     }
@@ -166,6 +166,6 @@ public class NearbyItemFragment extends BaseFragment {
         if (mPoiSearch != null) {
             mPoiSearch.destroy();
         }
-        dismissProgressDialog();
+        dismissLoadingDialog();
     }
 }

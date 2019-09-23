@@ -69,7 +69,7 @@
             android:name=".main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/DefaultCityPickerTheme"></activity>
+            android:theme="@style/DefaultCityPickerTheme"/>
         <activity
             android:name=".main.NoticeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -80,6 +80,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="支付"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.OnlineNavigationActivity"
+            android:label="在线导航"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
 
         <!-- 百度地图 -->
         <meta-data
@@ -105,10 +110,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity
-            android:name=".main.OnlineNavigationActivity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

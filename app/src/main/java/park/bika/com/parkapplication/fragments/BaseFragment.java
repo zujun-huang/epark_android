@@ -2,7 +2,6 @@ package park.bika.com.parkapplication.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,13 +12,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import park.bika.com.parkapplication.R;
-import park.bika.com.parkapplication.utils.StatusBarUtil;
-import park.bika.com.parkapplication.utils.StringUtil;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
 
 /**
@@ -29,9 +29,8 @@ import park.bika.com.parkapplication.utils.TextDialogUtil;
 public class BaseFragment extends Fragment {
 
     protected Context context;
-    private Dialog modalDialog;
+    private Dialog modalDialog, loadingDialog;
     private TextDialogUtil textDialog;
-    private ProgressDialog progressDialog;
     protected String TAG;
     @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
@@ -49,21 +48,43 @@ public class BaseFragment extends Fragment {
         TAG = getClass().getSimpleName();
     }
 
-    public void dismissProgressDialog(){
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
+    public void dismissLoadingDialog(){
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
         }
     }
 
+    public void showLoadingDialog(){
+        showLoadingDialog("正在加载...");
+    }
+
     //显示加载进度
-    public void showProgressDialog(String title, String message) {
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog.show(context, title, message, true, false);
-        } else if (progressDialog.isShowing()) {
-            progressDialog.setTitle(title);
-            progressDialog.setMessage(message);
+    public void showLoadingDialog(String message) {
+        TextView tipTextView;
+        if (loadingDialog == null) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
+            tipTextView = view.findViewById(R.id.tipTextView);
+            if (!TextUtils.isEmpty(message)){
+                tipTextView.setText(message);
+            }
+            loadingDialog = new Dialog(context, R.style.dialog_style);
+            loadingDialog.setCancelable(true);
+            loadingDialog.setCanceledOnTouchOutside(false);
+            loadingDialog.setContentView(view.findViewById(R.id.dialog_loading_view), new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            Window window = loadingDialog.getWindow();
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            window.setGravity(Gravity.CENTER);
+            window.setAttributes(lp);
+        } else if (loadingDialog.isShowing()) {
+            tipTextView = loadingDialog.findViewById(R.id.tipTextView);
+            if (!TextUtils.isEmpty(message)){
+                tipTextView.setText(message);
+            }
         }
-        progressDialog.show();
+        loadingDialog.show();
     }
 
     //获取resId对应组件的资源文本
