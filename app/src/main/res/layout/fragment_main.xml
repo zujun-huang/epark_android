@@ -141,9 +141,8 @@
 
                         <TextView
                             android:id="@+id/tv_main_park_count"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="5"
                             android:gravity="center"
                             android:text="附近 0 个停车场"
                             android:textColor="@color/colorAppBlack"

@@ -19,13 +19,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.utils.StatusBarUtil;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
+import park.bika.com.parkapplication.utils.VolleyHttpUtil;
 
 /**
  * @作者 huangzujun
@@ -36,8 +43,10 @@ public class BaseAct extends AppCompatActivity {
 
     public Context context;
     public String TAG;
-    private Dialog modalDialog;
+    private Dialog modalDialog, loadingDialog;
     private View modalView;
+    private TextDialogUtil textDialog;
+    private VolleyHttpUtil volleyHttp;
     private static List<Activity> mActivitys = new ArrayList<>();
 
     @SuppressLint("HandlerLeak")
@@ -75,6 +84,54 @@ public class BaseAct extends AppCompatActivity {
         }
     }
 
+    public void httpGet(String url, HashMap<String, String> maps, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        volleyHttp.httpRequest(Request.Method.GET, url, maps, listener, errorListener);
+    }
+
+    public void httpPost(String url, HashMap<String, String> maps, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        volleyHttp.httpRequest(Request.Method.POST, url, maps, listener, errorListener);
+    }
+
+    public void dismissLoadingDialog(){
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
+
+    public void showLoadingDialog(){
+        showLoadingDialog("正在加载...");
+    }
+
+    //显示加载进度
+    public void showLoadingDialog(String message) {
+        if (context == null) return;
+        TextView tipTextView;
+        if (loadingDialog == null) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
+            tipTextView = view.findViewById(R.id.tipTextView);
+            if (!TextUtils.isEmpty(message)){
+                tipTextView.setText(message);
+            }
+            loadingDialog = new Dialog(context, R.style.loading_dialog_style);
+            loadingDialog.setCancelable(true);
+            loadingDialog.setCanceledOnTouchOutside(false);
+            loadingDialog.setContentView(view.findViewById(R.id.dialog_loading_view), new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            Window window = loadingDialog.getWindow();
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            window.setGravity(Gravity.CENTER);
+            window.setAttributes(lp);
+        } else if (loadingDialog.isShowing()) {
+            tipTextView = loadingDialog.findViewById(R.id.tipTextView);
+            if (!TextUtils.isEmpty(message)){
+                tipTextView.setText(message);
+            }
+        }
+        loadingDialog.show();
+    }
+
     //获取resId对应组件的资源文本
     public void showToast(int resId) {
         showToast(getString(resId));
@@ -87,13 +144,51 @@ public class BaseAct extends AppCompatActivity {
     //显示警示框(没有取消按钮及标题)
     public void showToast(String msg, View.OnClickListener listener) {
         if (!TextUtils.isEmpty(msg)) {
-            showAlertDialog(null, msg, listener);
+            showAlertDialog(null, msg, listener, false);
         }
+    }
+
+    //显示警示框(没有取消按钮，有默认标题)
+    public void showAlertDialog(String msg, View.OnClickListener listener) {
+        if (!TextUtils.isEmpty(msg)) {
+            showAlertDialog(getString(R.string.modal_dialog_tip), msg, listener);
+        }
+    }
+
+    //显示警示框(有取消按钮，有默认标题)
+    public void showAlertDialog(String msg, View.OnClickListener positive_listener, View.OnClickListener negative_listener) {
+        textDialog = TextDialogUtil.createDialog(context).setMessage(getString(R.string.modal_dialog_tip), msg)
+                .setPositiveButton(positive_listener)
+                .setNegativeButton(negative_listener);
+        textDialog.show();
+    }
+
+    //显示警示框(有取消按钮，有默认标题，可设置确认文字)
+    public void showAlertDialog(String msg, String positive_txt, View.OnClickListener positive_listener, View.OnClickListener negative_listener) {
+        showAlertDialog(getString(R.string.modal_dialog_tip), msg, positive_txt, positive_listener, negative_listener);
+    }
+
+    //显示警示框(有取消按钮，自定义标题，可设置确认文字)
+    public void showAlertDialog(String title, String msg, String positive_txt, View.OnClickListener positive_listener, View.OnClickListener negative_listener) {
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title , msg)
+                .setPositiveButton(positive_txt, positive_listener)
+                .setNegativeButton(negative_listener);
+        textDialog.show();
     }
 
     //显示警示框(没有取消按钮，没有事件监听)
     public void showAlertDialog(String title, String msg, View.OnClickListener listener) {
-        showAlertDialog(title, msg, null , listener);
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
+                .setPositiveButton(listener);
+        textDialog.show();
+    }
+
+    //显示警示框(没有取消按钮，没有事件监听, 设置空白区域取消)
+    public void showAlertDialog(String title, String msg, View.OnClickListener listener, boolean cancel) {
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
+                .setPositiveButton(listener);
+        textDialog.setCancelable(cancel);
+        textDialog.show();
     }
 
     //显示警示框(没有取消按钮)
@@ -106,29 +201,35 @@ public class BaseAct extends AppCompatActivity {
     //显示警示框（没有按钮颜色设置）
     public void showAlertDialog(String title, String msg, String positive_txt, View.OnClickListener positive_listener,
                                 String negative_txt, View.OnClickListener negative_listener) {
-        TextDialogUtil.createDialog(context).setMessage(title, msg)
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(positive_txt, positive_listener)
-                .setNegativeButton(negative_txt, negative_listener)
-                .show();
+                .setNegativeButton(negative_txt, negative_listener);
+        textDialog.show();
     }
 
     //显示警示框（可设置按钮颜色，使用默认监听）
-    public void showAlertDialog(String title, String msg, @ColorInt int positiveColor,@ColorInt int negativeColor, View.OnClickListener positive_listener) {
-        TextDialogUtil.createDialog(context).setMessage(title, msg)
+    public void showAlertDialog(String title, String msg, @ColorInt int positiveColor, @ColorInt int negativeColor, View.OnClickListener positive_listener) {
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(positiveColor, null, positive_listener)
-                .setNegativeButton(negativeColor, null, null)
-                .show();
+                .setNegativeButton(negativeColor, null, null);
+        textDialog.show();
     }
 
     //显示警示框
     public void showAlertDialog(String title, String msg,
                                 String positive_txt, int positive_color, View.OnClickListener positive_listener,
                                 String negative_txt, int negative_color, View.OnClickListener negative_listener, boolean cancel) {
-        TextDialogUtil textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
                 .setPositiveButton(positive_color, positive_txt, positive_listener)
                 .setNegativeButton(negative_color, negative_txt, negative_listener);
         textDialog.setCancelable(cancel);
         textDialog.show();
+    }
+
+    public void dismiss() {
+        if (textDialog != null) {
+            textDialog.dismiss();
+        }
     }
 
     /**

@@ -84,7 +84,7 @@ public class BaseFragment extends Fragment {
             if (!TextUtils.isEmpty(message)){
                 tipTextView.setText(message);
             }
-            loadingDialog = new Dialog(context, R.style.dialog_style);
+            loadingDialog = new Dialog(context, R.style.loading_dialog_style);
             loadingDialog.setCancelable(true);
             loadingDialog.setCanceledOnTouchOutside(false);
             loadingDialog.setContentView(view.findViewById(R.id.dialog_loading_view), new LinearLayout.LayoutParams(

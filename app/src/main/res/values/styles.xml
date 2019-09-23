@@ -33,6 +33,18 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item> <!--设置Activity出现方式-->
     </style>
 
+    <!--加载框style-->
+    <style name="loading_dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
     <!--圆的选中-->
     <style name="RadioBtnMyIcon"> 
         <item name="android:button">@drawable/radiobutton_icon</item> 
