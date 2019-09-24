@@ -14,9 +14,9 @@ public interface MainBar {
      */
     int NEARBY_PAGE = 1;
     /**
-     * 社交
+     * 共享车位
      */
-    int SOCIAL_PAGE = 2;
+    int SHARECAR_PAGE = 2;
     /**
      * 我的
      */

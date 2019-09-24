@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,6 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
     private List<Fragment> fragments = new ArrayList<>();
     private ListFragmentAdapter fragmentAdapter;
     private LocatedCity locatedCity;
-    private int searchPosition = 0;
     public static City chooseCity;
 
     @Override
@@ -85,9 +85,9 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         hotCities.add(new HotCity("广州", "广东", "101280101"));
         hotCities.add(new HotCity("深圳", "广东", "101280601"));
         hotCities.add(new HotCity("杭州", "浙江", "101210101"));
-        chooseCity = new City(mainAct != null ? mainAct.currentDistrict : "重庆", "重庆", null, "101040100");
+        chooseCity = new City(mainAct != null ? mainAct.currentDistrict : "重庆", "重庆市", null, "101040100");
         List<City> cities = new DBManager(context).searchCity(chooseCity.getName());
-        locatedCity = new LocatedCity(chooseCity.getName(), "重庆", "101040100");
+        locatedCity = new LocatedCity(chooseCity.getName(), chooseCity.getProvince(), chooseCity.getCode());
         if (cities != null && cities.size() > 0) {
             locatedCity = new LocatedCity(cities.get(0).getName(),
                     cities.get(0).getProvince(),
@@ -118,10 +118,10 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         search_content.setSearchIconClickListener(searchTxt -> {
             InputMethodUtils.hide(context);
             if (suggestionInfos != null && suggestionInfos.size() > 0) {
-                SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(searchPosition);
-                if (suggestionInfo != null) {
-                    chooseCity.setName(suggestionInfo.getCity());
-                    chooseCity.setProvince(suggestionInfo.getDistrict());
+                SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(0);
+                if (suggestionInfo != null && !TextUtils.isEmpty(suggestionInfo.getDistrict())) {
+                    chooseCity.setName(suggestionInfo.getDistrict());
+                    chooseCity.setProvince(suggestionInfo.getCity());
                     showCityNearby();
                 }
             } else {
@@ -131,10 +131,15 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         //候选词点击
         keyWorldsView.setOnItemClickListener((parent, view, position, id) -> {
             InputMethodUtils.hide(context);
-            chooseCity.setName(suggestionInfos.get(position).getCity());
-            chooseCity.setProvince(suggestionInfos.get(position).getDistrict());
-            searchPosition = position;
-            showCityNearby();
+            if (TextUtils.isEmpty(suggestionInfos.get(position).getDistrict()) &&
+                    TextUtils.isEmpty(suggestionInfos.get(position).getDistrict())) {
+                position += 1;
+            }
+            if (position >= 0 && position < suggestionInfos.size()){
+                chooseCity.setName(suggestionInfos.get(position).getDistrict());
+                chooseCity.setProvince(suggestionInfos.get(position).getCity());
+                showCityNearby();
+            }
         });
     }
 
@@ -149,7 +154,9 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-    private void showCityNearby(){
+    private void showCityNearby() {
+        if (chooseCity == null) return;
+        tv_near_area.setText(chooseCity.getName());
         fragments.clear();
         for (int i = 0; i < tabTitles.length; i++) {
             nearby_tab.addTab(nearby_tab.newTab().setText(tabTitles[i]));
@@ -171,10 +178,7 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
                             @Override
                             public void onPick(int position, City data) {
                                 chooseCity = data;
-                                if (chooseCity != null) {
-                                    tv_near_area.setText(chooseCity.getName());
-                                    showCityNearby();
-                                }
+                                showCityNearby();
                             }
 
                             @Override
@@ -213,7 +217,7 @@ public class NearbyFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mSuggestionSearch != null){
+        if (mSuggestionSearch != null) {
             mSuggestionSearch.destroy();
         }
     }

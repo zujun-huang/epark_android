@@ -121,8 +121,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     private MapView mMapView;
     private AutoCompleteTextView keyWorldsView; //搜索词提示视图
 
-    private int mCurrentDirection = 0,//定位方向信息
-            searchPosition = 0; //搜索候选下标
+    private int mCurrentDirection = 0;//定位方向信息
     private Integer locationRadius = Constant.SEARCH_RADIUS; //搜索半径300m内的
     private boolean isChooseAddress = false; //是否自选地址
     private boolean isMapLoaded = false;      //地图是否加载完成
@@ -218,11 +217,11 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     private void showPermissionToast() {
         showAlertDialog(getString(R.string.modal_dialog_tip), "获取定位权限失败,\n请授权后重试~", "去设置", v -> {
-            dismiss();
             Intent settingIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Uri uri = Uri.parse("package:" + context.getPackageName());
             settingIntent.setData(uri);
             startActivity(settingIntent);
+            dismiss();
         });
     }
 
@@ -230,7 +229,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         search_content.setSearchIconClickListener(searchTxt -> {
             InputMethodUtils.hide(context);
             if (suggestionInfos != null && suggestionInfos.size() > 0) {
-                SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(searchPosition);
+                SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(0);
                 if (suggestionInfo != null &&
                         chooseLat != suggestionInfo.getPt().latitude &&
                         chooseLon != suggestionInfo.getPt().longitude) {
@@ -298,7 +297,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         keyWorldsView.setOnItemClickListener((parent, view, position, id) -> {
             InputMethodUtils.hide(context);
             showSearchAddress(suggestionInfos.get(position));
-            searchPosition = position;
         });
         //地图图标地点击
         mBaiduMap.setOnMarkerClickListener(marker -> {
@@ -670,9 +668,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             if (location == null || mMapView == null) {
                 return;
             }
-            if (location.getLocationWhere() == BDLocation.LOCATION_WHERE_OUT_CN
-                    || location.getLocationWhere() == BDLocation.LOCATION_WHERE_UNKNOW) {
+            if (location.getLocationWhere() == BDLocation.LOCATION_WHERE_OUT_CN) {
                 ToastUtil.showToast(mainAct, "目前EP智慧停只支持国内定位，国外车位推荐敬请期待~");
+                return;
+            }
+            if (location.getLocationWhere() == BDLocation.LOCATION_WHERE_UNKNOW){
+                ToastUtil.showToast(mainAct, "获取定位失败，请开启定位权限后重试~");
                 return;
             }
             if (location.getLocType() == BDLocation.TypeNetWorkException) {
@@ -790,12 +791,24 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 mNSVScroll.fullScroll(View.FOCUS_UP);
                 break;
             case R.id.iv_main_map_refresh://自身定位
-                InputMethodUtils.hide(context);
-                locationRadius = Constant.SEARCH_RADIUS;
-                mCurrentLat = 0; //随意设置纬度，防止自选位置后刷新自身点没有标志
-                isChooseAddress = false;
-                ToastUtil.showToast(context, "定位中……");
-                requestLocation(MyLocationConfiguration.LocationMode.COMPASS);
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(mainAct, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        showPermissionToast();
+                    } else {
+                        ActivityCompat.requestPermissions(mainAct, new String[]{
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION},
+                                PERMISSIONS_REQUEST_LOCATION
+                        );
+                    }
+                } else {
+                    InputMethodUtils.hide(context);
+                    locationRadius = Constant.SEARCH_RADIUS;
+                    mCurrentLat = 0; //随意设置纬度，防止自选位置后刷新自身点没有标志
+                    isChooseAddress = false;
+                    ToastUtil.showToast(context, "定位中……");
+                    requestLocation(MyLocationConfiguration.LocationMode.COMPASS);
+                }
                 break;
             case R.id.main_park_more://车位详情
                 showToast("功能还未完善，敬请期待~");

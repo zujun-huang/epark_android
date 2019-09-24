@@ -35,7 +35,7 @@ public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiS
     private Integer pageNum = 1, pageSize = 15;//第1页，每页15条
     private List<PoiItem> poiItems;
     private View view;
-    private boolean isUIVisiable = false,//页面是否可见
+    private boolean isUIVisible = false,//页面是否可见
             isInitView = false;//初始化view是否完成
 
     public NearbyItemFragment() {
@@ -86,12 +86,12 @@ public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiS
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        isUIVisiable = isVisibleToUser;
+        isUIVisible = isVisibleToUser;
         setParams();
     }
 
     private void setParams() {
-        if (isInitView && isUIVisiable) {
+        if (isInitView && isUIVisible) {
             initData();
             showNearbyByKeyWord();
         }

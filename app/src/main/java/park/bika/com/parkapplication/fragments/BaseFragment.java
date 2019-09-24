@@ -165,9 +165,9 @@ public class BaseFragment extends Fragment {
 
     //显示警示框(没有取消按钮)
     public void showAlertDialog(String title, String msg, String positive_txt, View.OnClickListener listener) {
-        TextDialogUtil.createDialog(context).setMessage(title, msg)
-                .setPositiveButton(positive_txt, listener)
-                .show();
+        textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)
+                .setPositiveButton(positive_txt, listener);
+        textDialog.show();
     }
 
     //显示警示框（没有按钮颜色设置）
@@ -199,7 +199,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void dismiss() {
-        if (textDialog != null) {
+        if (textDialog != null && textDialog.isShowing()) {
             textDialog.dismiss();
         }
     }

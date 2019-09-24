@@ -19,12 +19,12 @@ import park.bika.com.parkapplication.utils.ToolBarUtil;
 public class MainActivity extends BaseAct {
 
     private LinearLayout mLLToolBar;
-    //    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "共享", "我的"};
-    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
+    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "共享", "我的"};
+//    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
     private final int[] iconArr = {
             R.drawable.selector_toolbar_index,
             R.drawable.selector_toolbar_nearby,
-//            R.drawable.selector_toolbar_social,
+            R.drawable.selector_toolbar_share,
             R.drawable.selector_toolbar_myself};
 
     public String currentDistrict;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseAct {
     protected void onNewIntent(Intent intent) {
         int barTag = intent.getIntExtra("show", MainBar.HOME_PAGE);
         if (barTag == MainBar.HOME_PAGE || barTag == MainBar.NEARBY_PAGE ||
-                barTag == MainBar.MYSELF_PAGE || barTag == MainBar.SOCIAL_PAGE) {
+                barTag == MainBar.MYSELF_PAGE || barTag == MainBar.SHARECAR_PAGE) {
             getContentView(barTag);
         }
     }
@@ -93,10 +93,10 @@ public class MainActivity extends BaseAct {
                 nearbyFragment = new NearbyFragment();
                 ft.replace(R.id.fl_main_content, nearbyFragment);
                 break;
-            case MainBar.SOCIAL_PAGE:
-//                socialFragment = new SocialFragment();
-//                ft.replace(R.id.fl_main_content, socialFragment);
-//                break;
+            case MainBar.SHARECAR_PAGE:
+                ShareCarFragment shareCarFragment= new ShareCarFragment();
+                ft.replace(R.id.fl_main_content, shareCarFragment);
+                break;
             case MainBar.MYSELF_PAGE:
                 myselfFragment = MyselfFragment.newInstance();
                 ft.replace(R.id.fl_main_content, myselfFragment);

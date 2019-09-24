@@ -34,6 +34,7 @@
     <color name="c3D98FF">#3D98FF</color>
     <color name="cEDF1F5">#EDF1F5</color>
     <color name="gEEF2F5">#EEF2F5</color>
+    <color name="cccccc">#cccccc</color>
 
     <!--导航模态item文字-->
     <color name="modal_nav_baidu">#ff4e40</color>
