@@ -22,10 +22,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,10 +32,9 @@ import java.util.List;
 import park.bika.com.parkapplication.BuildConfig;
 import park.bika.com.parkapplication.Constant;
 import park.bika.com.parkapplication.R;
-import park.bika.com.parkapplication.adapters.ModalAdapter;
+import park.bika.com.parkapplication.activitys.MainActivity;
+import park.bika.com.parkapplication.activitys.NoticeActivity;
 import park.bika.com.parkapplication.bean.ModalBean;
-import park.bika.com.parkapplication.main.MainActivity;
-import park.bika.com.parkapplication.main.NoticeActivity;
 import park.bika.com.parkapplication.utils.LogUtil;
 import park.bika.com.parkapplication.utils.ShareUtil;
 import park.bika.com.parkapplication.utils.ThreadUtil;
@@ -109,16 +104,16 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
 
     private void initData() {
         String headImg = ShareUtil.newInstance().getLocHeadImg(context);
-        if (!TextUtils.isEmpty(headImg)){
+        if (!TextUtils.isEmpty(headImg)) {
             byte[] bytes = Base64.decode(headImg, Base64.DEFAULT);
-            head_img.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0 , bytes.length));
+            head_img.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
         }
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.notify_my://通知
                 startActivity(new Intent(context, NoticeActivity.class));
                 break;
@@ -180,19 +175,16 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                         .putExtra("title", "设置")
                 );
                 break;
+            default:
         }
     }
 
     private void showHeadImgModal() {
         List<ModalBean> modalBeanList = new ArrayList<>();
-        modalBeanList.add(new ModalBean("拍摄照片", getResources().getColor(R.color.colorAccent)));
-        modalBeanList.add(new ModalBean("图库选取", getResources().getColor(R.color.colorParkBlue)));
-        View modalView = View.inflate(context, R.layout.layout_modal, null);
-        ListView modal_lv = modalView.findViewById(R.id.modal_content);
-        modal_lv.setAdapter(new ModalAdapter(context, modalBeanList));
-        modal(modalView).show();
-        modal_lv.setOnItemClickListener((parent, view, position, id) -> {
-            switch (position){
+        modalBeanList.add(new ModalBean("拍摄照片", R.color.colorAccent));
+        modalBeanList.add(new ModalBean("图库选取", R.color.colorParkBlue));
+        showModal(modalBeanList).setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
                 case 0:
                     takePhoto();
                     dismissModal();
@@ -204,6 +196,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                     startActivityForResult(picIntent, REQUEST_EDIT_ICON_LIB);
                     dismissModal();
                     break;
+                default:
             }
         });
     }
@@ -211,7 +204,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
     /**
      * 显示没有权限手动设置框
      */
-    private void showNoPermissionsToast(){
+    private void showNoPermissionsToast() {
         showAlertDialog(getString(R.string.modal_dialog_tip), "获取拍摄权限失败,\n请授权后重试~", "去设置", v -> {
             dismiss();
             //用户手动授权
@@ -263,7 +256,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         }
         Intent intent = new Intent("com.android.camera.action.CROP");//系统自带图片裁切功能
         intent.setDataAndType(uri, "image/*");//裁剪的图片uri或图片类型
-        intent.putExtra("crop", "circle");//设置允许裁剪，circle 圆形剪切
+        intent.putExtra("crop", "true");//设置允许裁剪，circle 圆形剪切
         intent.putExtra("aspectX", 1);//裁剪框的 X 方向的比例,需要为整数
         intent.putExtra("aspectY", 1);//裁剪框的 Y 方向的比例,需要为整数
         intent.putExtra("outputX", 150);//返回数据的时候的X像素大小。
@@ -331,9 +324,9 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
 
     private void uploadImage(byte[] bytes) {
         ThreadUtil.runInThread(() ->
-            //由于未有服务器暂且本地存储
-            ShareUtil.newInstance().getShared(context, Constant.USER_HEAD_IMG).edit()
-                    .putString(Constant.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
+                //由于未有服务器暂且本地存储
+                ShareUtil.newInstance().getShared(context, Constant.USER_HEAD_IMG).edit()
+                        .putString(Constant.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
     }
 
     @Override

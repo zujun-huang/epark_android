@@ -30,7 +30,7 @@ import java.util.List;
 
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.adapters.ListFragmentAdapter;
-import park.bika.com.parkapplication.main.MainActivity;
+import park.bika.com.parkapplication.activitys.MainActivity;
 import park.bika.com.parkapplication.utils.CalcUtil;
 import park.bika.com.parkapplication.utils.InputMethodUtils;
 import park.bika.com.parkapplication.utils.ToastUtil;

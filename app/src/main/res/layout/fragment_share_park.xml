@@ -1,0 +1,50 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--地图-->
+    <park.bika.com.parkapplication.view.MapFrameLayout
+        android:id="@+id/share_map_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/mv_share_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true" />
+    </park.bika.com.parkapplication.view.MapFrameLayout>
+
+    <ImageView
+        android:id="@+id/share_park_appointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@mipmap/ic_share_park_appointment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/share_park_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorWhite"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/selector_main_location"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:rippleColor="@color/cccccc"
+        app:layout_constraintBottom_toBottomOf="@id/share_park_appointment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/share_park_appointment"
+        app:layout_constraintTop_toTopOf="@id/share_park_appointment" />
+
+</android.support.constraint.ConstraintLayout>

@@ -13,11 +13,6 @@ public interface Constant {
     int CHOOSE_AREA_CODE = 1800;
 
     /**
-     * 选择的地区
-     */
-    String CHOOSE_AREA_KEY = "CHOOSE_AREA";
-
-    /**
      * 支付方式
      */
     String[] PAYS = new String[]{"现金支付(暂未开通易派克)", "易派克支付", "微信支付", "支付宝支付"};

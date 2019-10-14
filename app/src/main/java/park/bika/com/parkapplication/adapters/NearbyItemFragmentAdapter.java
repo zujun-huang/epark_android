@@ -1,6 +1,7 @@
 package park.bika.com.parkapplication.adapters;
 
 import android.annotation.SuppressLint;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import park.bika.com.parkapplication.R;
-import park.bika.com.parkapplication.utils.StringUtil;
 import park.bika.com.parkapplication.view.CircleImageView;
 
 /**
@@ -73,20 +73,31 @@ public class NearbyItemFragmentAdapter extends BaseAdapter {
         List<Photo> photos = list.get(position).getPhotos();
         Glide.with(parent.getContext())
                 .load( photos!= null && photos.size() > 0 ? photos.get(0).getUrl() : null)
-                .error(parent.getContext().getResources().getDrawable(R.mipmap.nearby_jt))
+                .error(ContextCompat.getDrawable(parent.getContext(), R.mipmap.nearby_jt))
                 .into(holder.img);
         holder.title.setText(list.get(position).getTitle());
         PoiItemExtension poiExtension = list.get(position).getPoiExtension();
-        if (poiExtension == null) poiExtension = new PoiItemExtension(null, null);
+        if (poiExtension == null) {
+            poiExtension = new PoiItemExtension(null, null);
+        }
 
-        if (TextUtils.isEmpty(poiExtension.getOpentime())) holder.openTime.setVisibility(View.GONE);
-        else holder.openTime.setText(String.format("营业时间：%s", poiExtension.getOpentime()));
+        if (TextUtils.isEmpty(poiExtension.getOpentime())) {
+            holder.openTime.setVisibility(View.GONE);
+        } else {
+            holder.openTime.setText(String.format("营业时间：%s", poiExtension.getOpentime()));
+        }
 
-        if (TextUtils.isEmpty(list.get(position).getTel())) holder.tell.setVisibility(View.GONE);
-        else  holder.tell.setText(String.format("电话：%s", list.get(position).getTel()));
+        if (TextUtils.isEmpty(list.get(position).getTel())) {
+            holder.tell.setVisibility(View.GONE);
+        } else {
+            holder.tell.setText(String.format("电话：%s", list.get(position).getTel()));
+        }
 
-        if (TextUtils.isEmpty(list.get(position).getSnippet())) holder.address.setVisibility(View.GONE);
-        else  holder.address.setText(String.format("地址：%s", list.get(position).getSnippet()));
+        if (TextUtils.isEmpty(list.get(position).getSnippet())) {
+            holder.address.setVisibility(View.GONE);
+        } else {
+            holder.address.setText(String.format("地址：%s", list.get(position).getSnippet()));
+        }
 
         int star = (int) Math.ceil(Double.valueOf(TextUtils.isEmpty(poiExtension.getmRating()) ? "5" : poiExtension.getmRating()));
         switch (star) {
@@ -101,6 +112,7 @@ public class NearbyItemFragmentAdapter extends BaseAdapter {
             case 1:
                 holder.star1.setChecked(true);
                 break;
+            default:
         }
         return convertView;
     }

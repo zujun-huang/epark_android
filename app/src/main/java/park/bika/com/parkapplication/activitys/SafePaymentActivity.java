@@ -1,4 +1,4 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.UUID;
-
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.utils.OnMultiClickListener;
 import park.bika.com.parkapplication.utils.ShareUtil;
@@ -20,7 +18,7 @@ import park.bika.com.parkapplication.utils.ToastUtil;
 
 /**
  * Created by huangzujun on 2019/9/10.
- * Describe: 支付
+ * Describe: 支付页面
  */
 public class SafePaymentActivity extends BaseAct implements View.OnClickListener {
 

@@ -17,15 +17,20 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 
 import java.util.HashMap;
+import java.util.List;
 
 import park.bika.com.parkapplication.R;
+import park.bika.com.parkapplication.adapters.ModalAdapter;
+import park.bika.com.parkapplication.bean.ModalBean;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
+import park.bika.com.parkapplication.utils.ToastUtil;
 import park.bika.com.parkapplication.utils.VolleyHttpUtil;
 
 /**
@@ -52,7 +57,7 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        TAG = getClass().getSimpleName();
+        TAG = "ePark";
         volleyHttp = VolleyHttpUtil.newInstance(context);
     }
 
@@ -70,13 +75,19 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    public void showNetworkErrorToast(){
+        ToastUtil.showLongToast(context, getString(R.string.network_error));
+    }
+
     public void showLoadingDialog(){
         showLoadingDialog("正在加载...");
     }
 
     //显示加载进度
     public void showLoadingDialog(String message) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
         TextView tipTextView;
         if (loadingDialog == null) {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
@@ -215,7 +226,9 @@ public class BaseFragment extends Fragment {
      * @param layout  视图，可参考layout_modal.xml编写,使用 View.inflate(context, R.layout.layout_modal, null) 获取
      */
     public Dialog modal(Integer gravity, View layout) {
-        if (gravity == null) gravity = Gravity.BOTTOM;
+        if (gravity == null) {
+            gravity = Gravity.BOTTOM;
+        }
         modalDialog = new Dialog(context);
         Window dialogWindow = modalDialog.getWindow();
         dialogWindow.setGravity(gravity);
@@ -232,6 +245,23 @@ public class BaseFragment extends Fragment {
         }
         modalDialog.setContentView(layout);
         return modalDialog;
+    }
+
+    /**
+     * 显示底部模态框
+     * @param modalBeanList 列表数据 ModalBean
+     * @return 返回列表
+     */
+    public ListView showModal(List<ModalBean> modalBeanList){
+        return showModal(modalBeanList, null);
+    }
+
+    public ListView showModal(List<ModalBean> modalBeanList,Integer gravity){
+        View modalView = View.inflate(context, R.layout.layout_modal, null);
+        ListView modalLv = modalView.findViewById(R.id.modal_content);
+        modalLv.setAdapter(new ModalAdapter(context, modalBeanList));
+        modal(gravity , modalView).show();
+        return modalLv;
     }
 
     public void dismissModal() {

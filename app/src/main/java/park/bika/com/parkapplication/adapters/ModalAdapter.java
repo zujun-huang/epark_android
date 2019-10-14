@@ -1,6 +1,7 @@
 package park.bika.com.parkapplication.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ public class ModalAdapter extends BaseAdapter {
     private List<ModalBean> list;
     private Context context;
 
-    public ModalAdapter(Context context, List<ModalBean> list){
+    public ModalAdapter(Context context, List<ModalBean> list) {
         this.list = list;
         this.context = context;
         notifyDataSetChanged();
@@ -45,7 +46,7 @@ public class ModalAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.layout_modal_content_item, null);
             holder.item_tv = convertView.findViewById(R.id.item_tv);
@@ -54,11 +55,11 @@ public class ModalAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.item_tv.setText(list.get(position).getContentTxt());
-        holder.item_tv.setTextColor(list.get(position).getColor());
+        holder.item_tv.setTextColor(ContextCompat.getColor(context, list.get(position).getColor()));
         return convertView;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         private TextView item_tv;
     }
 }

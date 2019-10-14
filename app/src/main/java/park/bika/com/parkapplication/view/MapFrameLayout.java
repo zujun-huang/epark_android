@@ -75,6 +75,15 @@ public class MapFrameLayout extends FrameLayout {
         return false;
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            getParent().requestDisallowInterceptTouchEvent(true);//请求父控件不拦截触摸事件
+        } else if (ev.getAction() == MotionEvent.ACTION_UP) {
+            getParent().requestDisallowInterceptTouchEvent(false);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

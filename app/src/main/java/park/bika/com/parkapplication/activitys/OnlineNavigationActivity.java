@@ -1,22 +1,23 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.navi.BaiduMapNavigation;
-import com.baidu.mapapi.navi.NaviParaOption;
 
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.utils.StatusBarUtil;
 import park.bika.com.parkapplication.utils.ToastUtil;
 
+/**
+ * Created by huangzujun on 2019/10/9.
+ * Describe: 在线导航
+ */
 public class OnlineNavigationActivity extends BaseAct implements View.OnClickListener {
 
     private WebView webView;
@@ -65,6 +66,7 @@ public class OnlineNavigationActivity extends BaseAct implements View.OnClickLis
             case R.id.icon_back:
                 finish();
                 break;
+            default:
         }
     }
 

@@ -1,14 +1,16 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -30,6 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import park.bika.com.parkapplication.R;
+import park.bika.com.parkapplication.adapters.ModalAdapter;
+import park.bika.com.parkapplication.bean.ModalBean;
 import park.bika.com.parkapplication.utils.StatusBarUtil;
 import park.bika.com.parkapplication.utils.TextDialogUtil;
 import park.bika.com.parkapplication.utils.VolleyHttpUtil;
@@ -67,7 +73,7 @@ public class BaseAct extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         context = this;
-        TAG = getClass().getSimpleName();
+        TAG = "ePark";
         setStatusBar();
     }
 
@@ -104,7 +110,9 @@ public class BaseAct extends AppCompatActivity {
 
     //显示加载进度
     public void showLoadingDialog(String message) {
-        if (context == null) return;
+        if (context == null) {
+            return;
+        }
         TextView tipTextView;
         if (loadingDialog == null) {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_dialog, null);
@@ -235,27 +243,55 @@ public class BaseAct extends AppCompatActivity {
     /**
      * 模态框--默认位置在底部，需手动调 show方法
      * @param gravity 显示位置，如 Gravity.BOTTOM
-     * @param layoutResource 视图资源，可参考layout_modal.xml编写
+     * @param layout 视图，可参考layout_modal.xml编写
+     *
      */
-    public Dialog modal(Integer gravity, int layoutResource){
-        if (gravity == null) gravity = Gravity.BOTTOM;
-        modalDialog = new Dialog(context);
-        modalView = LayoutInflater.from(context).inflate(layoutResource, null);
-        Window dialogWindow = modalDialog.getWindow();
-        dialogWindow.setGravity(gravity);
-        modalDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialogWindow.getDecorView().setBackgroundColor(Color.TRANSPARENT);
-        dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialogWindow.setAttributes(lp);
-        View cancel = modalView.findViewById(R.id.cancel_tv);
-        if (cancel != null){
-            cancel.setOnClickListener(v -> modalDialog.dismiss());//取消
+    public Dialog modal(Integer gravity, View layout) {
+        if (gravity == null) {
+            gravity = Gravity.BOTTOM;
         }
-        modalDialog.setContentView(modalView);
+        modalDialog = new Dialog(context);
+        Window dialogWindow = modalDialog.getWindow();
+        if (dialogWindow != null){
+            dialogWindow.setGravity(gravity);
+            modalDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialogWindow.getDecorView().setBackgroundColor(Color.TRANSPARENT);
+            dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            dialogWindow.setAttributes(lp);
+        }
+        View cancelV = layout.findViewById(R.id.cancel_tv);
+        if (cancelV != null) {
+            cancelV.setOnClickListener(v -> modalDialog.dismiss());//取消
+        }
+        modalDialog.setContentView(layout);
         return modalDialog;
+    }
+
+    /**
+     * 显示底部模态框
+     * @param modalBeanList 列表数据 ModalBean
+     * @param cancel 能否点击外部取消
+     * @return 返回列表
+     */
+    public ListView showModal(List<ModalBean> modalBeanList, boolean cancel){
+        return showModal(modalBeanList, null, cancel);
+    }
+
+    public ListView showModal(List<ModalBean> modalBeanList){
+        return showModal(modalBeanList, null, true);
+    }
+
+    public ListView showModal(List<ModalBean> modalBeanList,Integer gravity, boolean cancel){
+        View modalView = View.inflate(context, R.layout.layout_modal, null);
+        ListView modalLv = modalView.findViewById(R.id.modal_content);
+        modalLv.setAdapter(new ModalAdapter(context, modalBeanList));
+        modal(gravity , modalView).show();
+        modalDialog.setCancelable(cancel);
+        modalDialog.setCanceledOnTouchOutside(cancel);
+        return modalLv;
     }
 
     public void dismissModal(){
@@ -273,9 +309,8 @@ public class BaseAct extends AppCompatActivity {
     }
 
     protected void setStatusBar() {
-        StatusBarUtil.setRootViewFitsSystemWindows(this, false);//预留出状态栏高度
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false);//false预留出状态栏高度
         StatusBarUtil.setTranslucentStatus(this); //状态栏透明
-
           //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
 //        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
 //        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {

@@ -1,10 +1,11 @@
 package park.bika.com.parkapplication.utils;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import static android.view.Gravity.CENTER;
+import park.bika.com.parkapplication.R;
 
 /**
  * @author hzj
@@ -32,7 +33,7 @@ public class ToastUtil {
      */
     public static void showToast(Context context, String msg) {
         if (toast == null) {
-            toast = Toast.makeText(context, null, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0 , 0);
             toast.setText(msg);
         } else {
@@ -43,7 +44,7 @@ public class ToastUtil {
 
     public static void showLongToast(Context context, String msg) {
         if (toast == null) {
-            toast = Toast.makeText(context, null, Toast.LENGTH_LONG);
+            toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0 , 0);
             toast.setText(msg);
         } else {

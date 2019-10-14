@@ -67,6 +67,7 @@ public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiS
                 case 3:
                     ctgr = "生活服务|购物服务";
                     break;
+                default:
             }
         }
     }
@@ -124,6 +125,7 @@ public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiS
                 listView.setAdapter(new NearbyItemFragmentAdapter(poiItems));
                 dismissLoadingDialog();
                 break;
+            default:
         }
     }
 
@@ -139,7 +141,10 @@ public class NearbyItemFragment extends BaseFragment implements PoiSearch.OnPoiS
         if (errorCode == 1000){
             poiItems = poiResult.getPois();
             handler.sendEmptyMessage(REFRESH_ADAPTER);
-        } else {
+        } else if (errorCode == 1804) {
+            showNetworkErrorToast();
+        }
+        else {
             ToastUtil.showToast(context, context.getResources().getString(R.string.nearby_no_found_msg));
         }
     }

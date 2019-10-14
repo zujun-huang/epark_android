@@ -4,7 +4,6 @@ import android.support.annotation.DrawableRes;
 
 /**
  * created huangzujun on 2019/9/9
- * Company:重庆帮考教育科技有限公司
  * Describe: 首页广告数据
  */
 public class Advertisement {

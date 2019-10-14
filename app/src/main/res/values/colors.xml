@@ -27,6 +27,7 @@
     <color name="color90PCTBlack">#19000000</color>
     <color name="color60PCTBlack">#66000000</color>
     <color name="f2f2f2">#f2f2f2</color>
+    <color name="defaultBg">#FFEAEBEF</color>
     <color name="c999999">#999999</color>
     <color name="c222222">#222222</color>
     <color name="f5282b">#f5282b</color>
@@ -35,6 +36,8 @@
     <color name="cEDF1F5">#EDF1F5</color>
     <color name="gEEF2F5">#EEF2F5</color>
     <color name="cccccc">#cccccc</color>
+    <color name="cFECC34">#FECC34</color>
+    <color name="c7Fffffff">#7Fffffff</color>
 
     <!--导航模态item文字-->
     <color name="modal_nav_baidu">#ff4e40</color>

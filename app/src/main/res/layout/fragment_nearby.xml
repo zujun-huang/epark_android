@@ -15,7 +15,7 @@
         <park.bika.com.parkapplication.view.StatusBarHeightView
             android:id="@+id/status_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorParkBlue" />
 
         <LinearLayout
@@ -34,7 +34,7 @@
                 android:drawableRight="@drawable/ic_down"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="永川"
+                android:text=""
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:drawableEnd="@drawable/ic_down"

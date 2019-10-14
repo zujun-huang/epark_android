@@ -45,9 +45,14 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 
-    <!--圆的选中-->
+    <!--支付圆的选中-->
     <style name="RadioBtnMyIcon"> 
         <item name="android:button">@drawable/radiobutton_icon</item> 
+    </style>
+
+    <!--滑动选择字体大小-->
+    <style name="TabLayoutTxtSize"> 
+        <item name="android:textSize">17sp</item> 
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

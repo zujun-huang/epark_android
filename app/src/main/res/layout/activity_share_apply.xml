@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gEEF2F5"
+    android:orientation="vertical">
+
+    <park.bika.com.parkapplication.view.StatusBarHeightView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/colorWhite">
+
+        <ImageView
+            android:id="@+id/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="泊位发布申请"
+            android:textColor="@color/g333333"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/share_apply_address"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="泊位地址："
+            android:textColor="@color/c666666" />
+
+        <TextView
+            android:id="@+id/share_apply_address_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="请选择泊位地图点"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/g333333" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:src="@mipmap/more_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:id="@+id/share_apply_floor"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="楼层选择："
+            android:textColor="@color/c666666" />
+
+        <TextView
+            android:id="@+id/share_apply_floor_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="地面泊位"
+            android:textColor="@color/g333333" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:src="@mipmap/more_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="泊位号："
+            android:textColor="@color/c666666" />
+
+        <EditText
+            android:id="@+id/share_apply_number_et"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:hint="请填写泊位号"
+            android:inputType="textCapCharacters"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/g333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="联系电话："
+            android:textColor="@color/c666666" />
+
+        <EditText
+            android:id="@+id/et_mobile_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:hint="请输入联系号码"
+            android:text=""
+            android:textColor="@color/g333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:id="@+id/share_apply_data"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="泊位材料："
+            android:textColor="@color/c666666" />
+
+        <TextView
+            android:id="@+id/share_apply_data_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="请上传泊位相关证明"
+            android:maxLines="1"
+            android:textColor="@color/g333333" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:src="@mipmap/more_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:id="@+id/share_apply_time"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="共享时段："
+            android:textColor="@color/c666666" />
+
+        <TextView
+            android:id="@+id/share_apply_time_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="请选择共享泊位时段"
+            android:maxLines="1"
+            android:textColor="@color/g333333" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:src="@mipmap/more_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:id="@+id/share_apply_no_time"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="限享时段："
+            android:textColor="@color/c666666" />
+
+        <TextView
+            android:id="@+id/share_apply_no_time_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="请选择共享泊位限享时段"
+            android:text="全共享"
+            android:maxLines="1"
+            android:textColor="@color/g333333" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:padding="10dp"
+            android:src="@mipmap/more_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gEEF2F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/select_method_white2gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingEnd="10dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="10dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="共享价格：\n(￥/小时)"
+            android:textColor="@color/c666666"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:maxLength="11"
+            android:hint="当前区域参考价格 ￥2.00"
+            android:inputType="numberDecimal"
+            android:text=""
+            android:textColor="@color/g333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:lineSpacingExtra="8dp"
+        android:text="温馨提示：\n1、请正确填写相关信息，以确保审核速度。\n2、泊位选点请务必准确，方便租客查找。" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/share_apply_btn"
+            android:layout_width="180dp"
+            android:layout_height="44dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/share_apply_btn"
+            android:gravity="center"
+            android:text="填好了"
+            android:textColor="@color/gffffff"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>

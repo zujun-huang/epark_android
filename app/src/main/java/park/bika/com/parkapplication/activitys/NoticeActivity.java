@@ -1,4 +1,4 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.os.Bundle;
 import android.text.TextUtils;

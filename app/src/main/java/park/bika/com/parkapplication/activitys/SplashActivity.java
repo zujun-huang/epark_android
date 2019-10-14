@@ -1,4 +1,4 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,10 @@ import park.bika.com.parkapplication.utils.StatusBarUtil;
 import park.bika.com.parkapplication.utils.ThreadUtil;
 import park.bika.com.parkapplication.view.StatusBarHeightView;
 
+/**
+ * Created by huangzujun on 2019/10/9.
+ * Describe: 启动页
+ */
 public class SplashActivity extends BaseAct {
 
     private static final int DELAYED_MAIN = 0x000700;
@@ -62,21 +66,22 @@ public class SplashActivity extends BaseAct {
                     case 2:
                         imageView.setBackgroundResource(R.mipmap.splash_3);
                         break;
+                    default:
                 }
                 carouselImgList.add(imageView);
                 //添加轮播点
-                ImageView pointIV = new ImageView(this);
-                pointIV.setBackgroundResource(R.drawable.selector_point);
+                ImageView pointIv = new ImageView(this);
+                pointIv.setBackgroundResource(R.drawable.selector_point);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CalcUtil.dp2px(this, 10), CalcUtil.dp2px(this, 10));
                 if (i == 0) {
-                    pointIV.setEnabled(true);
+                    pointIv.setEnabled(true);
                 } else {
-                    pointIV.setEnabled(false);
+                    pointIv.setEnabled(false);
                     params.leftMargin = 15;
                 }
-                pointIV.setLayoutParams(params);
+                pointIv.setLayoutParams(params);
                 mLLCarouselPointGroup.setVisibility(View.VISIBLE);
-                mLLCarouselPointGroup.addView(pointIV);
+                mLLCarouselPointGroup.addView(pointIv);
             }
             if (mVPCarousel.getAdapter() != null){
                 mVPCarousel.getAdapter().notifyDataSetChanged();

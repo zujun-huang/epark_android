@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <!--  往左边消失 -->
-    <translate android:fromXDelta="0" android:toXDelta="-100%p"
-        android:duration="200"/>
-    <alpha android:fromAlpha=".9" android:toAlpha=".8"
-        android:duration="200" />
+    <translate
+        android:duration="200"
+        android:fromXDelta="0"
+        android:toXDelta="-100%p" />
+    <alpha
+        android:duration="200"
+        android:fromAlpha=".9"
+        android:toAlpha=".8" />
 </set>

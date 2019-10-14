@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -80,12 +79,13 @@ import park.bika.com.parkapplication.BuildConfig;
 import park.bika.com.parkapplication.Constant;
 import park.bika.com.parkapplication.R;
 import park.bika.com.parkapplication.ThirdPartyMapType;
+import park.bika.com.parkapplication.activitys.OnlineNavigationActivity;
 import park.bika.com.parkapplication.adapters.AdvertisementAdapter;
 import park.bika.com.parkapplication.adapters.ModalAdapter;
 import park.bika.com.parkapplication.bean.Advertisement;
 import park.bika.com.parkapplication.bean.ModalBean;
-import park.bika.com.parkapplication.main.MainActivity;
-import park.bika.com.parkapplication.main.SafePaymentActivity;
+import park.bika.com.parkapplication.activitys.MainActivity;
+import park.bika.com.parkapplication.activitys.SafePaymentActivity;
 import park.bika.com.parkapplication.utils.BdAndGcjUtil;
 import park.bika.com.parkapplication.utils.CalcUtil;
 import park.bika.com.parkapplication.utils.InputMethodUtils;
@@ -230,11 +230,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             InputMethodUtils.hide(context);
             if (suggestionInfos != null && suggestionInfos.size() > 0) {
                 SuggestionResult.SuggestionInfo suggestionInfo = suggestionInfos.get(0);
-                if (suggestionInfo != null &&
+                if (suggestionInfo != null && suggestionInfo.getPt() != null &&
                         chooseLat != suggestionInfo.getPt().latitude &&
                         chooseLon != suggestionInfo.getPt().longitude) {
                     showSearchAddress(suggestionInfo);
-                } else ToastUtil.showToast(mainAct, "已显示" + searchTxt + "周边停车位置~");
+                } else {
+                    ToastUtil.showToast(mainAct, "已显示" + searchTxt + "周边停车位置~");
+                }
             } else {
                 ToastUtil.showToast(mainAct, "获取候选词失败，请检查网络状态后重试~");
             }
@@ -321,7 +323,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (mBaiduMap == null || suggestionInfo == null || mLocationClient == null) {
             return;
         }
-        if (mLocationClient.isStarted()) mLocationClient.stop();
+        if (mLocationClient.isStarted()) {
+            mLocationClient.stop();
+        }
         isChooseAddress = true;
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.target(suggestionInfo.getPt()).zoom(18.0f);
@@ -579,7 +583,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
         @Override
         public void onGetPoiResult(final PoiResult result) {
-            if (!isAdded()) return;
+            if (!isAdded()) {
+                return;
+            }
             if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
                 curParkCount = 0;
                 toPoiInfo = null;
@@ -842,16 +848,17 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                     );
                 }
                 break;
+            default:
         }
     }
 
     //显示选择导航
     private void showChooseNavigation() {
         List<ModalBean> modalBeanList = new ArrayList<>();
-        modalBeanList.add(new ModalBean("百度地图", getResources().getColor(R.color.modal_nav_baidu)));
-        modalBeanList.add(new ModalBean("高德地图", getResources().getColor(R.color.modal_nav_autonavi)));
-        modalBeanList.add(new ModalBean("腾讯地图", getResources().getColor(R.color.modal_nav_tencent)));
-        modalBeanList.add(new ModalBean("在线导航", getResources().getColor(R.color.g333333)));
+        modalBeanList.add(new ModalBean("百度地图", R.color.modal_nav_baidu));
+        modalBeanList.add(new ModalBean("高德地图", R.color.modal_nav_autonavi));
+        modalBeanList.add(new ModalBean("腾讯地图", R.color.modal_nav_tencent));
+        modalBeanList.add(new ModalBean("在线导航", R.color.g333333));
         View modalNavView = View.inflate(context, R.layout.layout_modal, null);
         modalNavView.findViewById(R.id.modal_nav_tip).setVisibility(View.VISIBLE);
         ListView modal_lv = modalNavView.findViewById(R.id.modal_content);
@@ -910,20 +917,23 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                     }
                     break;
                 case 3:
-                    if (mLocationClient != null && mLocationClient.isStarted()) mLocationClient.stop();
+                    if (mLocationClient != null && mLocationClient.isStarted()) {
+                        mLocationClient.stop();
+                    }
                     NaviParaOption paraOption = new NaviParaOption();
                     paraOption.startName("我的位置");
                     paraOption.startPoint(new LatLng(mCurrentLat, mCurrentLon));
                     paraOption.endName(toPoiInfo.getName());
                     paraOption.endPoint(toPoiInfo.location);
                     BaiduMapNavigation.openBaiduMapNavi(paraOption, context);
-//                    it = new Intent(context, OnlineNavigationActivity.class);
-//                    it.putExtra("toName" ,toPoiInfo.getName());
-//                    it.putExtra("toLatLng", toPoiInfo.location);
-//                    it.putExtra("fromLatLng", new LatLng(mCurrentLat, mCurrentLon));
+                    it = new Intent(context, OnlineNavigationActivity.class);
+                    it.putExtra("toName" ,toPoiInfo.getName());
+                    it.putExtra("toLatLng", toPoiInfo.location);
+                    it.putExtra("fromLatLng", new LatLng(mCurrentLat, mCurrentLon));
                     requestCode = ThirdPartyMapType.BAIDUMAP_REQUSTCODE;
                     dismissModal();
                     break;
+                default:
             }
             if (it != null) {
                 startActivityForResult(it, requestCode);

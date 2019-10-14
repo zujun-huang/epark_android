@@ -1,4 +1,4 @@
-package park.bika.com.parkapplication.main;
+package park.bika.com.parkapplication.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import park.bika.com.parkapplication.utils.ToolBarUtil;
 public class MainActivity extends BaseAct {
 
     private LinearLayout mLLToolBar;
-    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "共享", "我的"};
+    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "享停", "我的"};
 //    private final String[] TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
     private final int[] iconArr = {
             R.drawable.selector_toolbar_index,
@@ -94,12 +94,16 @@ public class MainActivity extends BaseAct {
                 ft.replace(R.id.fl_main_content, nearbyFragment);
                 break;
             case MainBar.SHARECAR_PAGE:
-                ShareCarFragment shareCarFragment= new ShareCarFragment();
+                shareCarFragment= new ShareCarFragment();
                 ft.replace(R.id.fl_main_content, shareCarFragment);
                 break;
             case MainBar.MYSELF_PAGE:
                 myselfFragment = MyselfFragment.newInstance();
                 ft.replace(R.id.fl_main_content, myselfFragment);
+                break;
+            default:
+                mainFragment = new MainFragment();
+                ft.replace(R.id.fl_main_content, mainFragment);
                 break;
         }
         ft.commitAllowingStateLoss();
