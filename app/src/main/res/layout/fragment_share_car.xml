@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <park.bika.com.parkapplication.view.StatusBarHeightView
+    <cn.epark.view.StatusBarHeightView
         android:id="@+id/status_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorParkBlue"
+        android:background="@color/theme_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,7 +18,7 @@
         app:tabTextAppearance="@style/TabLayoutTxtSize"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/colorParkBlue"
+        android:background="@color/theme_color"
         app:tabIndicatorColor="@color/colorWhite"
         app:tabGravity="fill"
         app:tabMode="fixed"

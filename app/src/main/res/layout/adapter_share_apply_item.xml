@@ -6,14 +6,9 @@
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/gEEF2F5" />
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="32dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp">
 
@@ -33,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="未审核"
-            android:textColor="@color/colorParkBlue"
+            android:textColor="@color/theme_color"
             android:textSize="15sp" />
     </RelativeLayout>
 
@@ -41,12 +36,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="112dp"
+        android:minHeight="110dp"
         android:orientation="horizontal"
         android:paddingEnd="15dp"
         android:paddingStart="15dp">
 
-        <park.bika.com.parkapplication.view.CircleImageView
+        <cn.epark.view.CircleImageView
             android:id="@+id/civ_img"
             android:layout_width="136dp"
             android:layout_height="86dp"
@@ -86,29 +81,44 @@
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="46dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp">
 
         <TextView
             android:id="@+id/tv_total_price"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="合计收益：￥0.00" />
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="合计收益：￥0.00"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_update"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="修改"
-            android:textColor="@color/colorParkBlue"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="取消共享"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_total_price"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/gEEF2F5" />
 
 </LinearLayout>

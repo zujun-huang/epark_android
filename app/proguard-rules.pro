@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+#保护注解
+-keepattributes *Annotation*
+
 #百度地图
 -keep class com.baidu.** {*;}
 -keep class mapsdkvi.com.** {*;}

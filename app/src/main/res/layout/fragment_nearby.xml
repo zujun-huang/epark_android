@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NearbyFragment">
+    tools:context="cn.epark.fragments.NearbyFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,16 +12,16 @@
         android:orientation="vertical">
 
         <!--顶部-->
-        <park.bika.com.parkapplication.view.StatusBarHeightView
+        <cn.epark.view.StatusBarHeightView
             android:id="@+id/status_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorParkBlue" />
+            android:background="@color/theme_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorParkBlue"
+            android:background="@color/theme_color"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -40,7 +40,7 @@
                 android:drawableEnd="@drawable/ic_down"
                 android:layout_marginEnd="10dp" />
 
-            <park.bika.com.parkapplication.view.SearchView
+            <cn.epark.view.SearchView
                 android:id="@+id/search_content"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -56,16 +56,16 @@
             android:id="@+id/select_nearby_tab"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            app:tabIndicatorColor="@color/colorParkBlue"
+            app:tabIndicatorColor="@color/theme_color"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorParkBlue"
+            app:tabSelectedTextColor="@color/theme_color"
             app:tabTextColor="@color/g333333" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/select_nearby_vp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

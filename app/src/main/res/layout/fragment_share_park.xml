@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <!--地图-->
-    <park.bika.com.parkapplication.view.MapFrameLayout
+    <cn.epark.view.MapFrameLayout
         android:id="@+id/share_map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true" />
-    </park.bika.com.parkapplication.view.MapFrameLayout>
+    </cn.epark.view.MapFrameLayout>
 
     <ImageView
         android:id="@+id/share_park_appointment"

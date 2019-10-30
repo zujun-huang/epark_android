@@ -8,7 +8,7 @@
     android:fillViewport="true"
     android:scrollbars="none"
     android:overScrollMode="never"
-    tools:context=".fragments.MyselfFragment">
+    tools:context="cn.epark.fragments.MyselfFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <park.bika.com.parkapplication.view.CircleImageView
+        <cn.epark.view.CircleImageView
             android:id="@+id/head_img"
             android:layout_width="111dp"
             android:layout_height="100dp"

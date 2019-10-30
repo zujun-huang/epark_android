@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="park.bika.com.parkapplication.fragments.ShareParkFragment">
+    tools:context="cn.epark.fragments.ShareParkFragment">
 
     <ListView
         android:id="@+id/share_apply_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:divider="@null"
         android:overScrollMode="never"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,16 +18,16 @@
         android:id="@+id/share_apply_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        android:alpha=".9"
         android:backgroundTint="@color/selector_float_btn"
-        android:src="@mipmap/park_add_white"
         android:clickable="true"
         android:focusable="true"
+        android:src="@mipmap/park_add_white"
         app:borderWidth="0dp"
-        app:rippleColor="@color/cccccc"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/cccccc" />
 
 </android.support.constraint.ConstraintLayout>

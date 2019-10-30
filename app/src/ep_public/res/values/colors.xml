@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--拆分包需要替换的颜色-->
+    <color name="theme_bar_title">#d9a518</color>
+    <color name="theme_bar_title_text">#ffffff</color>
+    <color name="theme_bar_other_title">#d9a518</color><!--四个主页面以外的title栏背景-->
+    <color name="theme_bar_other_title_text">#ffffff</color><!--四个主页面以外的title栏字体颜色-->
+    <color name="theme_home_button_end">#d8a42e</color>
+    <color name="theme_home_button_text">#ffffff</color>
+    <color name="theme_home_bar_text">#d9a518</color><!--字体颜色和主题色一样-->
+    <color name="theme_red_dot_bg">#FF0000</color><!--数字提示背景-->
+    <color name="theme_red_dot_text">#ffffff</color><!--数字提示数字-->
+    <color name="theme_title_tab_checked">#ffffff</color><!--title栏tab切换选中色-->
+    <color name="theme_title_tab_unchecked">#7FFFFFFF</color><!--title栏tab切换未选中色-->
+</resources>

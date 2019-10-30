@@ -6,10 +6,10 @@
     android:viewportHeight="1024">
 
     <path
-        android:fillColor="@color/colorParkBlue"
+        android:fillColor="@color/theme_color"
         android:pathData="M384 652.8h256c77.76 0 140.8 63.04 140.8 140.8v64a76.8 76.8 0 0 1-76.8 76.8H320a76.8 76.8 0 0 1-76.8-76.8v-64c0-77.76 63.04-140.8 140.8-140.8z m89.6-524.8h64c91.904 0 166.4 74.496 166.4 166.4v89.6c0 91.904-74.496 166.4-166.4 166.4h-64c-91.904 0-166.4-74.496-166.4-166.4v-89.6c0-91.904 74.496-166.4 166.4-166.4z" />
     <path
-        android:fillColor="@color/colorParkBlue"
+        android:fillColor="@color/theme_color"
         android:fillAlpha=".3"
         android:strokeAlpha=".3"
         android:strokeWidth="1"

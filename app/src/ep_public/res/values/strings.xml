@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">公共停易派克</string>
+    <string name="baidu_api_key">v6vsZU5aj8D7uocDeGbbMfjRnpchG03m</string>
+    <string name="gaode_api_key">1cd1c1dbe89d0e29da5bd188ecfcf26b</string>
+
+</resources>

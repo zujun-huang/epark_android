@@ -5,7 +5,7 @@
     android:background="@color/cEDF1F5"
     android:layout_height="match_parent">
 
-    <park.bika.com.parkapplication.view.StatusBarHeightView
+    <cn.epark.view.StatusBarHeightView
         android:id="@+id/statusBarHeightView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:background="@drawable/com_btn_confirm_selector_right"
             android:text="@string/app_confirm"
-            android:textColor="@color/colorParkBlue"
+            android:textColor="@color/theme_color"
             android:textSize="16sp" />
     </LinearLayout>
 

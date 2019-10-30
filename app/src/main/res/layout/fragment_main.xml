@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <park.bika.com.parkapplication.view.StatusBarHeightView
+        <cn.epark.view.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorParkBlue" />
+            android:background="@color/theme_color" />
 
         <!--顶部-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:background="@color/colorParkBlue"
+            android:background="@color/theme_color"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <park.bika.com.parkapplication.view.SearchView
+            <cn.epark.view.SearchView
                 android:id="@+id/search_content"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
@@ -53,60 +53,60 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/park_main_water"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="洗车保养"
-                android:focusable="true"
-                android:clickable="true"
                 android:textColor="@color/toolbar_color_selector" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/park_main_note"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="车位长租"
-                android:focusable="true"
-                android:clickable="true"
                 android:textColor="@color/toolbar_color_selector" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/park_main_fly"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="无人机"
-                android:focusable="true"
-                android:clickable="true"
                 android:textColor="@color/toolbar_color_selector" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/park_main_camera"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="高位摄像"
-                android:focusable="true"
-                android:clickable="true"
                 android:textColor="@color/toolbar_color_selector" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/park_main_menu"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="全部"
-                android:focusable="true"
-                android:clickable="true"
                 android:textColor="@color/toolbar_color_selector" />
         </LinearLayout>
 
@@ -148,12 +148,14 @@
                             android:textColor="@color/colorAppBlack"
                             android:textSize="18sp" />
 
-                        <park.bika.com.parkapplication.view.MarqueeTextView
+                        <cn.epark.view.MarqueeTextView
                             android:id="@+id/tv_main_park_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
                             android:layout_weight="7"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:text=""
                             android:textSize="16sp" />
 
@@ -161,12 +163,14 @@
                             android:id="@+id/iv_main_map_refresh"
                             android:layout_width="0dp"
                             android:layout_height="20dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="8dp"
                             android:layout_weight="1"
                             android:src="@drawable/selector_main_location" />
                     </LinearLayout>
 
                     <!--地图-->
-                    <park.bika.com.parkapplication.view.MapFrameLayout
+                    <cn.epark.view.MapFrameLayout
                         android:id="@+id/main_map_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -179,7 +183,7 @@
                             android:clickable="true"
                             android:focusable="true" />
 
-                    </park.bika.com.parkapplication.view.MapFrameLayout>
+                    </cn.epark.view.MapFrameLayout>
                     <!--地图end-->
 
                     <RelativeLayout
@@ -199,28 +203,28 @@
                         <View
                             android:layout_width="56dp"
                             android:layout_height="3dp"
-                            android:layout_centerHorizontal="true"
                             android:layout_below="@id/tv_main_park_tip"
-                            android:background="@color/colorParkBlue" />
+                            android:layout_centerHorizontal="true"
+                            android:background="@color/theme_color" />
 
                         <LinearLayout
-                            android:visibility="gone"
                             android:id="@+id/ll_park_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:orientation="horizontal"
-                            android:layout_alignParentRight="true"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="15dp"
                             android:layout_marginRight="15dp"
-                            android:layout_marginEnd="15dp">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_marginRight="3dp"
                                 android:layout_marginEnd="3dp"
-                                app:srcCompat="@drawable/ic_stop_vector"/>
+                                android:layout_marginRight="3dp"
+                                app:srcCompat="@drawable/ic_stop_vector" />
 
                             <TextView
                                 android:id="@+id/tv_park_time"
@@ -242,8 +246,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="80dp"
                         android:gravity="center_vertical"
+                        android:minHeight="80dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -261,7 +265,7 @@
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <park.bika.com.parkapplication.view.MarqueeTextView
+                                <cn.epark.view.MarqueeTextView
                                     android:id="@+id/main_park_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -275,8 +279,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:textColor="@color/c999999"
                                     android:text="易派克支付"
+                                    android:textColor="@color/c999999"
                                     android:textSize="14sp" />
                             </LinearLayout>
 
@@ -291,21 +295,21 @@
                                     android:id="@+id/main_park_num"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="剩余车位："
-                                    android:maxLines="1"
                                     android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="剩余车位："
                                     android:textColor="@color/colorTip999" />
 
                                 <TextView
                                     android:id="@+id/main_park_price"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:maxLines="2"
-                                    android:ellipsize="end"
-                                    android:layout_marginTop="4dp"
                                     android:layout_marginBottom="4dp"
+                                    android:layout_marginTop="4dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
                                     android:text="参考收费："
-                                    android:textColor="@color/colorTip999"/>
+                                    android:textColor="@color/colorTip999" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -341,21 +345,21 @@
                 </LinearLayout>
 
                 <!--活动版块-->
-                <park.bika.com.parkapplication.view.ChildListView
+                <cn.epark.view.ChildListView
                     android:id="@+id/clv_advertisement"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:divider="@android:color/transparent"
-                    android:dividerHeight="10dp"/>
+                    android:dividerHeight="10dp" />
 
                 <TextView
                     android:id="@+id/tv_main_bottom_txt"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:gravity="center"
-                    android:text="~星星点亮了黑夜，而你点亮了我的心~~"/>
+                    android:text="~星星点亮了黑夜，而你点亮了我的心~~" />
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
@@ -375,7 +379,7 @@
             android:layout_alignParentRight="true"
             android:visibility="gone"
             app:fab_colorNormal="@color/colorTopBlue"
-            app:fab_colorPressed="@color/colorParkBluePressed"
+            app:fab_colorPressed="@color/theme_colorPressed"
             app:fab_icon="@drawable/ic_go_top"
             app:fab_size="mini" />
     </RelativeLayout>

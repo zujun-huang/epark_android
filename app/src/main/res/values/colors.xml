@@ -6,7 +6,6 @@
     <color name="color_btn_press">#88eaeaea</color>
     <color name="gf4f4f4">#f4f4f4</color>
     <color name="gffffff">#ffffff</color>
-    <color name="g999999">#999999</color>
     <color name="gf35334">#f35334</color>
     <color name="gb2b2b2">#b2b2b2</color>
     <color name="g1090F0">#1090F0</color>
@@ -15,9 +14,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorB2White">#B2FFFFFF</color>
-    <color name="colorParkBlue">#1a81e2</color>
     <color name="colorTopBlue">#E51a81e2</color>
-    <color name="colorParkBluePressed">#B21a81e2</color>
     <color name="colorDefaultToolsBarText">#757575</color>
     <color name="colorAppBackground">#ebecf0</color>
     <color name="colorAppWhite">#fdfdfe</color>
@@ -32,6 +29,7 @@
     <color name="c222222">#222222</color>
     <color name="f5282b">#f5282b</color>
     <color name="c666666">#666666</color>
+    <color name="c555555">#555555</color>
     <color name="c3D98FF">#3D98FF</color>
     <color name="cEDF1F5">#EDF1F5</color>
     <color name="gEEF2F5">#EEF2F5</color>
@@ -43,5 +41,9 @@
     <color name="modal_nav_baidu">#ff4e40</color>
     <color name="modal_nav_autonavi">#0092fe</color>
     <color name="modal_nav_tencent">#00c463</color>
+
+    <!--主题颜色-->
+    <color name="theme_color">#1a81e2</color>
+    <color name="theme_colorPressed">#B21a81e2</color>
 
 </resources>

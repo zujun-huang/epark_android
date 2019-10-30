@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
+def isBreakPackage = true //是否打开拆分包
+
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.bika.park.application"
-        minSdkVersion 16
+        applicationId "cn.epark"
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
-        versionName "v1.1.0"
+        versionName "V1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
         multiDexEnabled true //避免"64K 引用限制"
@@ -16,10 +18,71 @@ android {
 
     signingConfigs {
         epark {
-            keyAlias 'com.bika.epark'
-            keyPassword 'bk1234'
-            storeFile file('com.bika.epark.jks')
-            storePassword 'bk1234'
+            keyAlias 'cn.epark'
+            keyPassword 'ep654321'
+            storeFile file('cn.epark.jks')
+            storePassword 'ep654321'
+        }
+
+        if (isBreakPackage){
+            ep_share {
+                keyAlias 'epark_share'
+                keyPassword 'ep654321'
+                storeFile file('cn.epark_share.jks')
+                storePassword 'ep654321'
+            }
+
+            ep_public {
+                keyAlias 'epark_public'
+                keyPassword 'ep654321'
+                storeFile file('cn.epark_public.jks')
+                storePassword 'ep654321'
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs=['libs']
+        }
+
+        if (isBreakPackage){
+            "ep_share_$defaultConfig.versionName" {
+                res.srcDirs "src/ep_share/res"
+            }
+
+            "ep_public_$defaultConfig.versionName" {
+                res.srcDirs "src/ep_public/res"
+            }
+        }
+    }
+
+    productFlavors {
+
+        //type 0:默认全部 1:公共停车 2:共享停车
+
+        "epark_$defaultConfig.versionName" {
+            applicationId "cn.epark"
+            signingConfig signingConfigs.epark
+            buildConfigField "boolean", "isBreakPackage", "false"
+            buildConfigField "int", "type", "0"
+        }
+
+        if (isBreakPackage){
+
+            "ep_share_$defaultConfig.versionName" {
+                applicationId "cn.epark_share"
+                signingConfig signingConfigs.ep_share
+                buildConfigField "boolean", "isBreakPackage", "true"
+                buildConfigField "int", "type", "2"
+            }
+
+            "ep_public_$defaultConfig.versionName" {
+                applicationId "cn.epark_public"
+                signingConfig signingConfigs.ep_public
+                buildConfigField "boolean", "isBreakPackage", "true"
+                buildConfigField "int", "type", "1"
+            }
         }
     }
 
@@ -28,26 +91,16 @@ android {
         debug {
             //Zip代码压缩优化
             zipAlignEnabled true
+            //debug时使用release签名，方便测试
+            signingConfig signingConfigs.epark
         }
 
         release {
-            minifyEnabled true
+            shrinkResources true //过滤无用的资源
+            minifyEnabled true   //混淆
             signingConfig signingConfigs.epark
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
-        }
-    }
-
-    //打包时命名
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "epark_" + defaultConfig.versionName + ".apk"
-        }
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDir 'libs'
         }
     }
 
@@ -56,7 +109,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//    useLibrary 'org.apache.http.legacy'
 }
 
 repositories {
@@ -83,8 +135,8 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.zaaach:citypicker:2.0.3'
-    //地址选择器
-    implementation files('libs/EventBus.jar')
+
+    implementation files('libs/EventBus.jar') //地区选择器
     //    implementation files('libs/galaxy_lite_lbs_v2.3.jar')
     implementation files('libs/galaxy_lite_v2.3.jar')
     implementation files('libs/httpmime-4.1.2.jar')
@@ -93,8 +145,13 @@ dependencies {
     //    implementation files('libs/lbsCoreSDK.jar')
     implementation files('libs/protobuf-java-2.3.0-micro.jar')
     implementation files('libs/req_head.jar')
-    implementation 'com.android.volley:volley:1.1.0'
+    implementation ("com.squareup.okhttp3:okhttp:4.2.2") {
+        exclude group:"org.jetbrains" //排除架包，与intellij_annotations冲突
+    }
+    implementation 'com.alibaba:fastjson:1.2.61'
+    implementation 'com.alibaba:fastjson:1.1.71.android'
 
     //高德
     implementation 'com.amap.api:search:latest.integration'
+
 }

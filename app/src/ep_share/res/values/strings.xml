@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">共享停易派克</string>
+    <string name="baidu_api_key">crnQr7iVdIQuFc118bDQHTGPK6W2teiT</string>
+    <string name="gaode_api_key">a6db77f219a79e320e5a716c873e2e1c</string>
+
+</resources>

@@ -48,7 +48,7 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:layout_margin="15dp"
-        android:src="@color/colorParkBlue"/>
+        android:src="@color/theme_color"/>
 
     <View
         android:layout_width="match_parent"
