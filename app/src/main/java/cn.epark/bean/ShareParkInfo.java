@@ -32,7 +32,7 @@ public class ShareParkInfo implements Parcelable{
     /**
      * 未审核
      */
-    public static int UNAUDITED = -1;
+    public static int UNAUDITED = 0;
 
     /**
      * 未审核-本地历史填写缓存
@@ -42,7 +42,7 @@ public class ShareParkInfo implements Parcelable{
     /**
      * 审核失败
      */
-    public static int AUDITED_FAILURE = 0;
+    public static int AUDITED_FAILURE = -1;
 
     /**
      * 审核通过

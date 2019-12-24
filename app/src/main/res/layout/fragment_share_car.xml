@@ -8,7 +8,7 @@
         android:id="@+id/status_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/theme_color"
+        android:background="@drawable/base_theme_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,7 +18,7 @@
         app:tabTextAppearance="@style/TabLayoutTxtSize"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/theme_color"
+        android:background="@drawable/base_theme_bg"
         app:tabIndicatorColor="@color/colorWhite"
         app:tabGravity="fill"
         app:tabMode="fixed"

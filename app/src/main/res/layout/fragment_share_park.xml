@@ -5,7 +5,6 @@
 
     <!--地图-->
     <cn.epark.view.MapFrameLayout
-        android:id="@+id/share_map_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,6 +19,36 @@
             android:clickable="true"
             android:focusable="true" />
     </cn.epark.view.MapFrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_park_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/shape_white_bg_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_stop_vector" />
+
+        <TextView
+            android:id="@+id/tv_park_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="05:06:12"
+            android:textColor="@color/g333333"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/share_park_appointment"

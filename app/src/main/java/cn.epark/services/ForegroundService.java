@@ -32,7 +32,7 @@ public class ForegroundService extends Service {
         super.onCreate();
         String channelId = "my_service";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(channelId, "我的后台服务");
+            createNotificationChannel(channelId, "正在导航");
         }
 
         Notification notification = new Notification();

@@ -35,6 +35,7 @@ public class SharePlaceFragment extends BaseFragment implements AdapterView.OnIt
     private List<ShareParkInfo> parkInfoList;
     private ShareApplyItemAdapter shareApplyItemAdapter;
     private SharedPreferences preferences;//基类的 SharedPreferences
+    private String historyApplyParkInfoStr;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,11 +63,17 @@ public class SharePlaceFragment extends BaseFragment implements AdapterView.OnIt
         shareApplyItemAdapter = new ShareApplyItemAdapter(parkInfoList);
         shareApplyLv.setAdapter(shareApplyItemAdapter);
         shareApplyItemAdapter.setOnItemCancelClickListener((v, position) -> {
-            if (shareApplyItemAdapter.getItem(position).getState() == ShareParkInfo.UNAUDITED_LOCATION){
+            int state = shareApplyItemAdapter.getItem(position).getState();
+            if (state == ShareParkInfo.SHARE_SUCCESS) {
+                ToastUtil.showToast(context, "取消共享成功，共享订单完成后可继续共享~");
+            } else if (state == ShareParkInfo.UNAUDITED_LOCATION){
                 preferences.edit().remove("add_apply_parkInfo").apply();
+                ToastUtil.showToast(context, "取消共享成功~");
+            } else {
+                ToastUtil.showToast(context, "取消共享成功~");
             }
             shareApplyItemAdapter.removeItem(position);
-        }); //取消共享
+        });
     }
 
     private void initView(View view) {
@@ -83,6 +90,13 @@ public class SharePlaceFragment extends BaseFragment implements AdapterView.OnIt
         public void onMultiClick(View v) {
             switch (v.getId()) {
                 case R.id.share_apply_add://添加发布共享车位申请
+                    if (!TextUtils.isEmpty(historyApplyParkInfoStr)){
+                        showAlertDialog("您还有未完成的添加记录，是否进入继续填写？", "进入",   v1 -> dismiss(),
+                                "重新填写", v1 -> {
+                                    dismiss();
+                                    preferences.edit().remove("add_apply_parkInfo").apply();
+                                }, true);
+                    }
                     startActivity(new Intent(context, ShareApplyActivity.class));
                     break;
                 default:
@@ -96,9 +110,9 @@ public class SharePlaceFragment extends BaseFragment implements AdapterView.OnIt
         super.onResume();
         if (ShareApplyActivity.isAddEdit){
             ShareApplyActivity.isAddEdit = false;
-            String addApplyParkInfo = preferences.getString("add_apply_parkInfo", null);
-            if (!TextUtils.isEmpty(addApplyParkInfo)){
-                ShareParkInfo addParkInfo = JSON.parseObject(addApplyParkInfo, ShareParkInfo.class);
+            historyApplyParkInfoStr = preferences.getString("add_apply_parkInfo", null);
+            if (!TextUtils.isEmpty(historyApplyParkInfoStr)){
+                ShareParkInfo addParkInfo = JSON.parseObject(historyApplyParkInfoStr, ShareParkInfo.class);
                 addParkInfo.setState(ShareParkInfo.UNAUDITED_LOCATION);
                 parkInfoList.add(addParkInfo);
                 shareApplyItemAdapter.addItem(addParkInfo);

@@ -24,7 +24,7 @@
     <color name="color90PCTBlack">#19000000</color>
     <color name="color60PCTBlack">#66000000</color>
     <color name="f2f2f2">#f2f2f2</color>
-    <color name="defaultBg">#FFEAEBEF</color>
+    <color name="defaultBg">#f5f7fa</color>
     <color name="c999999">#999999</color>
     <color name="c222222">#222222</color>
     <color name="f5282b">#f5282b</color>
@@ -34,6 +34,7 @@
     <color name="cEDF1F5">#EDF1F5</color>
     <color name="gEEF2F5">#EEF2F5</color>
     <color name="cccccc">#cccccc</color>
+    <color name="ceeeeee">#eeeeee</color>
     <color name="cFECC34">#FECC34</color>
     <color name="c7Fffffff">#7Fffffff</color>
 
@@ -43,7 +44,12 @@
     <color name="modal_nav_tencent">#00c463</color>
 
     <!--主题颜色-->
-    <color name="theme_color">#1a81e2</color>
-    <color name="theme_colorPressed">#B21a81e2</color>
+    <color name="theme_color_start">#03aaff</color>
+    <color name="theme_color">#1a80ff</color>
+    <color name="theme_btn_start">#25e4ff</color>
+    <color name="theme_btn_end">#4d76ff</color>
+    <color name="theme_btn_start_pressed">#B225e4ff</color>
+    <color name="theme_btn_end_pressed">#B24d76ff</color>
+    <color name="theme_color_pressed">#B21a80ff</color>
 
 </resources>

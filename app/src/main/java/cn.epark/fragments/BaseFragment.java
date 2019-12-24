@@ -248,6 +248,17 @@ public class BaseFragment extends Fragment {
         textDialog.show();
     }
 
+    //显示警示框(有默认标题，有取消按钮，有事件监听, 设置空白区域取消)
+    public void showAlertDialog(String msg, String positive_txt, View.OnClickListener positive_listener,
+                                String negative_txt, View.OnClickListener negative_listener, boolean cancel) {
+        textDialog = TextDialogUtil.createDialog(context)
+                .setMessage(getString(R.string.modal_dialog_tip), msg)
+                .setPositiveButton(positive_txt, positive_listener)
+                .setNegativeButton(negative_txt, negative_listener);
+        textDialog.setCancelable(cancel);
+        textDialog.show();
+    }
+
     //显示警示框(没有取消按钮，没有事件监听, 设置空白区域取消)
     public void showAlertDialog(String title, String msg, View.OnClickListener listener, boolean cancel) {
         textDialog = TextDialogUtil.createDialog(context).setMessage(title, msg)

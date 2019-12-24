@@ -89,6 +89,7 @@ import cn.epark.bean.ModalBean;
 import cn.epark.utils.BdAndGcjUtil;
 import cn.epark.utils.CalcUtil;
 import cn.epark.utils.InputMethodUtils;
+import cn.epark.utils.LogUtil;
 import cn.epark.utils.NetworkConnectUtil;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
@@ -300,7 +301,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             InputMethodUtils.hide(context);
             showSearchAddress(suggestionInfos.get(position));
         });
-        //地图图标地点击
+        //地图图标点击
         mBaiduMap.setOnMarkerClickListener(marker -> {
             Bundle info = marker.getExtraInfo();//获取marker信息
             if (preMarker == marker || info == null) {
@@ -341,6 +342,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (mLocationClient.isStarted()) {
             mLocationClient.stop();
         }
+        LogUtil.i(TAG, " ----- latitude: " + point.latitude + "  --- longitude: " + point.longitude);
         isChooseAddress = true;
         chooseLat = point.latitude;
         chooseLon = point.longitude;
@@ -365,6 +367,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         if (poiInfo == null || mBaiduMap == null) {
             return;
         }
+        LogUtil.i(TAG, " ----- latitude: " + poiInfo.getLocation().latitude + "  --- longitude: " + poiInfo.getLocation().longitude);
         if (isClick) {
             if (recommendPoiInfo == poiInfo) {
                 setParkInfoTitle(0);
@@ -791,7 +794,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_main_add:
-                ToastUtil.showToast(mainAct, "添加功能还未完善，敬请期待~");
+//                ToastUtil.showToast(mainAct, "收藏停车点成功~");
+                ToastUtil.showToast(mainAct, "当前停车点已收藏~");
                 break;
             case R.id.float_main_btn://缓慢回顶部
                 mNSVScroll.fullScroll(View.FOCUS_UP);

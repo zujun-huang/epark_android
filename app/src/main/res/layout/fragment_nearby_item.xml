@@ -6,18 +6,18 @@
     <ListView
         android:id="@+id/nearby_item_lv"
         android:layout_width="match_parent"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"/>
+        android:divider="@android:color/transparent"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp" />
 
     <TextView
         android:id="@+id/no_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableTop="@mipmap/null_agreement"
         android:drawablePadding="8dp"
-        android:text="暂无相关内容~"/>
+        android:drawableTop="@mipmap/null_agreement"
+        android:text="暂无相关内容~" />
 
 </FrameLayout>

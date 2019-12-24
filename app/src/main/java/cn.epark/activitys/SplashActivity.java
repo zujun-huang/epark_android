@@ -168,7 +168,7 @@ public class SplashActivity extends BaseAct {
 
     private void setStatusBarBlack(boolean isBlack){
         super.setStatusBar();
-        status_bar.setBackgroundResource(R.color.theme_colorPressed);
+        status_bar.setBackgroundResource(R.color.theme_color_pressed);
         if (isBlack){
             status_bar.setBackgroundResource(R.color.colorWhite);
             if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {

@@ -24,6 +24,7 @@
             android:layout_width="140dp"
             android:layout_height="100dp"
             android:minHeight="80dp"
+            android:background="@drawable/shape_img_bg"
             app:civ_radius="4dp" />
 
         <LinearLayout

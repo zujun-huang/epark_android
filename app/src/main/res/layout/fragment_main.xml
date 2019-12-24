@@ -13,13 +13,13 @@
         <cn.epark.view.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/theme_color" />
+            android:background="@drawable/base_theme_bg" />
 
         <!--顶部-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:background="@color/theme_color"
+            android:background="@drawable/base_theme_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -379,7 +379,7 @@
             android:layout_alignParentRight="true"
             android:visibility="gone"
             app:fab_colorNormal="@color/colorTopBlue"
-            app:fab_colorPressed="@color/theme_colorPressed"
+            app:fab_colorPressed="@color/theme_color_pressed"
             app:fab_icon="@drawable/ic_go_top"
             app:fab_size="mini" />
     </RelativeLayout>

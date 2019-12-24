@@ -17,7 +17,6 @@ import java.util.List;
 import cn.epark.R;
 import cn.epark.bean.ModalBean;
 import cn.epark.bean.ShareParkInfo;
-import cn.epark.utils.StatusBarUtil;
 import cn.epark.utils.StringUtil;
 import cn.epark.utils.ToastUtil;
 
@@ -27,7 +26,7 @@ import cn.epark.utils.ToastUtil;
  */
 public class ShareApplyActivity extends BaseAct implements View.OnClickListener {
 
-    private TextView title_tv, share_apply_address_tv, share_apply_floor_tv,
+    private TextView title_tv, share_apply_address_tv, share_apply_floor_tv, share_apply_error_msg,
             share_apply_data_tv, share_apply_time_tv, share_apply_no_time_tv;
     private EditText share_apply_number_et, et_mobile_phone, et_price;
 
@@ -74,6 +73,7 @@ public class ShareApplyActivity extends BaseAct implements View.OnClickListener 
         share_apply_number_et = findViewById(R.id.share_apply_number_et);
         share_apply_time_tv = findViewById(R.id.share_apply_time_tv);
         share_apply_no_time_tv = findViewById(R.id.share_apply_no_time_tv);
+        share_apply_error_msg = findViewById(R.id.share_apply_error_msg);
         et_mobile_phone = findViewById(R.id.et_mobile_phone);
         et_price = findViewById(R.id.et_price);
     }
@@ -115,16 +115,15 @@ public class ShareApplyActivity extends BaseAct implements View.OnClickListener 
             } else {
                 et_price.setText(StringUtil.formatAmount(shareParkInfo.getApplyPrice()));
             }
+            if (!TextUtils.isEmpty(shareParkInfo.getAuditTime())) {
+                share_apply_error_msg.setVisibility(View.VISIBLE);
+                share_apply_error_msg.setText(StringUtil.getFormatTime(shareParkInfo.getAuditTime())
+                        + " \n失败原因：" + shareParkInfo.getMsg());
+            } else {
+                share_apply_error_msg.setVisibility(View.GONE);
+            }
         } else {
             title_tv.setText("泊位发布申请");
-        }
-    }
-
-    @Override
-    protected void setStatusBar() {
-        super.setStatusBar();
-        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
-            StatusBarUtil.setStatusBarColor(this, 0x55000000);
         }
     }
 
@@ -194,7 +193,7 @@ public class ShareApplyActivity extends BaseAct implements View.OnClickListener 
             ToastUtil.showToast(context, "联系电话格式有误，请输入正确的手机号码~");
             return;
         }else if (TextUtils.isEmpty(share_apply_data_tv.getText().toString())){
-            ToastUtil.showToast(context, "请先上传泊位相关证明后重试~");
+            ToastUtil.showToast(context, "请先上传泊位相关材料后重试~");
             return;
         }else if (TextUtils.isEmpty(shareParkInfo.getFromTime()) || TextUtils.isEmpty(shareParkInfo.getToTime())){
             ToastUtil.showToast(context, "请选择共享泊位时段后重试~");

@@ -16,12 +16,12 @@
             android:id="@+id/status_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/theme_color" />
+            android:background="@drawable/base_theme_bg" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/theme_color"
+            android:background="@drawable/base_theme_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -59,6 +59,7 @@
             app:tabIndicatorColor="@color/theme_color"
             app:tabGravity="fill"
             app:tabMode="fixed"
+            android:background="@color/colorWhite"
             app:tabSelectedTextColor="@color/theme_color"
             app:tabTextColor="@color/g333333" />
 

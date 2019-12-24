@@ -4,9 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cn.epark.MainBar;
 import cn.epark.R;
 
 /**
@@ -18,8 +16,8 @@ import cn.epark.R;
 
 public class ToolBarUtil {
 
-    private List<TextView> mTextViews;
     private onToolBarClickListener onToolBarClickListener;
+    private TextView preTv;
 
     /**
      * 建立底部工具栏
@@ -41,27 +39,37 @@ public class ToolBarUtil {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
             params.weight = 1;
             container.addView(tv, params);
-            if (mTextViews == null) {
-                mTextViews = new ArrayList<>();
+            int iconPosition;
+            switch (iconArr[i]){
+                case R.drawable.selector_toolbar_nearby:
+                    iconPosition = MainBar.NEARBY_PAGE;
+                    break;
+                case R.drawable.selector_toolbar_share:
+                    iconPosition = MainBar.SHARE_PAGE;
+                    break;
+                case R.drawable.selector_toolbar_myself:
+                    iconPosition = MainBar.MYSELF_PAGE;
+                    break;
+                default:
+                    iconPosition = MainBar.HOME_PAGE;
+                    break;
             }
-            mTextViews.add(tv);
-            final int finalI = i;
-            tv.setOnClickListener(view -> onToolBarClickListener.onToolBarClick(finalI));
+            if (i == 0){
+                preTv = tv;
+                tv.setSelected(true);//默认选中
+            }
+            tv.setOnClickListener(view -> {
+                if (onToolBarClickListener != null){
+                    onToolBarClickListener.onToolBarClick(iconPosition);
+                }
+                if (preTv != null){
+                    preTv.setSelected(false);
+                    preTv = tv;
+                    preTv.setSelected(true);
+                }
+            });
         }
-    }
 
-    /**
-     * 改变底部选择状态
-     *
-     * @param position
-     */
-    public void changeChoosedState(int position) {
-        //还原所有颜色
-        for (TextView tv : mTextViews) {
-            tv.setSelected(false);
-        }
-        //设置selected属性改变选中效果
-        mTextViews.get(position).setSelected(true);
     }
 
     public interface onToolBarClickListener {

@@ -24,7 +24,7 @@ public class MainActivity extends BaseAct {
     private String[] TOOLBAR_TITLES;
     private int[] iconArr;
 
-    public String currentDistrict;
+    public String currentDistrict = "重庆";
 
     private ToolBarUtil toolBarUtil;
     private int curViewId = -1;
@@ -43,12 +43,7 @@ public class MainActivity extends BaseAct {
     }
 
     private void initListener() {
-        toolBarUtil.setOnToolBarClickListener(position -> {
-            //改变底部按钮状态
-            toolBarUtil.changeChoosedState(position);
-            //选择内容页面
-            getContentView(position);
-        });
+        toolBarUtil.setOnToolBarClickListener(this::getContentView);
     }
 
     private void initData() {
@@ -84,7 +79,6 @@ public class MainActivity extends BaseAct {
             toolBarUtil = new ToolBarUtil();
         }
         toolBarUtil.createToolBar(mLLToolBar, TOOLBAR_TITLES, iconArr);
-        toolBarUtil.changeChoosedState(0);    //设置底部菜单默认选中
     }
 
     @Override

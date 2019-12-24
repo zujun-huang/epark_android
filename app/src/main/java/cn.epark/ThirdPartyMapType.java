@@ -2,7 +2,6 @@ package cn.epark;
 
 /**
  * created huangzujun on 2019/9/7
- * Company:重庆帮考教育科技有限公司
  * Describe: 第三方地图信息
  */
 public interface ThirdPartyMapType {

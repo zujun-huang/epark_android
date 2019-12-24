@@ -9,13 +9,13 @@
         android:id="@+id/statusBarHeightView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@drawable/base_theme_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:background="@color/colorWhite"
+        android:background="@drawable/base_theme_bg"
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="44dp"
@@ -30,7 +30,7 @@
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
             android:padding="10dp"
-            app:srcCompat="@drawable/ic_back_black" />
+            app:srcCompat="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/title_tv"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="通知"
-            android:textColor="@color/g333333"
+            android:textColor="@color/colorWhite"
             android:textSize="17sp"
             android:textStyle="bold" />
     </RelativeLayout>

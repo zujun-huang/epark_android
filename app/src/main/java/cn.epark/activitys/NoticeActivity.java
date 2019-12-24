@@ -47,16 +47,4 @@ public class NoticeActivity extends BaseAct implements View.OnClickListener {
         }
     }
 
-
-    /**
-     * 设置状态栏颜色
-     */
-    @Override
-    public void setStatusBar() {
-        super.setStatusBar();
-        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
-            StatusBarUtil.setStatusBarColor(this, 0x55000000);
-        }
-    }
-
 }
