@@ -29,8 +29,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.epark.App;
 import cn.epark.BuildConfig;
-import cn.epark.Constant;
 import cn.epark.R;
 import cn.epark.activitys.MainActivity;
 import cn.epark.activitys.NoticeActivity;
@@ -93,13 +93,12 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         view.findViewById(R.id.notify_my).setOnClickListener(this);
         view.findViewById(R.id.nick_name).setOnClickListener(this);
         view.findViewById(R.id.rl_qd).setOnClickListener(this);
-        view.findViewById(R.id.rl_wdqb).setOnClickListener(this);
+        view.findViewById(R.id.tv_wallet).setOnClickListener(this);
         view.findViewById(R.id.rl_zd).setOnClickListener(this);
-        view.findViewById(R.id.rl_clgl).setOnClickListener(this);
-        view.findViewById(R.id.rl_yjfk).setOnClickListener(this);
-        view.findViewById(R.id.rl_yqhy).setOnClickListener(this);
-        view.findViewById(R.id.rl_gywm).setOnClickListener(this);
-        view.findViewById(R.id.rl_set).setOnClickListener(this);
+        view.findViewById(R.id.rl_car).setOnClickListener(this);
+        view.findViewById(R.id.tv_coupon).setOnClickListener(this);
+        view.findViewById(R.id.tv_collection).setOnClickListener(this);
+        view.findViewById(R.id.tv_set).setOnClickListener(this);
     }
 
     private void initData() {
@@ -133,46 +132,45 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 }
                 break;
             case R.id.nick_name://昵称
-
+                if (App.getAccount() == null) {
+                    //TODO 登录
+                } else {
+                    //TODO 修改昵称
+                }
                 break;
             case R.id.rl_qd://每日签到
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "每日签到")
+                        .putExtra("title", getString(R.string.daily_attendance))
                 );
                 break;
-            case R.id.rl_wdqb://我的钱包
+            case R.id.tv_wallet://我的钱包
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "我的钱包")
+                        .putExtra("title", getString(R.string.my_wallet))
                 );
                 break;
             case R.id.rl_zd://停车记录
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "停车记录")
+                        .putExtra("title", getString(R.string.parking_record))
                 );
                 break;
-            case R.id.rl_clgl://车辆管理
+            case R.id.rl_car://车辆管理
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "车辆管理")
+                        .putExtra("title", getString(R.string.vehicle_management))
                 );
                 break;
-            case R.id.rl_yjfk://意见反馈
+            case R.id.tv_coupon://优惠券
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "意见反馈")
+                        .putExtra("title", getString(R.string.my_coupon))
                 );
                 break;
-            case R.id.rl_yqhy://邀请好友
+            case R.id.tv_collection://我的收藏
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "邀请好友")
+                        .putExtra("title", getString(R.string.my_collection))
                 );
                 break;
-            case R.id.rl_gywm://关于我们
+            case R.id.tv_set://设置
                 startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "关于我们")
-                );
-                break;
-            case R.id.rl_set://设置
-                startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", "设置")
+                        .putExtra("title", getString(R.string.my_setting))
                 );
                 break;
             default:
@@ -325,8 +323,8 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
     private void uploadImage(byte[] bytes) {
         ThreadUtil.runInThread(() ->
                 //由于未有服务器暂且本地存储
-                ShareUtil.newInstance().getShared(context, Constant.USER_HEAD_IMG).edit()
-                        .putString(Constant.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
+                ShareUtil.newInstance().getShared(context, ShareUtil.USER_HEAD_IMG).edit()
+                        .putString(ShareUtil.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
     }
 
     @Override

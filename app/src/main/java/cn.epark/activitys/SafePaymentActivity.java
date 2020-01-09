@@ -41,7 +41,6 @@ public class SafePaymentActivity extends BaseAct implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addActivity(this);
         setContentView(R.layout.activity_safe_payment);
         needSuccessReturn = getIntent().getBooleanExtra("needSuccessReturn", false);
         orderPrice = getIntent().getDoubleExtra("orderPrice", 0.00);

@@ -30,5 +30,15 @@
     <string name="modal_nav_tip">为了衔接您的日常使用习惯，\n易派克为您提供第三方导航方案~</string>
     <string name="pay_sure_btn">确认支付 ￥%s</string>
     <string name="pay_safe_orderid">订单编号：%s</string>
+    <string name="default_user_name">登录 / 注册</string>
+    <string name="my_services">我的服务</string>
+    <string name="daily_attendance">每日签到</string>
+    <string name="parking_record">停车记录</string>
+    <string name="vehicle_management">车辆管理</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_coupon">优惠券</string>
+    <string name="my_collection">我的收藏</string>
+    <string name="my_setting">设置</string>
+    <string name="unknow_error">抱歉，当前服务已遗失~</string>
 
 </resources>

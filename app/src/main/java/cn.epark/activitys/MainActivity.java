@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.baidu.mapapi.SDKInitializer;
 
+import cn.epark.App;
 import cn.epark.BuildConfig;
 import cn.epark.MainBar;
 import cn.epark.PackageType;
@@ -15,6 +16,7 @@ import cn.epark.fragments.MainFragment;
 import cn.epark.fragments.MyselfFragment;
 import cn.epark.fragments.NearbyFragment;
 import cn.epark.fragments.ShareCarFragment;
+import cn.epark.utils.NetWorkReceiver;
 import cn.epark.utils.ToastUtil;
 import cn.epark.utils.ToolBarUtil;
 
@@ -47,6 +49,7 @@ public class MainActivity extends BaseAct {
     }
 
     private void initData() {
+        netWorkReceiver = new NetWorkReceiver(context, this);
         //底部按钮
         switch (BuildConfig.type){
             case PackageType.EP_PUBLIC:
@@ -141,8 +144,11 @@ public class MainActivity extends BaseAct {
             exitTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();
-            closeAllActivity();
+            netWorkReceiver.unregisterReceiver();
+            App.getInstance().cancelSessionTimer();
+            App.getInstance().closeAllActivity();
             System.exit(0);
         }
     }
+
 }

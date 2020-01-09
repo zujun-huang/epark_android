@@ -75,6 +75,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.epark.App;
 import cn.epark.BuildConfig;
 import cn.epark.Constant;
 import cn.epark.R;
@@ -90,7 +91,6 @@ import cn.epark.utils.BdAndGcjUtil;
 import cn.epark.utils.CalcUtil;
 import cn.epark.utils.InputMethodUtils;
 import cn.epark.utils.LogUtil;
-import cn.epark.utils.NetworkConnectUtil;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
 import cn.epark.utils.ToastUtil;
@@ -524,7 +524,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
      */
     private void requestLocation(MyLocationConfiguration.LocationMode locationMode) {
         setLocationMode(locationMode);//设置定位模式
-        if (NetworkConnectUtil.isNetworkConnected(mainAct)) {
+        if (App.hasNetwork) {
             mLocationClient.start();//开始定位
         } else {
             showToast("检测到网络已断开，请开启网络后重试~");

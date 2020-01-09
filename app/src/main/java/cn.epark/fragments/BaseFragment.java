@@ -124,7 +124,7 @@ public class BaseFragment extends Fragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtil.showToast(context, "抱歉，当前服务已遗失~");
+            ToastUtil.showToast(context, getString(R.string.unknow_error));
         }
     }
 

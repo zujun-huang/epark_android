@@ -1,0 +1,111 @@
+package cn.epark.bean;
+
+import cn.epark.utils.StringUtil;
+
+/**
+ * created huangzujun on 2020/1/9
+ * Company:重庆帮考教育科技有限公司
+ * Describe: 用户
+ */
+public class Account {
+
+    private String id;
+    private String name;//真实姓名
+    private String nickName;//昵称
+    private String head;//头像地址
+    private String telphone;//手机号码
+    private Double balance;//余额
+    private Integer credit;//信用分
+    private Integer gender;//性别 1男 2女
+    private Integer type;//用户类型
+    private String encryptionSession;//用户session
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public String getTelphone() {
+        return telphone;
+    }
+
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
+    }
+
+    public String getBalance() {
+        if (balance == null) {
+            balance = 0D;
+        }
+        return StringUtil.formatAmount(balance);
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public Integer getCredit() {
+        if (credit == null) {
+            credit = 100;//默认100信用分
+        }
+        return credit;
+    }
+
+    public void setCredit(Integer credit) {
+        this.credit = credit;
+    }
+
+    public Integer getType() {
+        if (type == null) {
+            type = 0;
+        }
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getSessionId() {
+        return encryptionSession;
+    }
+
+    public void setEncryptionSession(String encryptionSession) {
+        this.encryptionSession = encryptionSession;
+    }
+}

@@ -41,12 +41,12 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 
+import cn.epark.App;
 import cn.epark.Constant;
 import cn.epark.R;
 import cn.epark.ThirdPartyMapType;
 import cn.epark.activitys.MainActivity;
 import cn.epark.utils.InputMethodUtils;
-import cn.epark.utils.NetworkConnectUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
@@ -212,7 +212,7 @@ public class ShareParkFragment extends BaseFragment implements SensorEventListen
         if (mBaiduMap != null) {
             mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(locationMode, true, null));
         }
-        if (NetworkConnectUtil.isNetworkConnected(context)) {
+        if (App.hasNetwork) {
             mLocationClient.start();
         } else {
             showToast("检测到网络已断开，请开启网络后重试~");

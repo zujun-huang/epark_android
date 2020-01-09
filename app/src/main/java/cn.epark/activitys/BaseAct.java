@@ -1,10 +1,10 @@
 package cn.epark.activitys;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,14 +26,15 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.epark.App;
 import cn.epark.R;
 import cn.epark.adapters.ModalAdapter;
 import cn.epark.bean.ModalBean;
 import cn.epark.utils.LogUtil;
+import cn.epark.utils.NetWorkReceiver;
 import cn.epark.utils.OkHttpUtil;
 import cn.epark.utils.OkHttpUtil.Method;
 import cn.epark.utils.StatusBarUtil;
@@ -48,13 +49,13 @@ import okhttp3.Response;
  * @日期 2019-07-26
  * @描述 基类
  */
-public class BaseAct extends AppCompatActivity {
+public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetWorkListener  {
 
     public Context context;
+    public NetWorkReceiver netWorkReceiver;
     public String TAG;
     private Dialog modalDialog, loadingDialog;
     private TextDialogUtil textDialog;
-    private static List<Activity> mActivitys = new ArrayList<>();
 
     @SuppressLint("HandlerLeak")
     public Handler handler = new Handler(){
@@ -87,7 +88,7 @@ public class BaseAct extends AppCompatActivity {
     private void initBackIcon() {
         View backView = findViewById(R.id.icon_back);
         if (backView != null){
-            backView.setOnClickListener(v -> closeActivity(this));
+            backView.setOnClickListener(v -> finish());
         }
     }
 
@@ -397,55 +398,25 @@ public class BaseAct extends AppCompatActivity {
 //        }
     }
 
-    public static void addActivity(Activity a) {
-        mActivitys.add(a);
-    }
-
-    public static void closeActivity(Activity a) {
-        for (Activity activity : mActivitys) {
-            if (a.getClass().getName().equals(activity.getClass().getName())) {
-                activity.finish();
-            }
-        }
-    }
-
-    /**
-     * 关闭指定类名的Activity
-     * @param cls 类名
-     */
-    public static void closeActivity(Class cls) {
-        for (Activity activity : mActivitys) {
-            if (cls.getName().equals(activity.getClass().getName())) {
-                activity.finish();
-            }
-        }
-    }
-
-    /**
-     * 关闭除了指定类名的Activity以外的所有Activity
-     * @param cls 不关闭的Activity类名
-     */
-    public static void closeAllExcept(Class cls) {
-        for (Activity a : mActivitys) {
-            if (!a.getClass().getName().equals(cls.getName())) {
-                a.finish();
-            }
-        }
-    }
-
-    public static void closeAllActivity() {
-        for (Activity a : mActivitys) {
-            if (a != null) {
-                a.finish();
-            }
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    @Override
+    public void onNetworkChange(int networkType) {
+        if (networkType == -1) {
+            App.hasNetwork = false;
+        } else {
+            if (networkType == ConnectivityManager.TYPE_WIFI) {
+                App.isWiFi = true;
+            } else {
+                App.isWiFi = false;
+            }
+            App.hasNetwork = true;
         }
     }
 

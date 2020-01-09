@@ -73,6 +73,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 case MotionEvent.ACTION_UP:
                     aet_search.setText("语音读取功能还未完善，敬请期待~");
                     break;
+                default: // Do nothing
             }
             return false;
         });
@@ -147,6 +148,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 aet_search.setText("");
                 aet_search.setHint(defHintTxt);
                 break;
+            default: // Do nothing
         }
     }
 
