@@ -22,7 +22,7 @@ import okhttp3.Response;
  */
 public class OkHttpUtil {
 
-    private boolean SHOW_REQUEST , SHOW_RESPONSE = BuildConfig.DEBUG;
+    private boolean SHOW_REQUEST = BuildConfig.DEBUG;
     private static OkHttpUtil mOkHttpUtil;
     private OkHttpClient mOkHttpClient;
 
@@ -95,9 +95,6 @@ public class OkHttpUtil {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (callback != null){
-                    if (SHOW_RESPONSE) {
-                        LogUtil.i("okHttpUtil", "response:" + response.toString());
-                    }
                     callback.onResponse(call, response);
                 }
             }

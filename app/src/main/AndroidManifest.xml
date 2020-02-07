@@ -34,13 +34,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
-        android:name=".App"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".activitys.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -54,10 +54,10 @@
         </activity>
         <activity
             android:name=".activitys.MainActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/DefaultCityPickerTheme"/>
+            android:theme="@style/DefaultCityPickerTheme" />
         <activity
             android:name=".activitys.NoticeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -70,15 +70,29 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.OnlineNavigationActivity"
-            android:label="在线导航"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"/>
-
+            android:label="在线导航"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.ShareApplyActivity"
-            android:label="共享车位发布/修改"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"/>
+            android:label="共享车位发布/修改"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SMSLoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="短信登录"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SetPasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="设置新密码"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PasswordLoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="密码登录"
+            android:screenOrientation="portrait" />
 
         <!-- 百度地图 -->
         <meta-data
@@ -90,9 +104,10 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <!--高德地图-->
-        <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="@string/gaode_api_key"/>
+        <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="@string/gaode_api_key" />
 
         <!-- <service android:name=".services.ForegroundService" /> -->
 

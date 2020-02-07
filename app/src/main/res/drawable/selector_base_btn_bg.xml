@@ -13,7 +13,7 @@
         <shape android:shape="rectangle">
             <gradient
                 android:startColor="@color/theme_btn_start_pressed"
-                android:centerColor="@color/theme_color"
+                android:centerColor="@color/theme_color_pressed"
                 android:endColor="@color/theme_btn_end_pressed"/>
             <corners android:radius="22dp" />
         </shape>

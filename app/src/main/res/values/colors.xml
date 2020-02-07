@@ -19,9 +19,11 @@
     <color name="gEEF2F5">#EEF2F5</color>
     <color name="ceeeeee">#eeeeee</color>
     <color name="color_e1e1e1">#e1e1e1</color>
+    <color name="gececec">#ececec</color>
     <color name="cccccc">#cccccc</color>
     <color name="c7Fffffff">#7Fffffff</color>
     <color name="color_def_cancel">#b3b3b3</color>
+    <color name="cB7B7B7">#B7B7B7</color>
     <color name="gb2b2b2">#b2b2b2</color>
     <color name="c999999">#999999</color>
     <color name="colorTip999">#999</color>
@@ -37,6 +39,7 @@
     <color name="c131313">#131313</color>
     <color name="f5282b">#f5282b</color>
     <color name="c3D98FF">#3D98FF</color>
+    <color name="c1B8FFF">#1B8FFF</color>
     <color name="cFECC34">#FECC34</color>
 
     <!--导航模态item文字-->
@@ -49,6 +52,10 @@
     <color name="theme_color">#1a80ff</color>
     <color name="theme_btn_start">#25e4ff</color>
     <color name="theme_btn_end">#4d76ff</color>
+    <color name="theme_send_btn_start">#0EC0FF</color>
+    <color name="theme_send_btn_end">#299AFF</color>
+    <color name="theme_send_btn_start_normal">#B20EC0FF</color>
+    <color name="theme_send_btn_end_normal">#B2299AFF</color>
     <color name="theme_btn_start_pressed">#B225e4ff</color>
     <color name="theme_btn_end_pressed">#B24d76ff</color>
     <color name="theme_color_pressed">#B21a80ff</color>

@@ -45,7 +45,14 @@ public class App extends MultiDexApplication
     }
 
     public static Account getAccount() {
+        if (account == null) {
+            account = new Account();
+        }
         return account;
+    }
+
+    public void setAccount(Account account) {
+        App.account = account;
     }
 
     public static App getInstance() {
@@ -71,26 +78,26 @@ public class App extends MultiDexApplication
         params.put("user_id", usesId);
         params.put("session_id", sessionId);
         OkHttpUtil.getInstance(this).request(OkHttpUtil.Method.POST,
-                App.URL + "/user/refreshSession", params, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        LogUtil.w("App", e.getMessage());
-                    }
+            App.URL + URLConstant.URL_REFRESH_SESSION, params, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    LogUtil.w("App", e.getMessage());
+                }
 
-                    @Override
-                    public void onResponse(Call call, Response response){
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.body().string());
-                            String status = jsonObject.optString("status");
-                            if (ErrorCode.STATE_OK.equals(status)) {
-                                account.setEncryptionSession(jsonObject.optString("data"));
-                                LogUtil.i("App", "刷新会话有效期成功");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                @Override
+                public void onResponse(Call call, Response response){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String status = jsonObject.optString("status");
+                        if (ErrorCode.STATE_OK.equals(status)) {
+                            account.setEncryptionSession(jsonObject.optString("data"));
+                            LogUtil.i("App", "刷新会话有效期成功");
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+            });
     }
 
     public void addActivity(Activity a) {

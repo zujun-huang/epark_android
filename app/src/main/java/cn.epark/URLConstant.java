@@ -21,4 +21,21 @@ public interface URLConstant {
     /** 忘记密码 */
     String URL_FORGET_PWD = "/user/forgetPwd";
     int ACTION_FORGET_PWD = 0x00000013;
+
+    /** 修改用户信息 */
+    String URL_UPDATE_USER = "/user/updateUserInfo";
+    int ACTION_UPDATE_USER = 0x00000014;
+
+    /** 退出登录 */
+    String URL_LOGIN_OUT = "/user/clearUserInfo";
+    int ACTION_LOGIN_OUT = 0x00000015;
+
+    /** 刷新session */
+    String URL_REFRESH_SESSION = "/user/refreshSession";
+    int ACTION_REFRESH_SESSION = 0x00000016;
+
+    /** 密码登录 */
+    String URL_PWD_LOGIN = "/user/login";
+    int ACTION_PWD_LOGIN = 0x00000017;
+
 }

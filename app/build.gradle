@@ -24,7 +24,7 @@ android {
             storePassword 'ep654321'
         }
 
-        if (isBreakPackage){
+        if (isBreakPackage) {
             ep_share {
                 keyAlias 'epark_share'
                 keyPassword 'ep654321'
@@ -43,10 +43,10 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs=['libs']
+            jniLibs.srcDirs = ['libs']
         }
 
-        if (isBreakPackage){
+        if (isBreakPackage) {
             "ep_share_$defaultConfig.versionName" {
                 res.srcDirs "src/ep_share/res"
             }
@@ -68,7 +68,7 @@ android {
             buildConfigField "int", "type", "0"
         }
 
-        if (isBreakPackage){
+        if (isBreakPackage) {
 
             "ep_share_$defaultConfig.versionName" {
                 applicationId "cn.epark_share"
@@ -145,8 +145,8 @@ dependencies {
     //    implementation files('libs/lbsCoreSDK.jar')
     implementation files('libs/protobuf-java-2.3.0-micro.jar')
     implementation files('libs/req_head.jar')
-    implementation ("com.squareup.okhttp3:okhttp:4.2.2") {
-        exclude group:"org.jetbrains" //排除架包，与intellij_annotations冲突
+    implementation("com.squareup.okhttp3:okhttp:4.2.2") {
+        exclude group: "org.jetbrains" //排除架包，与intellij_annotations冲突
     }
     implementation 'com.alibaba:fastjson:1.2.61'
     implementation 'com.alibaba:fastjson:1.1.71.android'

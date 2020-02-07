@@ -51,6 +51,7 @@ import okhttp3.Response;
  */
 public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetWorkListener  {
 
+    public final int SHOW_TOAST = 0x00000001;
     public Context context;
     public NetWorkReceiver netWorkReceiver;
     public String TAG;
@@ -61,8 +62,14 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     public Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            BaseAct.this.handleMessage(msg);
+            switch (msg.what) {
+                case SHOW_TOAST:
+                    ToastUtil.showToast(context, (String) msg.obj);
+                    break;
+                default:
+                    super.handleMessage(msg);
+                    BaseAct.this.handleMessage(msg);
+            }
         }
     };
 
@@ -92,7 +99,8 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         }
     }
 
-    class BaseCallback implements Callback{
+    class BaseCallback implements Callback {
+
         private int actionCode;
         private boolean autoDismiss;
 
@@ -143,6 +151,7 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     }
 
     public void onResponseOk(String response, int actionCode) {
+        LogUtil.i("okHttpUtil", "response:" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONObject data = jsonObject.optJSONObject("data");
@@ -167,8 +176,12 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     }
 
     public void onResponseFail(int errorCode, String errorMsg, int actionCode) {
-        LogUtil.e("okHttp", " errorCode:" + errorCode + " errorMsg:" +  errorMsg);
-        ToastUtil.showToast(context, errorMsg);
+        LogUtil.e("okHttp", " errorCode:" + errorCode + ", errorMsg:" +  errorMsg);
+        Message message = new Message();
+        message.what = SHOW_TOAST;
+        message.obj = errorMsg;
+        message.arg1 = errorCode;
+        handler.sendMessage(message);
     }
 
     //网络错误

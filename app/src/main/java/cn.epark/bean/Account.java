@@ -1,5 +1,7 @@
 package cn.epark.bean;
 
+import android.text.TextUtils;
+
 import cn.epark.utils.StringUtil;
 
 /**
@@ -19,6 +21,7 @@ public class Account {
     private Integer gender;//性别 1男 2女
     private Integer type;//用户类型
     private String encryptionSession;//用户session
+    private boolean pwdIsNull;//是否为新用户
 
     public String getId() {
         return id;
@@ -29,6 +32,9 @@ public class Account {
     }
 
     public String getName() {
+        if (TextUtils.isEmpty(name)) {
+            name = "";
+        }
         return name;
     }
 
@@ -37,6 +43,9 @@ public class Account {
     }
 
     public String getNickName() {
+        if (TextUtils.isEmpty(nickName)) {
+            nickName = getName();
+        }
         return nickName;
     }
 
@@ -107,5 +116,13 @@ public class Account {
 
     public void setEncryptionSession(String encryptionSession) {
         this.encryptionSession = encryptionSession;
+    }
+
+    public void setPwdIsNull(boolean pwdIsNull) {
+        this.pwdIsNull = pwdIsNull;
+    }
+
+    public boolean getPwdIsNull() {
+        return pwdIsNull;
     }
 }

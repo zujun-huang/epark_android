@@ -21,7 +21,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:padding="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             app:srcCompat="@drawable/ic_back" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="泊位发布申请"
+            android:text=""
             android:textColor="@color/colorWhite"
             android:textSize="17sp" />
     </RelativeLayout>

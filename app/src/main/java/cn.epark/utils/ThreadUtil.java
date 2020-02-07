@@ -17,7 +17,7 @@ public class ThreadUtil {
     /**
      * 主线程handler
      */
-    public static Handler handler = new Handler();
+    private static Handler handler = new Handler();
 
     /**
      * UI线程执行task

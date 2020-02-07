@@ -61,5 +61,14 @@
     <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/selector_star</item>
      </style>
-
+    <style name="EditText_input">
+        <item name="android:background">@drawable/et_underline_unselected</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_shape</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+    <style name="TextView_input">
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
 </resources>

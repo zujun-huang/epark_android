@@ -1,8 +1,10 @@
 package cn.epark.activitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.LinearLayout;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -46,12 +48,15 @@ public class MainActivity extends BaseAct {
 
     private void initListener() {
         toolBarUtil.setOnToolBarClickListener(this::getContentView);
+        if (TextUtils.isEmpty(App.getAccount().getId())) {
+            App.getInstance().startSessionTimer();
+        }
     }
 
     private void initData() {
         netWorkReceiver = new NetWorkReceiver(context, this);
         //底部按钮
-        switch (BuildConfig.type){
+        switch (BuildConfig.type) {
             case PackageType.EP_PUBLIC:
                 TOOLBAR_TITLES = new String[]{"首页", "附近", "我的"};
                 iconArr = new int[]{
@@ -86,7 +91,7 @@ public class MainActivity extends BaseAct {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        int barTag = intent.getIntExtra("show", MainBar.HOME_PAGE);
+        int barTag = intent.getIntExtra("showBar", MainBar.HOME_PAGE);
         if (barTag == MainBar.HOME_PAGE || barTag == MainBar.NEARBY_PAGE ||
                 barTag == MainBar.MYSELF_PAGE || barTag == MainBar.SHARE_PAGE) {
             getContentView(barTag);
@@ -114,7 +119,7 @@ public class MainActivity extends BaseAct {
                 ft.replace(R.id.fl_main_content, nearbyFragment);
                 break;
             case MainBar.SHARE_PAGE:
-                shareCarFragment= new ShareCarFragment();
+                shareCarFragment = new ShareCarFragment();
                 ft.replace(R.id.fl_main_content, shareCarFragment);
                 break;
             case MainBar.MYSELF_PAGE:
@@ -149,6 +154,12 @@ public class MainActivity extends BaseAct {
             App.getInstance().closeAllActivity();
             System.exit(0);
         }
+    }
+
+    public static void actShowBar(Context context, int bar) {
+        context.startActivity(new Intent(context, MainActivity.class)
+                .putExtra("showBar", bar)
+        );
     }
 
 }

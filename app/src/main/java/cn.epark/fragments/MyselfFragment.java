@@ -16,12 +16,16 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,6 +38,7 @@ import cn.epark.BuildConfig;
 import cn.epark.R;
 import cn.epark.activitys.MainActivity;
 import cn.epark.activitys.NoticeActivity;
+import cn.epark.activitys.SMSLoginActivity;
 import cn.epark.bean.ModalBean;
 import cn.epark.utils.LogUtil;
 import cn.epark.utils.ShareUtil;
@@ -51,10 +56,13 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
     private static int TAKEPAHTO = 1;// 标识 -> 1:拍照  0:相册
     private static final int REQUEST_EDIT_ICON_LIB = 0x000770;
     private static final int REQUEST_EDIT_PIC = 0x000790;
+    public static final int REQUEST_LOGIN = 0x000791;
     private static final int REQUEST_TAKE_PHOTO_PERMISSION = 0x000799;//申请权限
 
     private MainActivity mainAct;
     private CircleImageView head_img;//头像
+    private TextView userNameTv;
+
     private Uri uriClipUri;
 
     public static MyselfFragment newInstance() {
@@ -91,7 +99,8 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         head_img = view.findViewById(R.id.head_img);
         head_img.setOnClickListener(this);
         view.findViewById(R.id.notify_my).setOnClickListener(this);
-        view.findViewById(R.id.nick_name).setOnClickListener(this);
+        userNameTv = view.findViewById(R.id.nick_name);
+        userNameTv.setOnClickListener(this);
         view.findViewById(R.id.rl_qd).setOnClickListener(this);
         view.findViewById(R.id.tv_wallet).setOnClickListener(this);
         view.findViewById(R.id.rl_zd).setOnClickListener(this);
@@ -107,7 +116,6 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
             byte[] bytes = Base64.decode(headImg, Base64.DEFAULT);
             head_img.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
         }
-
     }
 
     @Override
@@ -132,8 +140,8 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 }
                 break;
             case R.id.nick_name://昵称
-                if (App.getAccount() == null) {
-                    //TODO 登录
+                if (TextUtils.isEmpty(App.getAccount().getNickName())) {
+                    startActivity(new Intent(context, SMSLoginActivity.class));
                 } else {
                     //TODO 修改昵称
                 }
@@ -320,6 +328,17 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
+    private void updateUserInfo() {
+        Glide.with(context)
+                .load(App.getAccount().getHead())
+                .error(ContextCompat.getDrawable(context, R.mipmap.default_icon))
+                .into(head_img);
+        if (!TextUtils.isEmpty(App.getAccount().getNickName())) {
+            userNameTv.setText(App.getAccount().getNickName());
+        }
+
+    }
+
     private void uploadImage(byte[] bytes) {
         ThreadUtil.runInThread(() ->
                 //由于未有服务器暂且本地存储
@@ -341,4 +360,9 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUserInfo();
+    }
 }

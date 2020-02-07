@@ -26,13 +26,11 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import cn.epark.R;
-import cn.epark.utils.OkHttpUtil;
 
-public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
+public class CircleImageView extends ImageView {
     private static final ImageView.ScaleType SCALE_TYPE = ImageView.ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
