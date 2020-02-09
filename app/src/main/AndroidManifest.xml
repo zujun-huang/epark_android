@@ -93,6 +93,18 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="密码登录"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ForgetPasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="忘记密码"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 百度地图 -->
         <meta-data

@@ -135,8 +135,8 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.zaaach:citypicker:2.0.3'
-
-    implementation files('libs/EventBus.jar') //地区选择器
+    implementation files('libs/EventBus.jar')
+    //地区选择器
     //    implementation files('libs/galaxy_lite_lbs_v2.3.jar')
     implementation files('libs/galaxy_lite_v2.3.jar')
     implementation files('libs/httpmime-4.1.2.jar')
@@ -145,13 +145,15 @@ dependencies {
     //    implementation files('libs/lbsCoreSDK.jar')
     implementation files('libs/protobuf-java-2.3.0-micro.jar')
     implementation files('libs/req_head.jar')
-    implementation("com.squareup.okhttp3:okhttp:4.2.2") {
+    implementation('com.squareup.okhttp3:okhttp:4.2.2') {
         exclude group: "org.jetbrains" //排除架包，与intellij_annotations冲突
     }
     implementation 'com.alibaba:fastjson:1.2.61'
     implementation 'com.alibaba:fastjson:1.1.71.android'
-
     //高德
     implementation 'com.amap.api:search:latest.integration'
-
+    //QQ
+    implementation files('libs/open_sdk_r2973327_lite.jar')
+    //微信
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

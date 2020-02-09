@@ -119,7 +119,9 @@ public class PasswordLoginActivity extends BaseAct {
                     finish();
                     break;
                 case R.id.forget_pwd_tv:
-                    //todo 忘记密码 1
+                    startActivity(new Intent(context, ForgetPasswordActivity.class)
+                            .putExtra("phoneNum", phoneNum)
+                    );
                     break;
                 default: super.onClick(v);
             }

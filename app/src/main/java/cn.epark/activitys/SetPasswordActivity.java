@@ -1,7 +1,9 @@
 package cn.epark.activitys;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -18,11 +20,12 @@ import cn.epark.R;
 import cn.epark.URLConstant;
 import cn.epark.adapters.LoginTextWatcher;
 import cn.epark.utils.OnMultiClickListener;
+import cn.epark.utils.StatusBarUtil;
 import cn.epark.utils.ToastUtil;
 
 /**
  * Created by huangzujun on 2020/2/07.
- * Describe: 新用户设置密码
+ * Describe: 新用户设置密码 | 忘记密码最后一步
  */
 public class SetPasswordActivity extends BaseAct {
 
@@ -30,13 +33,23 @@ public class SetPasswordActivity extends BaseAct {
     private ImageView pwdClearBtn, pwdShowBtn;
     private EditText passwordEt;
 
-    private String newPwd;
+    private String newPwd, phoneNum, code;
+    private boolean isForgetPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
         initView();
+        initData(getIntent());
+    }
+
+    private void initData(Intent intent) {
+        if (intent != null) {
+            phoneNum = intent.getStringExtra("phoneNum");
+            code = intent.getStringExtra("code");
+            isForgetPwd = intent.getBooleanExtra("forgetPwd", false);
+        }
     }
 
     private void initView() {
@@ -62,7 +75,11 @@ public class SetPasswordActivity extends BaseAct {
                     break;
                 case R.id.finish_btn_tv://完成
                     if (checkInputPassword()) {
-                        setUserPassword();
+                        if (isForgetPwd) {
+                            setForgetPwd();
+                        } else {
+                            setUserPassword();
+                        }
                     }
                     break;
                 default: break;
@@ -90,6 +107,17 @@ public class SetPasswordActivity extends BaseAct {
         return result;
     }
 
+    private void setForgetPwd() {
+        if (TextUtils.isEmpty(phoneNum) || TextUtils.isEmpty(code)) {
+            return;
+        }
+        HashMap<String, String> params = new HashMap<>(6);
+        params.put("telphone", phoneNum);
+        params.put("yzm", code);
+        params.put("newPwd", newPwd);
+        httpPost(App.URL + URLConstant.URL_FORGET_PWD, params, URLConstant.ACTION_FORGET_PWD);
+    }
+
     private void setUserPassword() {
         HashMap<String, String> params = new HashMap<>(6);
         params.put("user_id", App.getAccount().getId());
@@ -106,6 +134,9 @@ public class SetPasswordActivity extends BaseAct {
                 setResult(Activity.RESULT_OK);
                 finish();
                 break;
+            case URLConstant.ACTION_FORGET_PWD:
+
+                break;
             default: super.onResponseOk(data, actionCode);
         }
     }
@@ -120,7 +151,22 @@ public class SetPasswordActivity extends BaseAct {
                     handler.obtainMessage(SHOW_TOAST, getString(R.string.unknow_error)).sendToTarget();
                 }
                 break;
+            case URLConstant.ACTION_FORGET_PWD:
+                if (ErrorCode.PASSWORD == errorCode) {
+                    handler.obtainMessage(SHOW_TOAST, "密码格式错误，请重新输入后重试！").sendToTarget();
+                } else {
+                    handler.obtainMessage(SHOW_TOAST, errorCode, -1, errorMsg).sendToTarget();
+                }
+                break;
             default: super.onResponseFail(errorCode, errorMsg, actionCode);
+        }
+    }
+
+    @Override
+    protected void setStatusBar() {
+        super.setStatusBar();
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            StatusBarUtil.setStatusBarColor(this, 0x55000000);
         }
     }
 }

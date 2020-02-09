@@ -31,4 +31,9 @@ public interface Constant {
      * 3小时=180min，177min=2小时57分钟
      */
     int SESSION_MAX = 177;
+
+    /**
+     * wx APP_id
+     */
+    String WX_APP_ID = "";
 }

@@ -23,6 +23,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -30,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.epark.App;
+import cn.epark.Constant;
+import cn.epark.ErrorCode;
 import cn.epark.R;
 import cn.epark.adapters.ModalAdapter;
 import cn.epark.bean.ModalBean;
@@ -52,9 +59,13 @@ import okhttp3.Response;
 public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetWorkListener  {
 
     public final int SHOW_TOAST = 0x00000001;
+    public final int WX_ONRESP = 0x00000002;
     public Context context;
     public NetWorkReceiver netWorkReceiver;
     public String TAG;
+    public IWXAPI wxApi;
+    public BaseResp wxResp;
+    public Handler wxHandler;
     private Dialog modalDialog, loadingDialog;
     private TextDialogUtil textDialog;
 
@@ -64,7 +75,19 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SHOW_TOAST:
-                    ToastUtil.showToast(context, (String) msg.obj);
+                    if (msg.arg1 == ErrorCode.SERVICES_ERROR) {
+                        ToastUtil.showToast(context, getString(R.string.unknow_error));
+                    } else {
+                        ToastUtil.showToast(context, (String) msg.obj);
+                    }
+                    break;
+                case WX_ONRESP:
+                    boolean authorize = (boolean) msg.obj;
+                    if (authorize) {//授权成功
+                        onWxResponseOk(((SendAuth.Resp) wxResp).code);
+                    } else {
+                        onWxResponseCancel();
+                    }
                     break;
                 default:
                     super.handleMessage(msg);
@@ -84,6 +107,12 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         context = this;
         TAG = "ePark";
         setStatusBar();
+        initWx();
+    }
+
+    private void initWx() {
+        wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID, true);
+        wxApi.registerApp(Constant.WX_APP_ID);
     }
 
     @Override
@@ -123,7 +152,7 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
             if (response.code() == 200) {
                 onResponseOk(response.body().string(), actionCode);
             } else {
-                onResponseFail(call, response);
+                onResponseError(call, actionCode);
             }
             if (autoDismiss){
                 dismissLoadingDialog();
@@ -187,6 +216,18 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     //网络错误
     public void onResponseError(Call call, int actionCode){
         showNetWorkToast();
+    }
+
+    /**
+     * 微信授权成功回调
+     * @param code {@link SendAuth.Resp#code}
+     */
+    public void onWxResponseOk(String code) {
+
+    }
+
+    public void onWxResponseCancel() {
+        ToastUtil.showToast(context, "取消授权");
     }
 
     public void dismissLoadingDialog(){

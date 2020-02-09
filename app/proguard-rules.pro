@@ -70,3 +70,17 @@
 -keep interface com.google.android.support.v4.app.** { *; }
 -keep public class * extends com.google.android.support.v4.**
 -keep public class * extends com.google.android.support.v4.app.Fragment
+
+#微信
+-keep class com.tencent.mm.opensdk.** {
+    *;
+}
+
+-keep class com.tencent.wxop.** {
+    *;
+}
+
+-keep class com.tencent.mm.sdk.** {
+    *;
+}
+

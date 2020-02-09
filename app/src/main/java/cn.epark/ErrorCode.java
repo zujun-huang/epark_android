@@ -13,6 +13,9 @@ public interface ErrorCode {
     /** sessionID不合法 */
     int ILLEGAL_SESSIONID = 10005;
 
+    /** 服务器错误 */
+    int SERVICES_ERROR = 10000;
+
     /** 密码格式或复杂度 */
     int PASSWORD = 20005;
 
