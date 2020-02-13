@@ -1,4 +1,4 @@
-package cn.epark.activitys;
+package cn.epark.activities;
 
 import android.app.Activity;
 import android.content.Intent;

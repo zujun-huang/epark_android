@@ -112,13 +112,13 @@
         </RelativeLayout>
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/error_msg_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text=""
-            android:textColor="@color/f5282b" />
+            android:text="@string/sms_login_tip"
+            android:textSize="12sp"
+            android:textColor="@color/g333333" />
 
         <TextView
             android:id="@+id/login_btn_tv"

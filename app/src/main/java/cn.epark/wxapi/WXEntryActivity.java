@@ -7,7 +7,7 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
-import cn.epark.activitys.BaseAct;
+import cn.epark.activities.BaseAct;
 import cn.epark.utils.ToastUtil;
 
 /**

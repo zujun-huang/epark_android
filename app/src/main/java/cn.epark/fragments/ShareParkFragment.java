@@ -45,7 +45,7 @@ import cn.epark.App;
 import cn.epark.Constant;
 import cn.epark.R;
 import cn.epark.ThirdPartyMapType;
-import cn.epark.activitys.MainActivity;
+import cn.epark.activities.MainActivity;
 import cn.epark.utils.InputMethodUtils;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;

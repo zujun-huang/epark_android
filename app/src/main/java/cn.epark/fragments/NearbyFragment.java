@@ -30,7 +30,7 @@ import java.util.List;
 
 import cn.epark.R;
 import cn.epark.adapters.ListFragmentAdapter;
-import cn.epark.activitys.MainActivity;
+import cn.epark.activities.MainActivity;
 import cn.epark.utils.CalcUtil;
 import cn.epark.utils.InputMethodUtils;
 import cn.epark.utils.ToastUtil;

@@ -42,7 +42,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activitys.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
@@ -53,51 +53,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activitys.MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/DefaultCityPickerTheme" />
         <activity
-            android:name=".activitys.NoticeActivity"
+            android:name=".activities.NoticeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="通知"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.SafePaymentActivity"
+            android:name=".activities.SafePaymentActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="支付"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.OnlineNavigationActivity"
+            android:name=".activities.OnlineNavigationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="在线导航"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.ShareApplyActivity"
+            android:name=".activities.ShareApplyActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="共享车位发布/修改"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.SMSLoginActivity"
+            android:name=".activities.SMSLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="短信登录"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.SetPasswordActivity"
+            android:name=".activities.SetPasswordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="设置新密码"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.PasswordLoginActivity"
+            android:name=".activities.PasswordLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="密码登录"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activitys.ForgetPasswordActivity"
+            android:name=".activities.ForgetPasswordActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="忘记密码"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.UpdatePasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="修改密码"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="设置"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -122,6 +133,7 @@
             android:value="@string/gaode_api_key" />
 
         <!-- <service android:name=".services.ForegroundService" /> -->
+
 
         <!-- 文件临时缓存 -->
         <provider

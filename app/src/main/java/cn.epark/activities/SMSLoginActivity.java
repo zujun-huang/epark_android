@@ -1,8 +1,11 @@
-package cn.epark.activitys;
+package cn.epark.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,21 +20,23 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import cn.epark.App;
+import cn.epark.MainBar;
 import cn.epark.R;
 import cn.epark.URLConstant;
-import cn.epark.adapters.LoginTextWatcher;
 import cn.epark.adapters.BasePhoneLoginTextWatcher;
+import cn.epark.adapters.LoginTextWatcher;
 import cn.epark.bean.Account;
+import cn.epark.fragments.MyselfFragment;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
 import cn.epark.utils.ToastUtil;
 
 /**
- * Created by huangzujun on 2020/2/07.
- * Describe: 修改密码
+ * Created by huangzujun on 2020/1/27.
+ * Describe: 短信登录
  */
-public class UpdatePasswordActivity extends BaseAct {
+public class SMSLoginActivity extends BaseAct {
 
     public static final String SHAREPREFERENCES_USER_INPUT_PHONE = "USER_INPUT_PHONE";
 
@@ -45,7 +50,7 @@ public class UpdatePasswordActivity extends BaseAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_password);
+        setContentView(R.layout.activity_smslogin);
         initView();
         initData();
     }
@@ -83,8 +88,10 @@ public class UpdatePasswordActivity extends BaseAct {
             @Override
             public void afterTextChanged(Editable s) {
                 super.afterTextChanged(s);
-                if (s.length() == 13) {
-                    phoneNum = s.toString().replace(" ", "");
+                phoneNum = s.toString().replace(" ", "");
+                if (s.length() >= 0) {
+                    loginErrorTv.setTextColor(ContextCompat.getColor(context, R.color.g333333));
+                    loginErrorTv.setText(R.string.sms_login_tip);
                 }
             }
         });
@@ -93,7 +100,7 @@ public class UpdatePasswordActivity extends BaseAct {
     private OnMultiClickListener clickListener = new OnMultiClickListener() {
         @Override
         public void onMultiClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.close_btn:
                     finish();
                     break;
@@ -108,7 +115,7 @@ public class UpdatePasswordActivity extends BaseAct {
                 case R.id.send_code_btn_tv:
                     if (TextUtils.isEmpty(phoneNum)) {
                         ToastUtil.showToast(context, "请输入手机号码后重试!");
-                    }  else if (!StringUtil.isPhoneNumber(phoneNum)) {
+                    } else if (!StringUtil.isPhoneNumber(phoneNum)) {
                         ToastUtil.showToast(context, "手机号码格式错误，请检查后重试！");
                     } else {
                         getCode(phoneNum);
@@ -120,12 +127,17 @@ public class UpdatePasswordActivity extends BaseAct {
                     }
                     break;
                 case R.id.pwd_login_tv:
+                    startActivity(new Intent(context, PasswordLoginActivity.class));
+                    finish();
                     break;
                 case R.id.iv_wx:
+                    //todo 微信登录
                     break;
                 case R.id.iv_qq:
+                    //TODO qq登录
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     };
@@ -153,7 +165,14 @@ public class UpdatePasswordActivity extends BaseAct {
                         .putString(SHAREPREFERENCES_USER_INPUT_PHONE, phoneNum)
                         .apply();
                 break;
-            default: super.handleMessage(msg);
+                case URLConstant.ACTION_LOGIN_OTP:
+                    handler.removeCallbacks(codeCountDown);
+                    sendCodeBtn.setEnabled(true);
+                    sendCodeBtn.setText(R.string.send_sms);
+                    codeCountDownNum = 59;
+                    break;
+            default:
+                super.handleMessage(msg);
         }
 
     }
@@ -167,17 +186,16 @@ public class UpdatePasswordActivity extends BaseAct {
                 handler.obtainMessage(URLConstant.ACTION_GET_OTP).sendToTarget();
                 break;
             case URLConstant.ACTION_LOGIN_OTP:
-                handler.removeCallbacks(codeCountDown);
+                handler.obtainMessage(URLConstant.ACTION_LOGIN_OTP).sendToTarget();
                 App.getInstance().setAccount(JSON.parseObject(data.toString(), Account.class));
-                App.getInstance().startSessionTimer();
                 if (App.getAccount().getPwdIsNull()) {
-                    //todo 设置密码
+                    startActivityForResult(new Intent(context, SetPasswordActivity.class), MyselfFragment.REQUEST_LOGIN);
                 } else {
-                    setResult(Activity.RESULT_OK);
-                    finish();
+                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
                 }
                 break;
-            default: super.onResponseOk(data, actionCode);
+            default:
+                super.onResponseOk(data, actionCode);
         }
     }
 
@@ -205,22 +223,39 @@ public class UpdatePasswordActivity extends BaseAct {
         } else if (!StringUtil.isPhoneNumber(phoneNum)) {
             loginErrorMsg = "手机号码格式错误，请检查后重试！";
             result = false;
-        } else if (TextUtils.isEmpty(inputCode)){
+        } else if (TextUtils.isEmpty(inputCode)) {
             loginErrorMsg = "请输入验证码后重试！";
             result = false;
         } else {
             result = true;
         }
-        setLoginErrorInfo(loginErrorMsg);
+        setLoginErrorInfo(loginErrorTv, loginErrorMsg);
         return result;
     }
 
-    private void setLoginErrorInfo(CharSequence loginErrorMsg) {
+    public static void setLoginErrorInfo(TextView loginErrorTv, CharSequence loginErrorMsg) {
         if (!TextUtils.isEmpty(loginErrorMsg)) {
             loginErrorTv.setVisibility(View.VISIBLE);
             loginErrorTv.setText(loginErrorMsg);
+            loginErrorTv.setTextColor(ContextCompat.getColor(loginErrorTv.getContext(), R.color.f5282b));
         } else {
             loginErrorTv.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case MyselfFragment.REQUEST_LOGIN:
+                if (resultCode != Activity.RESULT_OK) {
+                    codeEt.setText("");
+                    App.getInstance().setAccount(null);
+                } else {
+                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

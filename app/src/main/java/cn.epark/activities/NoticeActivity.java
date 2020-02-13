@@ -1,4 +1,4 @@
-package cn.epark.activitys;
+package cn.epark.activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.epark.R;
-import cn.epark.utils.StatusBarUtil;
+
 /**
  * Created by huangzujun on 2019/9/4.
  * Describe: 通知

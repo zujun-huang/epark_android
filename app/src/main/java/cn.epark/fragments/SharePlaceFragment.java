@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.epark.R;
-import cn.epark.activitys.ShareApplyActivity;
+import cn.epark.activities.ShareApplyActivity;
 import cn.epark.adapters.ShareApplyItemAdapter;
 import cn.epark.bean.ShareParkInfo;
 import cn.epark.utils.OnMultiClickListener;

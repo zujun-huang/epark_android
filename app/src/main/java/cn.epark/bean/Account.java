@@ -12,6 +12,7 @@ import cn.epark.utils.StringUtil;
 public class Account {
 
     private String id;
+    private String pwd;//密码
     private String name;//真实姓名
     private String nickName;//昵称
     private String head;//头像地址
@@ -29,6 +30,14 @@ public class Account {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getName() {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.epark.activitys.SplashActivity">
+    tools:context="cn.epark.activities.SplashActivity">
 
     <cn.epark.view.StatusBarHeightView
         android:id="@+id/status_bar"

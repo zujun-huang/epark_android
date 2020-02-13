@@ -1,4 +1,4 @@
-package cn.epark.activitys;
+package cn.epark.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -131,11 +131,12 @@ public class SetPasswordActivity extends BaseAct {
         switch (actionCode) {
             case URLConstant.ACTION_UPDATE_PWD:
                 handler.obtainMessage(SHOW_TOAST, "新密码设置成功！").sendToTarget();
+                App.getAccount().setPwd(newPwd);
                 setResult(Activity.RESULT_OK);
                 finish();
                 break;
             case URLConstant.ACTION_FORGET_PWD:
-
+                //fixme 忘记密码返回失败
                 break;
             default: super.onResponseOk(data, actionCode);
         }
