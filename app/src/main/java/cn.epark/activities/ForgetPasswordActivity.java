@@ -1,8 +1,10 @@
 package cn.epark.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +32,7 @@ import cn.epark.utils.ToastUtil;
  */
 public class ForgetPasswordActivity extends BaseAct {
 
+    private final int REQUEST_SET_PWD = 0x00000001;
 
     private ImageView phoneClearBtn, codeClearBtn;
     private TextView sendCodeBtn, loginErrorTv;
@@ -100,10 +103,10 @@ public class ForgetPasswordActivity extends BaseAct {
                     break;
                 case R.id.finish_btn_tv://下一步
                     if (checkParams()) {
-                        startActivity(new Intent(context, SetPasswordActivity.class)
+                        startActivityForResult(new Intent(context, SetPasswordActivity.class)
                             .putExtra("phoneNum", phoneNum)
                             .putExtra("code", inputCode)
-                            .putExtra("forgetPwd", true)
+                            .putExtra("forgetPwd", true), REQUEST_SET_PWD
                         );
                     }
                     break;
@@ -180,6 +183,18 @@ public class ForgetPasswordActivity extends BaseAct {
         super.setStatusBar();
         if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
             StatusBarUtil.setStatusBarColor(this, 0x55000000);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case REQUEST_SET_PWD:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                }
+                break;
+            default: super.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

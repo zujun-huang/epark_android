@@ -51,7 +51,11 @@ public class CacheManagerUtil {
             }
             return dir.delete();
         }
-        return false;
+        if (dir != null) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package cn.epark.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -17,7 +18,6 @@ import cn.epark.URLConstant;
 import cn.epark.utils.CacheManagerUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.StringUtil;
-import cn.epark.utils.ToastUtil;
 
 /**
  * Created by huangzujun on 2020/2/13.
@@ -56,6 +56,7 @@ public class SettingsActivity extends BaseAct {
         findViewById(R.id.clear_cache_rl).setOnClickListener(clickListener);
         findViewById(R.id.feedback_rl).setOnClickListener(clickListener);
         findViewById(R.id.change_user_btn_tv).setOnClickListener(clickListener);
+        findViewById(R.id.login_out_btn_tv).setOnClickListener(clickListener);
     }
 
     private OnMultiClickListener clickListener = new OnMultiClickListener() {
@@ -71,7 +72,10 @@ public class SettingsActivity extends BaseAct {
                 case R.id.clear_cache_rl:
                     showAlertDialog("确认清除吗？",
                             "清除缓存会导致个人缓存信息删除，\n是否确认清除？",
-                            "确认", view -> CacheManagerUtil.getInstance().clearAllCache(context));
+                            "确认", view -> {
+                                CacheManagerUtil.getInstance().clearAllCache(context);
+                                initViews();
+                            }, null);
                     break;
                 case R.id.feedback_rl:
                     break;
@@ -99,16 +103,28 @@ public class SettingsActivity extends BaseAct {
     }
 
     @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+            case URLConstant.ACTION_GET_APP_INFO:
+                showAlertDialog("温馨提示",
+                        "当前已是最新版本，无需更新！", "确定", null, null);
+                break;
+            default:
+                super.handleMessage(msg);
+                break;
+        }
+    }
+
+    @Override
     public void onResponseOk(JSONObject data, int actionCode) {
         switch (actionCode) {
             case URLConstant.ACTION_LOGIN_OUT:
-                ToastUtil.showToast(context, "已退出当前账号");
+                handler.obtainMessage(SHOW_TOAST, "已退出当前账号").sendToTarget();
                 App.getInstance().setAccount(null);
                 finish();
                 break;
             case URLConstant.ACTION_GET_APP_INFO:
-                showAlertDialog("温馨提示",
-                        "当前已是最新版本，无需更新！", "确定", v -> dismiss());
+                handler.obtainMessage(URLConstant.ACTION_GET_APP_INFO).sendToTarget();
                 break;
             default: super.onResponseOk(data, actionCode);
         }

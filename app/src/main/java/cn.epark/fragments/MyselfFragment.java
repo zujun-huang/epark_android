@@ -141,7 +141,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 }
                 break;
             case R.id.nick_name://昵称
-                if (!isLogin()) {
+                if (!isLogin(false)) {
                     startActivity(new Intent(context, SMSLoginActivity.class));
                 } else {
                     //TODO 修改昵称
@@ -336,6 +336,8 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 .into(head_img);
         if (!TextUtils.isEmpty(App.getAccount().getNickName())) {
             userNameTv.setText(App.getAccount().getNickName());
+        } else {
+            userNameTv.setText(R.string.default_user_name);
         }
 
     }

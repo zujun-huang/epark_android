@@ -29,6 +29,7 @@ import java.util.List;
 
 import cn.epark.App;
 import cn.epark.R;
+import cn.epark.activities.BaseAct;
 import cn.epark.activities.SMSLoginActivity;
 import cn.epark.adapters.ModalAdapter;
 import cn.epark.bean.ModalBean;
@@ -45,6 +46,8 @@ import okhttp3.Response;
  * Describe: fragment 基类
  */
 public class BaseFragment extends Fragment {
+
+    public final int SHOW_TOAST = 0x00000009;
 
     protected Context context;
     private Dialog modalDialog, loadingDialog;
@@ -127,7 +130,7 @@ public class BaseFragment extends Fragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtil.showToast(context, getString(R.string.unknow_error));
+            handler.obtainMessage(SHOW_TOAST, getString(R.string.unknow_error)).sendToTarget();
         }
     }
 
@@ -150,16 +153,21 @@ public class BaseFragment extends Fragment {
         showNetWorkToast();
     }
 
+    public boolean isLogin() {
+        return isLogin(true);
+    }
+
     /**
      * 登录否
+     * @param shoTip 是否显示提示
      * @return true：未登录
      */
-    public boolean isLogin() {
+    public boolean isLogin(boolean shoTip) {
         boolean result = !TextUtils.isEmpty(App.getAccount().getId());
-        if (!result) {
-            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~", "立即登录", v ->
-                    startActivity(new Intent(context, SMSLoginActivity.class))
-            );
+        if (!result && shoTip) {
+            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~",
+                    "立即登录", v -> startActivity(new Intent(context, SMSLoginActivity.class)),
+                    null);
         }
         return result;
     }

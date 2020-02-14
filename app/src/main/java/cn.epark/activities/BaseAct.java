@@ -59,8 +59,8 @@ import okhttp3.Response;
  */
 public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetWorkListener  {
 
-    public final int SHOW_TOAST = 0x00000001;
-    public final int WX_ONRESP = 0x00000002;
+    public final int SHOW_TOAST = 0x00000009;
+    public final int WX_ONRESP = 0x00000008;
     public Context context;
     public NetWorkReceiver netWorkReceiver;
     public String TAG;
@@ -192,7 +192,7 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
             }
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtil.showToast(context, "抱歉，当前服务已遗失~");
+            handler.obtainMessage(SHOW_TOAST, getString(R.string.unknow_error)).sendToTarget();
         }
     }
 
@@ -231,15 +231,20 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         ToastUtil.showToast(context, "取消授权");
     }
 
+    public boolean isLogin() {
+        return isLogin(true);
+    }
+
     /**
      * 登录否
+     * @param shoTip 是否显示提示
      * @return true：未登录
      */
-    public boolean isLogin() {
+    public boolean isLogin(boolean shoTip) {
         boolean result = !TextUtils.isEmpty(App.getAccount().getId());
-        if (!result) {
+        if (!result && shoTip) {
             showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~", "立即登录", v ->
-                    startActivity(new Intent(context, SMSLoginActivity.class))
+                    startActivity(new Intent(context, SMSLoginActivity.class), null)
             );
         }
         return result;
