@@ -39,7 +39,7 @@ public interface URLConstant {
     int ACTION_PWD_LOGIN = 0x00000017;
 
     /** 获取app版本信息 */
-    String URL_GET_APP_INFO = "/AppInfo/getAppInfoList";
+    String URL_GET_APP_INFO = "/appInfo/getAppInfoList";
     int ACTION_GET_APP_INFO = 0x00000020;
 
 }

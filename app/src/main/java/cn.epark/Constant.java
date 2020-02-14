@@ -32,8 +32,4 @@ public interface Constant {
      */
     int SESSION_MAX = 177;
 
-    /**
-     * wx APP_id
-     */
-    String WX_APP_ID = "";
 }

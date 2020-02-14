@@ -28,6 +28,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.tauth.Tencent;
 
 import org.json.JSONObject;
 
@@ -36,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.epark.App;
-import cn.epark.Constant;
 import cn.epark.ErrorCode;
 import cn.epark.R;
 import cn.epark.adapters.ModalAdapter;
@@ -66,9 +66,12 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     public String TAG;
     public IWXAPI wxApi;
     public BaseResp wxResp;
+    public Tencent mTencent;
     public Handler wxHandler;
     private Dialog modalDialog, loadingDialog;
     private TextDialogUtil textDialog;
+    private String WX_APP_ID, WX_SECRET;
+    private String QQ_APP_ID, QQ_APP_KEY;
 
     @SuppressLint("HandlerLeak")
     public Handler handler = new Handler(){
@@ -109,16 +112,25 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         TAG = "ePark";
         setStatusBar();
         initWx();
+        initQQ();
+    }
+
+    private void initQQ() {
+        QQ_APP_ID = getString(R.string.qq_app_id);
+        QQ_APP_KEY = getString(R.string.qq_app_key);
+        mTencent = Tencent.createInstance(QQ_APP_ID, getApplicationContext());
     }
 
     private void initWx() {
-        wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID, true);
-        wxApi.registerApp(Constant.WX_APP_ID);
+        WX_APP_ID = getString(R.string.wx_app_id);
+        WX_SECRET = getString(R.string.wx_secret);
+        wxApi = WXAPIFactory.createWXAPI(this, WX_APP_ID, true);
+        wxApi.registerApp(WX_APP_ID);
     }
 
     @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
+    public void setContentView(int layoutResId) {
+        super.setContentView(layoutResId);
         initBackIcon();
     }
 
@@ -167,6 +179,10 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
             showLoadingDialog();
         }
         OkHttpUtil.getInstance(context).request(Method.GET, url, params, new BaseCallback(actionCode, autoDismiss));
+    }
+
+    public void httpGet(String url, int actionCode){
+        httpGet(url, null, actionCode, true, true);
     }
 
     public void httpPost(String url, HashMap<String, String> params, int actionCode){
@@ -243,8 +259,9 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     public boolean isLogin(boolean shoTip) {
         boolean result = !TextUtils.isEmpty(App.getAccount().getId());
         if (!result && shoTip) {
-            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~", "立即登录", v ->
-                    startActivity(new Intent(context, SMSLoginActivity.class), null)
+            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~",
+                    "立即登录", v -> startActivity(new Intent(context, SMSLoginActivity.class)),
+                    null
             );
         }
         return result;
@@ -294,6 +311,14 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
 
     public void showNetWorkToast(){
         ToastUtil.showToast(context, getString(R.string.network_error));
+    }
+
+    public void showTip(int resId) {
+        showTip(getString(resId));
+    }
+
+    public void showTip(String msg) {
+        ToastUtil.showToast(context, msg);
     }
 
     //获取resId对应组件的资源文本

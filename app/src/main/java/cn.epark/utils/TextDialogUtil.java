@@ -22,7 +22,7 @@ public class TextDialogUtil extends Dialog{
     private View view, v_line;
     private Context context;
     private Button cancelBtn, positiveBtn;
-    private View.OnClickListener btnClickListener;
+    private View.OnClickListener positive_listener, negative_listener;
 
     //默认文本dialog
     public TextDialogUtil(@NonNull Context context) {
@@ -108,7 +108,7 @@ public class TextDialogUtil extends Dialog{
             v_line.setVisibility(View.GONE);
         }
         if (li != null){
-            btnClickListener = li;
+            positive_listener = li;
         }
         return this;
     }
@@ -137,7 +137,7 @@ public class TextDialogUtil extends Dialog{
             cancelBtn.setText(cancelText);
         }
         if (li != null){
-            btnClickListener = li;
+            negative_listener = li;
         }
         return this;
     }
@@ -147,8 +147,11 @@ public class TextDialogUtil extends Dialog{
         @Override
         public void onClick(View v) {
             dismiss();
-            if (btnClickListener != null) {
-                btnClickListener.onClick(v);
+            if (negative_listener != null) {
+                negative_listener.onClick(v);
+            }
+            if (positive_listener != null) {
+                positive_listener.onClick(v);
             }
         }
     }

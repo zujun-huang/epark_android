@@ -2,7 +2,10 @@ package cn.epark.utils;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
+
+import cn.epark.R;
 
 /**
  * @author hzj
@@ -31,6 +34,7 @@ public class ToastUtil {
     public static void showToast(Context context, String msg) {
         if (toast == null) {
             toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+            toast.getView().setBackgroundResource(R.drawable.shape_loading_bg);
             toast.setGravity(Gravity.CENTER, 0 , 0);
             toast.setText(msg);
         } else {
@@ -42,6 +46,7 @@ public class ToastUtil {
     public static void showLongToast(Context context, String msg) {
         if (toast == null) {
             toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+            toast.getView().setBackgroundResource(R.drawable.shape_loading_bg);
             toast.setGravity(Gravity.CENTER, 0 , 0);
             toast.setText(msg);
         } else {

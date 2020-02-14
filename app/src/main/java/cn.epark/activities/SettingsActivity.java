@@ -7,14 +7,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.epark.App;
 import cn.epark.BuildConfig;
 import cn.epark.R;
 import cn.epark.URLConstant;
+import cn.epark.bean.AppVersion;
 import cn.epark.utils.CacheManagerUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.StringUtil;
@@ -28,11 +34,18 @@ public class SettingsActivity extends BaseAct {
     private TextView phoneNumTv, clearCacheTv, appVersionTv;
     private View versionNewView;
 
+    private AppVersion versionNew;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         initViews();
+        initData();
+    }
+
+    private void initData() {
+        getAppVersionInfo();
     }
 
     private void initViews() {
@@ -67,7 +80,7 @@ public class SettingsActivity extends BaseAct {
                     startActivity(new Intent(context, UpdatePasswordActivity.class));
                     break;
                 case R.id.check_version_rl:
-                    getAppVersionInfo();
+                    checkVersion();
                     break;
                 case R.id.clear_cache_rl:
                     showAlertDialog("确认清除吗？",
@@ -90,8 +103,9 @@ public class SettingsActivity extends BaseAct {
     };
 
     private void getAppVersionInfo() {
-        HashMap<String, String> params = new HashMap<>(6);
-        //fixme 接口未完
+        HashMap<String, String> params = new HashMap<>(3);
+        params.put("page", "1");
+        params.put("size", "3");
         httpPost(App.URL + URLConstant.URL_GET_APP_INFO, params, URLConstant.ACTION_GET_APP_INFO);
     }
 
@@ -106,12 +120,22 @@ public class SettingsActivity extends BaseAct {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case URLConstant.ACTION_GET_APP_INFO:
-                showAlertDialog("温馨提示",
-                        "当前已是最新版本，无需更新！", "确定", null, null);
+                if (versionNew != null) {
+                    versionNewView.setVisibility(View.VISIBLE);
+                }
                 break;
             default:
                 super.handleMessage(msg);
                 break;
+        }
+    }
+
+    private void checkVersion() {
+        if (versionNew == null) {
+            showAlertDialog("温馨提示",
+                    "当前已是最新版本，无需更新！", "确定", null, null);
+        } else {
+            //todo 下载
         }
     }
 
@@ -123,9 +147,26 @@ public class SettingsActivity extends BaseAct {
                 App.getInstance().setAccount(null);
                 finish();
                 break;
-            case URLConstant.ACTION_GET_APP_INFO:
+            case URLConstant.ACTION_GET_APP_INFO: {
+                JSONArray jsonArray = data.optJSONArray("list");
+                List<AppVersion> versionList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    AppVersion appVersion = JSON.parseObject(jsonArray.optString(i), AppVersion.class);
+                    versionList.add(appVersion);
+                }
+                if (versionList.size() > 0 ) {
+                    String currentVersion = BuildConfig.VERSION_NAME.replace("V", "");
+                    if (currentVersion.equals(versionList.get(0).getVersion())) {
+                        versionNew = null;
+                    } else {
+                        versionNew = versionList.get(0);
+                    }
+                } else {
+                    handler.obtainMessage(SHOW_TOAST, getString(R.string.unknow_error)).sendToTarget();
+                }
                 handler.obtainMessage(URLConstant.ACTION_GET_APP_INFO).sendToTarget();
                 break;
+            }
             default: super.onResponseOk(data, actionCode);
         }
     }

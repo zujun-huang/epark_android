@@ -27,6 +27,7 @@ import cn.epark.adapters.BasePhoneLoginTextWatcher;
 import cn.epark.adapters.LoginTextWatcher;
 import cn.epark.bean.Account;
 import cn.epark.fragments.MyselfFragment;
+import cn.epark.utils.AuthLoginUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
@@ -46,6 +47,7 @@ public class SMSLoginActivity extends BaseAct {
 
     private String phoneNum, inputCode;
     private int codeCountDownNum = 59;
+    private AuthLoginUtil authLoginUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class SMSLoginActivity extends BaseAct {
             phoneEt.setText(sharePhone);
             phoneEt.setSelection(phoneEt.getText().length());
         }
+        authLoginUtil = new AuthLoginUtil(this, mTencent);
     }
 
     private void initView() {
@@ -135,6 +138,7 @@ public class SMSLoginActivity extends BaseAct {
                     break;
                 case R.id.iv_qq:
                     //TODO qq登录
+                    authLoginUtil.qqLogin();
                     break;
                 default:
                     break;
@@ -245,6 +249,9 @@ public class SMSLoginActivity extends BaseAct {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (authLoginUtil != null) {
+            authLoginUtil.onActivityResult(requestCode, resultCode, data);
+        }
         switch (requestCode) {
             case MyselfFragment.REQUEST_LOGIN:
                 if (resultCode != Activity.RESULT_OK) {

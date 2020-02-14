@@ -28,6 +28,7 @@ import cn.epark.adapters.BasePhoneLoginTextWatcher;
 import cn.epark.adapters.LoginTextWatcher;
 import cn.epark.bean.Account;
 import cn.epark.fragments.MyselfFragment;
+import cn.epark.utils.AuthLoginUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
@@ -43,6 +44,7 @@ public class PasswordLoginActivity extends BaseAct {
     private TextView errorTipTv;
 
     private String phoneNum, pwdNum;
+    private AuthLoginUtil authLoginUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class PasswordLoginActivity extends BaseAct {
                 phoneEt.setSelection(phoneEt.length());
             }
         }
+        authLoginUtil = new AuthLoginUtil(this, mTencent);
     }
 
     private void initView() {
@@ -77,6 +80,8 @@ public class PasswordLoginActivity extends BaseAct {
         findViewById(R.id.sms_login_tv).setOnClickListener(clickListener);
         findViewById(R.id.forget_pwd_tv).setOnClickListener(clickListener);
         findViewById(R.id.close_btn).setOnClickListener(clickListener);
+        findViewById(R.id.iv_wx).setOnClickListener(clickListener);
+        findViewById(R.id.iv_qq).setOnClickListener(clickListener);
         phoneEt.addTextChangedListener(new BasePhoneLoginTextWatcher(phoneEt, phoneClearBtn) {
             @Override
             public void afterTextChanged(Editable s) {
@@ -122,6 +127,11 @@ public class PasswordLoginActivity extends BaseAct {
                     startActivity(new Intent(context, ForgetPasswordActivity.class)
                             .putExtra("phoneNum", phoneNum)
                     );
+                    break;
+                case R.id.iv_qq:
+                    authLoginUtil.qqLogin();
+                    break;
+                case R.id.iv_wx:
                     break;
                 default: super.onClick(v);
             }

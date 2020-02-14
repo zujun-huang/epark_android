@@ -65,7 +65,7 @@ public class OkHttpUtil {
         Call call;
         switch (method){
             case Method.GET:
-                if (params.size() > 0){
+                if (params != null && params.size() > 0){
                     url += "?" + prepareParam(params);
                 }
                 request = new Request.Builder().url(url).build();
@@ -82,7 +82,9 @@ public class OkHttpUtil {
         }
         if (SHOW_REQUEST){
             LogUtil.i("okHttpUtil", "URL:" + url);
-            LogUtil.i("okHttpUtil", "params:" + params.toString());
+            if (params != null) {
+                LogUtil.i("okHttpUtil", "params:" + params.toString());
+            }
         }
         call.enqueue(new Callback() {
             @Override
