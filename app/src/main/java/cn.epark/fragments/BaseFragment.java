@@ -3,6 +3,7 @@ package cn.epark.fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +27,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.epark.App;
 import cn.epark.R;
+import cn.epark.activities.SMSLoginActivity;
 import cn.epark.adapters.ModalAdapter;
 import cn.epark.bean.ModalBean;
 import cn.epark.utils.LogUtil;
@@ -145,6 +148,20 @@ public class BaseFragment extends Fragment {
     //网络错误
     public void onResponseError(Call call, int actionCode){
         showNetWorkToast();
+    }
+
+    /**
+     * 登录否
+     * @return true：未登录
+     */
+    public boolean isLogin() {
+        boolean result = !TextUtils.isEmpty(App.getAccount().getId());
+        if (!result) {
+            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~", "立即登录", v ->
+                    startActivity(new Intent(context, SMSLoginActivity.class))
+            );
+        }
+        return result;
     }
 
     public void showNetWorkToast(){

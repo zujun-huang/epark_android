@@ -3,6 +3,7 @@ package cn.epark.activities;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -228,6 +229,20 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
 
     public void onWxResponseCancel() {
         ToastUtil.showToast(context, "取消授权");
+    }
+
+    /**
+     * 登录否
+     * @return true：未登录
+     */
+    public boolean isLogin() {
+        boolean result = !TextUtils.isEmpty(App.getAccount().getId());
+        if (!result) {
+            showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~", "立即登录", v ->
+                    startActivity(new Intent(context, SMSLoginActivity.class))
+            );
+        }
+        return result;
     }
 
     public void dismissLoadingDialog(){

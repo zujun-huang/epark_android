@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -159,6 +160,24 @@ public class StringUtil {
      */
     public static boolean isPhoneNumber(String mobileNumber){
         return PATTERN_PHONE.matcher(mobileNumber).matches();
+    }
+
+    /**
+     * 隐藏手机号码，默认显示前个三数字及后三个数字
+     * @param mobileNumber 手机号码
+     * @param afterNum 后几位数字
+     * @return 前三后n的手机号
+     */
+    public static String hidePhoneNumber(String mobileNumber,Integer afterNum) {
+        if (TextUtils.isEmpty(mobileNumber)){
+            return "";
+        }
+        Integer n = 3;
+        if (afterNum != null && afterNum > 0){
+            n = afterNum;
+        }
+        return mobileNumber.substring(0, 3) + "****" +
+                mobileNumber.substring(mobileNumber.length() - n);
     }
 
 }

@@ -38,4 +38,8 @@ public interface URLConstant {
     String URL_PWD_LOGIN = "/user/login";
     int ACTION_PWD_LOGIN = 0x00000017;
 
+    /** 获取app版本信息 */
+    String URL_GET_APP_INFO = "/AppInfo/getAppInfoList";
+    int ACTION_GET_APP_INFO = 0x00000020;
+
 }

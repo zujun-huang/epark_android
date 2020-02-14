@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,7 @@ public class TextDialogUtil extends Dialog{
     private View view, v_line;
     private Context context;
     private Button cancelBtn, positiveBtn;
+    private View.OnClickListener btnClickListener;
 
     //默认文本dialog
     public TextDialogUtil(@NonNull Context context) {
@@ -93,18 +95,20 @@ public class TextDialogUtil extends Dialog{
     }
 
     public TextDialogUtil setPositiveButton(@ColorInt int color, String positiveText, View.OnClickListener li) {
-        if (positiveBtn == null) return this;
+        if (positiveBtn == null) {
+            return this;
+        }
         if (color > 0){
             positiveBtn.setTextColor(color);
         }
         if (!TextUtils.isEmpty(positiveText)){
             positiveBtn.setText(positiveText);
-            positiveBtn.setBackground(context.getResources().getDrawable(R.drawable.com_btn_confirm_selector));
+            positiveBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.com_btn_confirm_selector));
             cancelBtn.setVisibility(View.GONE);
             v_line.setVisibility(View.GONE);
         }
         if (li != null){
-            positiveBtn.setOnClickListener(li);
+            btnClickListener = li;
         }
         return this;
     }
@@ -120,18 +124,20 @@ public class TextDialogUtil extends Dialog{
     }
 
     public TextDialogUtil setNegativeButton(@ColorInt int color, String cancelText, View.OnClickListener li) {
-        if (cancelBtn == null) return this;
+        if (cancelBtn == null) {
+            return this;
+        }
         if (color > 0){
             cancelBtn.setTextColor(color);
         }
         if (!TextUtils.isEmpty(cancelText)){
             cancelBtn.setVisibility(View.VISIBLE);
             v_line.setVisibility(View.VISIBLE);
-            positiveBtn.setBackground(context.getResources().getDrawable(R.drawable.com_btn_confirm_selector_right));
+            positiveBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.com_btn_confirm_selector_right));
             cancelBtn.setText(cancelText);
         }
         if (li != null){
-            cancelBtn.setOnClickListener(li);
+            btnClickListener = li;
         }
         return this;
     }
@@ -141,6 +147,9 @@ public class TextDialogUtil extends Dialog{
         @Override
         public void onClick(View v) {
             dismiss();
+            if (btnClickListener != null) {
+                btnClickListener.onClick(v);
+            }
         }
     }
 }

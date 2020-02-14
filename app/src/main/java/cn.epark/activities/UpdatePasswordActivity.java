@@ -43,7 +43,7 @@ public class UpdatePasswordActivity extends BaseAct {
         View titleView = findViewById(R.id.title_layout);
         if (titleView != null) {
             TextView titleTv = titleView.findViewById(R.id.title_tv);
-            titleTv.setText("修改密码");
+            titleTv.setText(R.string.update_pwd);
         }
         oldPwdEt = findViewById(R.id.input_old_pwd_et);
         oldPwdClearBtn = findViewById(R.id.pwd_old_clear_iv);

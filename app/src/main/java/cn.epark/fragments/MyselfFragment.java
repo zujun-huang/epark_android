@@ -39,6 +39,7 @@ import cn.epark.R;
 import cn.epark.activities.MainActivity;
 import cn.epark.activities.NoticeActivity;
 import cn.epark.activities.SMSLoginActivity;
+import cn.epark.activities.SettingsActivity;
 import cn.epark.bean.ModalBean;
 import cn.epark.utils.LogUtil;
 import cn.epark.utils.ShareUtil;
@@ -140,7 +141,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 }
                 break;
             case R.id.nick_name://昵称
-                if (TextUtils.isEmpty(App.getAccount().getNickName())) {
+                if (!isLogin()) {
                     startActivity(new Intent(context, SMSLoginActivity.class));
                 } else {
                     //TODO 修改昵称
@@ -177,9 +178,9 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 );
                 break;
             case R.id.tv_set://设置
-                startActivity(new Intent(context, NoticeActivity.class)
-                        .putExtra("title", getString(R.string.my_setting))
-                );
+                if (isLogin()) {
+                    startActivity(new Intent(context, SettingsActivity.class));
+                }
                 break;
             default:
         }

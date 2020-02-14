@@ -47,5 +47,12 @@
     <string name="countdown_send_sms">%d 秒后重试</string>
     <string name="sms_login_tip">未注册的手机号码验证后将自动注册账号</string>
     <string name="set_password_rule_tip">密码需包含其中三项：大写英文、小写英文、数字、字符</string>
+    <string name="phone_number">手机号</string>
+    <string name="update_pwd">修改密码</string>
+    <string name="update_version">版本更新</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="feedback">意见反馈</string>
+    <string name="change_other_user">切换账号</string>
+    <string name="login_out">退出登录</string>
 
 </resources>
