@@ -61,6 +61,12 @@ public class OkHttpUtil {
      * @param callback 返回监听
      */
     public void request(int method, String url, Map<String, String> params, Callback callback) {
+        if (SHOW_REQUEST){
+            LogUtil.i("okHttpUtil", "URL:" + url);
+            if (params != null) {
+                LogUtil.i("okHttpUtil", "params:" + params.toString());
+            }
+        }
         Request request;
         Call call;
         switch (method){
@@ -73,18 +79,14 @@ public class OkHttpUtil {
                 break;
             default:
                 FormBody.Builder builder = new FormBody.Builder();
-                for (String key : params.keySet()){
-                    builder.add(key, params.get(key));
+                if (params != null && params.size() > 0) {
+                    for (String key : params.keySet()){
+                        builder.add(key, params.get(key));
+                    }
                 }
                 request = new Request.Builder().url(url).post(builder.build()).build();
                 call = mOkHttpClient.newCall(request);
                 break;
-        }
-        if (SHOW_REQUEST){
-            LogUtil.i("okHttpUtil", "URL:" + url);
-            if (params != null) {
-                LogUtil.i("okHttpUtil", "params:" + params.toString());
-            }
         }
         call.enqueue(new Callback() {
             @Override

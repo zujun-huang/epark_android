@@ -22,7 +22,6 @@ public class TextDialogUtil extends Dialog{
     private View view, v_line;
     private Context context;
     private Button cancelBtn, positiveBtn;
-    private View.OnClickListener positive_listener, negative_listener;
 
     //默认文本dialog
     public TextDialogUtil(@NonNull Context context) {
@@ -30,12 +29,9 @@ public class TextDialogUtil extends Dialog{
         this.context = context;
         view = View.inflate(context, R.layout.com_textdialog_layout, null);
         init(view);
-        TextDialogClickListener textDialogClickListener = new TextDialogClickListener();
         cancelBtn = view.findViewById(R.id.dialog_button_cancel);
         positiveBtn = view.findViewById(R.id.dialog_button_confirm);
         v_line = view.findViewById(R.id.vertical_line);
-        cancelBtn.setOnClickListener(textDialogClickListener);
-        positiveBtn.setOnClickListener(textDialogClickListener);
     }
 
     //自定义样式dialog
@@ -107,9 +103,12 @@ public class TextDialogUtil extends Dialog{
             cancelBtn.setVisibility(View.GONE);
             v_line.setVisibility(View.GONE);
         }
-        if (li != null){
-            positive_listener = li;
-        }
+        positiveBtn.setOnClickListener(v -> {
+            dismiss();
+            if (li != null) {
+                li.onClick(v);
+            }
+        });
         return this;
     }
     
@@ -136,23 +135,12 @@ public class TextDialogUtil extends Dialog{
             positiveBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.com_btn_confirm_selector_right));
             cancelBtn.setText(cancelText);
         }
-        if (li != null){
-            negative_listener = li;
-        }
-        return this;
-    }
-    
-    //默认点击事件处理
-    class TextDialogClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
+        cancelBtn.setOnClickListener(v -> {
             dismiss();
-            if (negative_listener != null) {
-                negative_listener.onClick(v);
+            if (li != null) {
+                li.onClick(v);
             }
-            if (positive_listener != null) {
-                positive_listener.onClick(v);
-            }
-        }
+        });
+        return this;
     }
 }

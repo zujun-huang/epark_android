@@ -48,7 +48,7 @@ public class MainActivity extends BaseAct {
 
     private void initListener() {
         toolBarUtil.setOnToolBarClickListener(this::getContentView);
-        if (TextUtils.isEmpty(App.getAccount().getId())) {
+        if (App.getAccount().isEmptyId()) {
             App.getInstance().startSessionTimer();
         }
     }

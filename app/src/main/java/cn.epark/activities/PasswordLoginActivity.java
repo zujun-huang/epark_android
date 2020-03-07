@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import cn.epark.App;
 import cn.epark.ErrorCode;
-import cn.epark.MainBar;
 import cn.epark.R;
 import cn.epark.URLConstant;
 import cn.epark.adapters.BasePhoneLoginTextWatcher;
@@ -173,7 +172,7 @@ public class PasswordLoginActivity extends BaseAct {
                 if (App.getAccount().getPwdIsNull()) {
                     startActivityForResult(new Intent(context, SetPasswordActivity.class), MyselfFragment.REQUEST_LOGIN);
                 } else {
-                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+                    SMSLoginActivity.loginSuccess(context);
                 }
                 break;
             default: super.onResponseOk(data, actionCode);
@@ -202,6 +201,9 @@ public class PasswordLoginActivity extends BaseAct {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (authLoginUtil != null) {
+            authLoginUtil.onActivityResult(requestCode, resultCode, data);
+        }
         switch (requestCode) {
             case MyselfFragment.REQUEST_LOGIN:
                 if (resultCode != Activity.RESULT_OK) {
@@ -209,7 +211,7 @@ public class PasswordLoginActivity extends BaseAct {
                     pwdEt.requestFocus();
                     App.getInstance().setAccount(null);
                 } else {
-                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+                    SMSLoginActivity.loginSuccess(context);
                 }
                 break;
             default:

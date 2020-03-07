@@ -1,6 +1,7 @@
 package cn.epark.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -95,6 +96,11 @@ public class SMSLoginActivity extends BaseAct {
                 if (s.length() >= 0) {
                     loginErrorTv.setTextColor(ContextCompat.getColor(context, R.color.g333333));
                     loginErrorTv.setText(R.string.sms_login_tip);
+                    if (phoneNum.length() >= 11) {
+                        ShareUtil.newInstance().getShared(context).edit()
+                                .putString(SHAREPREFERENCES_USER_INPUT_PHONE, phoneNum)
+                                .apply();
+                    }
                 }
             }
         });
@@ -138,7 +144,11 @@ public class SMSLoginActivity extends BaseAct {
                     break;
                 case R.id.iv_qq:
                     //TODO qq登录
-                    authLoginUtil.qqLogin();
+                    if (authLoginUtil != null) {
+                        authLoginUtil.qqLogin();
+                    } else {
+                        showTip(R.string.unknow_error);
+                    }
                     break;
                 default:
                     break;
@@ -165,9 +175,6 @@ public class SMSLoginActivity extends BaseAct {
             case URLConstant.ACTION_GET_OTP:
                 sendCodeBtn.setEnabled(false);
                 ToastUtil.showToast(context, "验证码已发送，请注意查收！");
-                ShareUtil.newInstance().getShared(context).edit()
-                        .putString(SHAREPREFERENCES_USER_INPUT_PHONE, phoneNum)
-                        .apply();
                 break;
                 case URLConstant.ACTION_LOGIN_OTP:
                     handler.removeCallbacks(codeCountDown);
@@ -195,7 +202,7 @@ public class SMSLoginActivity extends BaseAct {
                 if (App.getAccount().getPwdIsNull()) {
                     startActivityForResult(new Intent(context, SetPasswordActivity.class), MyselfFragment.REQUEST_LOGIN);
                 } else {
-                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+                    loginSuccess(context);
                 }
                 break;
             default:
@@ -247,6 +254,11 @@ public class SMSLoginActivity extends BaseAct {
         }
     }
 
+    public static void loginSuccess(Context context) {
+        ShareUtil.newInstance().saveLoginUser(context, App.getAccount());
+        MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (authLoginUtil != null) {
@@ -258,7 +270,7 @@ public class SMSLoginActivity extends BaseAct {
                     codeEt.setText("");
                     App.getInstance().setAccount(null);
                 } else {
-                    MainActivity.actShowBar(context, MainBar.MYSELF_PAGE);
+                    loginSuccess(context);
                 }
                 break;
             default:

@@ -35,6 +35,7 @@ import java.util.List;
 
 import cn.epark.App;
 import cn.epark.BuildConfig;
+import cn.epark.Constant;
 import cn.epark.R;
 import cn.epark.activities.MainActivity;
 import cn.epark.activities.NoticeActivity;
@@ -121,6 +122,13 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.nick_name) {
+            if (isLogin(false)) {
+                startActivity(new Intent(context, SMSLoginActivity.class));
+            }
+        } else if (isLogin()) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.notify_my://通知
                 startActivity(new Intent(context, NoticeActivity.class));
@@ -138,13 +146,6 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                     }
                 } else {
                     showHeadImgModal();
-                }
-                break;
-            case R.id.nick_name://昵称
-                if (!isLogin(false)) {
-                    startActivity(new Intent(context, SMSLoginActivity.class));
-                } else {
-                    //TODO 修改昵称
                 }
                 break;
             case R.id.rl_qd://每日签到
@@ -178,9 +179,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 );
                 break;
             case R.id.tv_set://设置
-                if (isLogin()) {
-                    startActivity(new Intent(context, SettingsActivity.class));
-                }
+                startActivity(new Intent(context, SettingsActivity.class));
                 break;
             default:
         }
@@ -334,7 +333,7 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
                 .load(App.getAccount().getHead())
                 .error(ContextCompat.getDrawable(context, R.mipmap.default_icon))
                 .into(head_img);
-        if (!TextUtils.isEmpty(App.getAccount().getNickName())) {
+        if (!App.getAccount().isEmptyNickName()) {
             userNameTv.setText(App.getAccount().getNickName());
         } else {
             userNameTv.setText(R.string.default_user_name);
@@ -344,9 +343,9 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
 
     private void uploadImage(byte[] bytes) {
         ThreadUtil.runInThread(() ->
-                //由于未有服务器暂且本地存储
-                ShareUtil.newInstance().getShared(context, ShareUtil.USER_HEAD_IMG).edit()
-                        .putString(ShareUtil.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
+                //fixme 由于未有服务器暂且本地存储
+                ShareUtil.newInstance().getShared(context).edit()
+                        .putString(Constant.USER_HEAD_IMG, Base64.encodeToString(bytes, Base64.DEFAULT)).apply());
     }
 
     @Override
@@ -366,6 +365,8 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        updateUserInfo();
+        if (!App.getAccount().isEmptyId()) {
+            updateUserInfo();
+        }
     }
 }

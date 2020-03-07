@@ -88,15 +88,32 @@
                 android:textColor="@color/c666666"
                 android:textSize="15sp" />
 
-            <ImageView
+            <TextView
                 android:visibility="gone"
                 android:id="@+id/version_red_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
-                android:src="@drawable/notice_red_background" />
+                android:text="new"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:textSize="12sp"
+                android:background="@drawable/shape_notice_red_bg" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/app_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_version"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/c666666"
+            android:textSize="12sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -208,20 +225,10 @@
             android:textColor="@color/colorWhite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/change_user_btn_tv"
+
             android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/app_version_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:text=""
-            android:textColor="@color/c666666"
-            android:textSize="15sp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
     </android.support.constraint.ConstraintLayout>
 

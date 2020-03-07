@@ -33,6 +33,7 @@ public class App extends MultiDexApplication
     public static String Market = BuildConfig.APPLICATION_ID;
     public static String URL;
     public static boolean hasNetwork = true, isWiFi = false;
+    public static boolean isFirstRun;//首次启动App
     private static App instance;
     private static Account account;
     private Future future;
@@ -61,7 +62,7 @@ public class App extends MultiDexApplication
 
     public void startSessionTimer() {
         //隔177分钟后刷新一次sessionid
-        future = new ScheduledThreadPoolExecutor(1).scheduleAtFixedRate(()-> refreshSessionId(account.getSessionId(), account.getId()),
+        future = new ScheduledThreadPoolExecutor(1).scheduleAtFixedRate(()-> refreshSessionId(),
                 Constant.SESSION_MAX, Constant.SESSION_MAX, TimeUnit.MINUTES);
     }
 
@@ -72,16 +73,16 @@ public class App extends MultiDexApplication
         }
     }
 
-    public void refreshSessionId(String sessionId, String usesId) {
-        LogUtil.i("App", "----------刷新会话有效期---------");
+    public void refreshSessionId() {
+        LogUtil.i("okHttpUtil", "----------刷新会话有效期---------");
         HashMap<String, String> params = new HashMap<>(2);
-        params.put("user_id", usesId);
-        params.put("session_id", sessionId);
+        params.put("user_id", getAccount().getId());
+        params.put("session_id", getAccount().getEncryptionSession());
         OkHttpUtil.getInstance(this).request(OkHttpUtil.Method.POST,
             App.URL + URLConstant.URL_REFRESH_SESSION, params, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    LogUtil.w("App", e.getMessage());
+                    LogUtil.e("okHttpUtil", "刷新会话有效期失败" + e.getMessage());
                 }
 
                 @Override
@@ -91,10 +92,11 @@ public class App extends MultiDexApplication
                         String status = jsonObject.optString("status");
                         if (ErrorCode.STATE_OK.equals(status)) {
                             account.setEncryptionSession(jsonObject.optString("data"));
-                            LogUtil.i("App", "刷新会话有效期成功");
+                            LogUtil.i("okHttpUtil", "刷新会话有效期成功");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        LogUtil.e("okHttpUtil", "刷新会话有效期失败" + e.getMessage());
                     }
                 }
             });

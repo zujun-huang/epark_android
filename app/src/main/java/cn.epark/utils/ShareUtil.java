@@ -2,6 +2,13 @@ package cn.epark.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+
+import cn.epark.App;
+import cn.epark.Constant;
+import cn.epark.bean.Account;
 
 /**
  * created huangzujun on 2019/8/30
@@ -11,9 +18,7 @@ public class ShareUtil {
 
     private static ShareUtil share = null;
     private final String LOCAL_SHARED_PREFERENCES_NAME = "Epark";
-    /** 用户本地头像 */
-    public static final String USER_HEAD_IMG = "head_img";
-
+    private final String USER_INFO = "USER_LOGIN_INFO";
 
     public static ShareUtil newInstance() {
         if (share == null) {
@@ -48,18 +53,49 @@ public class ShareUtil {
      * @return key对应的值，不存在返回null
      */
     public String getLocData(Context context, String key){
-        SharedPreferences preferences= context.getSharedPreferences(LOCAL_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return preferences.getString(key, null);
+        return getShared(context).getString(key, null);
     }
 
-    //是否第一次运行参数
+    /**
+     * 设置App不是第一次运行
+     */
+    public void setNotFirstRun(Context context){
+        getShared(context).edit().putBoolean("first_run", false).apply();
+    }
+
+    /**
+     * 获取是否第一次运行参数
+     */
     public boolean isFirstRun(Context context){
-        SharedPreferences preferences= context.getSharedPreferences(LOCAL_SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return preferences.getBoolean("first_run", true);
+        return getShared(context).getBoolean("first_run", true);
     }
 
     public String getLocHeadImg(Context context){
-        SharedPreferences preferences= context.getSharedPreferences(USER_HEAD_IMG, Context.MODE_PRIVATE);
-        return preferences.getString(USER_HEAD_IMG, null);
+        return getShared(context).getString(Constant.USER_HEAD_IMG, null);
+    }
+
+    /**
+     * 保存登录用户缓存
+     * @param context context
+     * @param account 用户
+     */
+    public void saveLoginUser(Context context, Account account) {
+        getShared(context).edit()
+                .putString(USER_INFO, JSON.toJSONString(account))
+                .apply();
+    }
+
+    /**
+     * 是否能自动登录
+     * @param context context
+     * @return false
+     */
+    public boolean isEmptyLoginUser(Context context) {
+        String userJson = getShared(context).getString(USER_INFO, null);
+        boolean emptyUser = TextUtils.isEmpty(userJson);
+        if (!emptyUser) {
+            App.getInstance().setAccount(JSON.parseObject(userJson, Account.class));
+        }
+        return emptyUser;
     }
 }

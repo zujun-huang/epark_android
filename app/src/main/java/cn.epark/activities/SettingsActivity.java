@@ -63,7 +63,7 @@ public class SettingsActivity extends BaseAct {
         clearCacheTv = findViewById(R.id.clear_cache_tv);
         clearCacheTv.setText(CacheManagerUtil.getInstance().getCacheSize(context));
         appVersionTv = findViewById(R.id.app_version_tv);
-        appVersionTv.setText(BuildConfig.VERSION_NAME);
+        appVersionTv.setText(String.format(getString(R.string.current_version), BuildConfig.VERSION_NAME));
         findViewById(R.id.update_pwd_rl).setOnClickListener(clickListener);
         findViewById(R.id.check_version_rl).setOnClickListener(clickListener);
         findViewById(R.id.clear_cache_rl).setOnClickListener(clickListener);
@@ -112,7 +112,7 @@ public class SettingsActivity extends BaseAct {
     private void loginOut() {
         HashMap<String, String> params = new HashMap<>(6);
         params.put("user_id", App.getAccount().getId());
-        params.put("session_id", App.getAccount().getSessionId());
+        params.put("session_id", App.getAccount().getEncryptionSession());
         httpPost(App.URL + URLConstant.URL_LOGIN_OUT, params, URLConstant.ACTION_LOGIN_OUT);
     }
 
@@ -132,8 +132,7 @@ public class SettingsActivity extends BaseAct {
 
     private void checkVersion() {
         if (versionNew == null) {
-            showAlertDialog("温馨提示",
-                    "当前已是最新版本，无需更新！", "确定", null, null);
+            showAlertDialog("当前已是最新版本，无需更新！", null);
         } else {
             //todo 下载
         }

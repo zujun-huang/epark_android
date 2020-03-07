@@ -32,4 +32,7 @@ public interface Constant {
      */
     int SESSION_MAX = 177;
 
+    /** 用户本地头像 */
+    String USER_HEAD_IMG = "head_img";
+
 }

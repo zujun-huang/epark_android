@@ -74,10 +74,10 @@ public class UpdatePasswordActivity extends BaseAct {
                     pwdEt.requestFocus();
                     break;
                 case R.id.pwd_old_show_iv:
-                    changeShowPwd(oldPwdEt.isSelected(), oldPwdEt, oldPwdShowBtn);
+                    changeShowPwd(!oldPwdEt.isSelected(), oldPwdEt, oldPwdShowBtn);
                     break;
                 case R.id.pwd_show_iv:
-                    changeShowPwd(pwdEt.isSelected(), pwdEt, pwdShowBtn);
+                    changeShowPwd(!pwdEt.isSelected(), pwdEt, pwdShowBtn);
                     break;
                 case R.id.finish_btn_tv:
                     if (checkPwd()) {
@@ -97,7 +97,7 @@ public class UpdatePasswordActivity extends BaseAct {
     private void updatePwd() {
         HashMap<String, String> params = new HashMap<>(6);
         params.put("user_id", App.getAccount().getId());
-        params.put("session_id", App.getAccount().getSessionId());
+        params.put("session_id", App.getAccount().getEncryptionSession());
         params.put("oldPwd", oldPwd);
         params.put("newPwd", pwd);
         httpPost(App.URL + URLConstant.URL_UPDATE_PWD, params, URLConstant.ACTION_UPDATE_PWD);

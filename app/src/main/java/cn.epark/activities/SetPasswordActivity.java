@@ -121,7 +121,7 @@ public class SetPasswordActivity extends BaseAct {
     private void setUserPassword() {
         HashMap<String, String> params = new HashMap<>(6);
         params.put("user_id", App.getAccount().getId());
-        params.put("session_id", App.getAccount().getSessionId());
+        params.put("session_id", App.getAccount().getEncryptionSession());
         params.put("newPwd", newPwd);
         httpPost(App.URL + URLConstant.URL_UPDATE_PWD, params, URLConstant.ACTION_UPDATE_PWD);
     }

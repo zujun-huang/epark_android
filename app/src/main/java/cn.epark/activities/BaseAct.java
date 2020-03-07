@@ -257,8 +257,8 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
      * @return true：未登录
      */
     public boolean isLogin(boolean shoTip) {
-        boolean result = !TextUtils.isEmpty(App.getAccount().getId());
-        if (!result && shoTip) {
+        boolean result = App.getAccount().isEmptyId();
+        if (result && shoTip) {
             showAlertDialog("温馨提示", "您当前处于未登录状态，请登录后再尝试此操作~",
                     "立即登录", v -> startActivity(new Intent(context, SMSLoginActivity.class)),
                     null

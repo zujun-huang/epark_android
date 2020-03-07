@@ -42,4 +42,12 @@ public interface URLConstant {
     String URL_GET_APP_INFO = "/appInfo/getAppInfoList";
     int ACTION_GET_APP_INFO = 0x00000020;
 
+    /** 查询用户反馈 */
+    String URL_GET_FEEDBACK_LIST = "/feedback/getFeedbackList";
+    int ACTION_GET_FEEDBACK_LIST = 0x00000021;
+
+    /** 提交反馈 */
+    String URL_SUBMIT_FEEDBACK = "/feedback/updateFeedback";
+    int ACTION_SUBMIT_FEEDBACK = 0x00000022;
+
 }

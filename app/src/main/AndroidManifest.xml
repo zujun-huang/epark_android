@@ -153,6 +153,9 @@
 
         <!-- <service android:name=".services.ForegroundService" /> -->
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <!-- 文件临时缓存 -->
         <provider

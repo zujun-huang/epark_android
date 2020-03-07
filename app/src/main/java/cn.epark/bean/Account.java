@@ -41,7 +41,7 @@ public class Account {
     }
 
     public String getName() {
-        if (TextUtils.isEmpty(name)) {
+        if (name == null) {
             name = "";
         }
         return name;
@@ -90,6 +90,9 @@ public class Account {
     }
 
     public String getHead() {
+        if (!head.contains("http")) {
+            head = "http://" + head;
+        }
         return head;
     }
 
@@ -119,11 +122,14 @@ public class Account {
         this.type = type;
     }
 
-    public String getSessionId() {
+    public String getEncryptionSession() {
         return encryptionSession;
     }
 
     public void setEncryptionSession(String encryptionSession) {
+        if (encryptionSession == null) {
+            encryptionSession = "";
+        }
         this.encryptionSession = encryptionSession;
     }
 
@@ -133,5 +139,13 @@ public class Account {
 
     public boolean getPwdIsNull() {
         return pwdIsNull;
+    }
+
+    public boolean isEmptyId() {
+        return TextUtils.isEmpty(id);
+    }
+
+    public boolean isEmptyNickName() {
+        return TextUtils.isEmpty(getNickName());
     }
 }

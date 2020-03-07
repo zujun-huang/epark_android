@@ -59,5 +59,6 @@
     <string name="feedback">意见反馈</string>
     <string name="change_other_user">切换账号</string>
     <string name="login_out">退出登录</string>
+    <string name="current_version">当前版本：%s</string>
 
 </resources>

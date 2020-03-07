@@ -3,7 +3,7 @@ package cn.epark.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,17 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.epark.App;
 import cn.epark.R;
-import cn.epark.utils.CalcUtil;
 import cn.epark.utils.ShareUtil;
-import cn.epark.utils.StatusBarUtil;
-import cn.epark.utils.ThreadUtil;
-import cn.epark.view.StatusBarHeightView;
 
 /**
  * Created by huangzujun on 2019/10/9.
@@ -29,15 +25,12 @@ import cn.epark.view.StatusBarHeightView;
  */
 public class SplashActivity extends BaseAct {
 
-    private static final int DELAYED_MAIN = 0x000700;
     private Context context;
     private ViewPager mVPCarousel;
-    private LinearLayout mLLCarouselPointGroup;
     private Button mBtnIn;
-    private List<ImageView> carouselImgList = new ArrayList<>();//图片数据
-    private int prePosition = 0; //记录上次圆点位置
-    public boolean firstRun;
-    private StatusBarHeightView status_bar;
+    private List<ImageView> carouselImgList;//图片数据
+    @DrawableRes
+    private int[] splashResIds = {R.mipmap.splash_1, R.mipmap.splash_2, R.mipmap.splash_3};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,139 +42,71 @@ public class SplashActivity extends BaseAct {
     }
 
     private void initImages() {
-        firstRun = ShareUtil.newInstance().getShared(getApplicationContext()).getBoolean("first_run" ,true);
-        if (firstRun){
-            carouselImgList.clear();
-            mLLCarouselPointGroup.removeAllViews();
-            for (int i = 0; i < 3; i++) {
+        App.isFirstRun = ShareUtil.newInstance().isFirstRun(context);
+        carouselImgList = new ArrayList<>();
+        if (App.isFirstRun) {
+            for (int resId : splashResIds) {
                 ImageView imageView = new ImageView(this);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                switch (i) {
-                    case 0:
-                        imageView.setBackgroundResource(R.mipmap.splash_1);
-                        break;
-                    case 1:
-                        imageView.setImageResource(R.mipmap.splash_2);
-                        break;
-                    case 2:
-                        imageView.setBackgroundResource(R.mipmap.splash_3);
-                        break;
-                    default:
-                }
+                imageView.setImageResource(resId);
                 carouselImgList.add(imageView);
-                //添加轮播点
-                ImageView pointIv = new ImageView(this);
-                pointIv.setBackgroundResource(R.drawable.selector_point);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(CalcUtil.dp2px(this, 10), CalcUtil.dp2px(this, 10));
-                if (i == 0) {
-                    pointIv.setEnabled(true);
-                } else {
-                    pointIv.setEnabled(false);
-                    params.leftMargin = 15;
-                }
-                pointIv.setLayoutParams(params);
-                mLLCarouselPointGroup.setVisibility(View.VISIBLE);
-                mLLCarouselPointGroup.addView(pointIv);
             }
-            if (mVPCarousel.getAdapter() != null){
+            if (mVPCarousel.getAdapter() != null) {
                 mVPCarousel.getAdapter().notifyDataSetChanged();
             }
-            setStatusBarBlack(true);
-            ShareUtil.newInstance().getShared(getApplicationContext()).edit()
-                    .putBoolean("first_run", false).apply();
+            ShareUtil.newInstance().setNotFirstRun(context);
         } else {
-            status_bar.setVisibility(View.GONE);
             mBtnIn.setVisibility(View.GONE);
-            mLLCarouselPointGroup.setVisibility(View.GONE);
             ImageView imageView = new ImageView(this);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setBackgroundResource(R.mipmap.app_index);
+            imageView.setImageResource(R.mipmap.app_index);
             carouselImgList.add(imageView);
-            if (mVPCarousel.getAdapter() != null){
+            if (mVPCarousel.getAdapter() != null) {
                 mVPCarousel.getAdapter().notifyDataSetChanged();
             }
-            //延时1s跳转
-            ThreadUtil.runInThread(()->{
-                try {
-                    Thread.sleep(1000);
-                    handler.obtainMessage(DELAYED_MAIN).sendToTarget();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            });
+            //延时1.5s跳转
+            handler.postDelayed(this::autoLogin, 1500);
         }
     }
 
-    @Override
-    public void handleMessage(Message msg) {
-        switch (msg.what){
-            case DELAYED_MAIN:
-                startActivity(new Intent(context, MainActivity.class));
-                finish();
-                break;
-            default:
-                super.handleMessage(msg);
+    private void autoLogin() {
+        if (!ShareUtil.newInstance().isEmptyLoginUser(context)) {
+            App.getInstance().refreshSessionId();
         }
+        clickToMain();
+    }
+
+    private void clickToMain() {
+        startActivity(new Intent(context, MainActivity.class));
+        finish();
     }
 
     private void initListener() {
         mVPCarousel.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                //设置轮播点状态及文本
-                mLLCarouselPointGroup.getChildAt(prePosition).setEnabled(false);
-                mLLCarouselPointGroup.getChildAt(position).setEnabled(true);
-                prePosition = position;
                 //按钮
                 mBtnIn.setVisibility(View.GONE);
                 if (position == carouselImgList.size() - 1) {
                     mBtnIn.setVisibility(View.VISIBLE);
                 }
-                //状态栏主题切换
-                switch (position) {
-                    case 0:
-                    case 2:
-                        setStatusBarBlack(true);
-                        break;
-                    default:
-                        setStatusBarBlack(false);
-                        break;
-                }
             }
         });
-        mBtnIn.setOnClickListener( view -> {
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        mBtnIn.setOnClickListener(v -> clickToMain());
     }
 
     private void initView() {
         context = this;
         mVPCarousel = findViewById(R.id.vp_carousel);
-        mLLCarouselPointGroup = findViewById(R.id.ll_carousel_point_group);
         mBtnIn = findViewById(R.id.btn_carousel_in);
         mVPCarousel.setAdapter(new CarouselPagerAdapter());
-        status_bar = findViewById(R.id.status_bar);
-    }
-
-    private void setStatusBarBlack(boolean isBlack){
-        super.setStatusBar();
-        status_bar.setBackgroundResource(R.color.theme_color_pressed);
-        if (isBlack){
-            status_bar.setBackgroundResource(R.color.colorWhite);
-            if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
-                StatusBarUtil.setStatusBarColor(this, 0x55000000);
-            }
-        }
     }
 
     class CarouselPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
-            return carouselImgList.size();
+            return carouselImgList != null ? carouselImgList.size() : 0;
         }
 
         @NonNull
