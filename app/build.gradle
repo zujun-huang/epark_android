@@ -156,4 +156,6 @@ dependencies {
     implementation files('libs/open_sdk_r2973327_lite.jar')
     //微信
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //腾讯bugly
+    implementation 'com.tencent.bugly:crashreport:latest.release'
 }

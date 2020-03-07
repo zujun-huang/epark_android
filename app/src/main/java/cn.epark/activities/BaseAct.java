@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -37,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.epark.App;
+import cn.epark.BuildConfig;
 import cn.epark.ErrorCode;
 import cn.epark.R;
 import cn.epark.adapters.ModalAdapter;
@@ -113,6 +115,12 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         setStatusBar();
         initWx();
         initQQ();
+        initBugly();
+    }
+
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(),
+                getString(R.string.bugly_app_id), BuildConfig.DEBUG);
     }
 
     private void initQQ() {
