@@ -23,6 +23,7 @@ import cn.epark.URLConstant;
 import cn.epark.bean.AppVersion;
 import cn.epark.utils.CacheManagerUtil;
 import cn.epark.utils.OnMultiClickListener;
+import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
 
 /**
@@ -91,6 +92,7 @@ public class SettingsActivity extends BaseAct {
                             }, null);
                     break;
                 case R.id.feedback_rl:
+                    // todo 意见
                     break;
                 case R.id.change_user_btn_tv:
                     break;
@@ -144,6 +146,7 @@ public class SettingsActivity extends BaseAct {
             case URLConstant.ACTION_LOGIN_OUT:
                 handler.obtainMessage(SHOW_TOAST, "已退出当前账号").sendToTarget();
                 App.getInstance().setAccount(null);
+                ShareUtil.newInstance().clearLoginUser(context);
                 finish();
                 break;
             case URLConstant.ACTION_GET_APP_INFO: {

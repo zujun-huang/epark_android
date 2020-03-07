@@ -90,7 +90,7 @@ public class Account {
     }
 
     public String getHead() {
-        if (!head.contains("http")) {
+        if (head != null && !head.contains("http")) {
             head = "http://" + head;
         }
         return head;
@@ -123,13 +123,13 @@ public class Account {
     }
 
     public String getEncryptionSession() {
+        if (encryptionSession == null) {
+            encryptionSession = "";
+        }
         return encryptionSession;
     }
 
     public void setEncryptionSession(String encryptionSession) {
-        if (encryptionSession == null) {
-            encryptionSession = "";
-        }
         this.encryptionSession = encryptionSession;
     }
 

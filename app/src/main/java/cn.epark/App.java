@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import cn.epark.bean.Account;
 import cn.epark.utils.LogUtil;
 import cn.epark.utils.OkHttpUtil;
+import cn.epark.utils.ShareUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -91,8 +92,13 @@ public class App extends MultiDexApplication
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         String status = jsonObject.optString("status");
                         if (ErrorCode.STATE_OK.equals(status)) {
-                            account.setEncryptionSession(jsonObject.optString("data"));
+                            getAccount().setEncryptionSession(jsonObject.optString("data"));
+                            ShareUtil.newInstance().saveLoginUser(getApplicationContext(), getAccount());
                             LogUtil.i("okHttpUtil", "刷新会话有效期成功");
+                        } else {
+                            JSONObject error = jsonObject.optJSONObject("data");
+                            LogUtil.i("okHttpUtil", "刷新会话有效期错误，错误信息："
+                                    + error.optString("errMsg"));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

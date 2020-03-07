@@ -338,7 +338,6 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
         } else {
             userNameTv.setText(R.string.default_user_name);
         }
-
     }
 
     private void uploadImage(byte[] bytes) {
@@ -365,8 +364,6 @@ public class MyselfFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        if (!App.getAccount().isEmptyId()) {
-            updateUserInfo();
-        }
+        updateUserInfo();
     }
 }

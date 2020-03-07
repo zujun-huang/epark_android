@@ -86,6 +86,17 @@ public class ShareUtil {
     }
 
     /**
+     * 清除登录用户缓存
+     * <p>
+     *     退出登录用
+     * </p>
+     * @param context context
+     */
+    public void clearLoginUser(Context context) {
+        getShared(context).edit().remove(USER_INFO).apply();
+    }
+
+    /**
      * 是否能自动登录
      * @param context context
      * @return false
