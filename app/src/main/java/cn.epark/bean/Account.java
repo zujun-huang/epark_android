@@ -11,7 +11,7 @@ import cn.epark.utils.StringUtil;
  */
 public class Account {
 
-    private String id;
+    private String id = "";
     private String pwd;//密码
     private String name;//真实姓名
     private String nickName;//昵称
@@ -19,7 +19,7 @@ public class Account {
     private String telphone;//手机号码
     private Double balance;//余额
     private Integer credit;//信用分
-    private Integer gender;//性别 1男 2女
+    private Integer gender = 1;//性别 1男 2女
     private Integer type;//用户类型
     private String encryptionSession;//用户session
     private boolean pwdIsNull;//是否为新用户
@@ -66,11 +66,18 @@ public class Account {
         return gender;
     }
 
+    public String getSex() {
+        return gender == null ? "" : gender == 1 ? "男" : "女";
+    }
+
     public void setGender(Integer gender) {
         this.gender = gender;
     }
 
     public String getTelphone() {
+        if (telphone == null) {
+            telphone = "";
+        }
         return telphone;
     }
 

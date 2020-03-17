@@ -59,6 +59,14 @@
     <string name="update_version">版本更新</string>
     <string name="clear_cache">清除缓存</string>
     <string name="feedback">意见反馈</string>
+    <string name="feedback_submit">提交反馈</string>
+    <string name="feedback_question">问题和意见</string>
+    <string name="feedback_question_hint">简要描述您要反馈的问题和意见</string>
+    <string name="feedback_question_pic">图片（选填，提供问题截图）</string>
+    <string name="feedback_question_contact">联系方式（选填）</string>
+    <string name="feedback_contact">联系方式</string>
+    <string name="set_user_info">个人资料</string>
+    <string name="set_user_nickname">设置昵称</string>
     <string name="change_other_user">切换账号</string>
     <string name="login_out">退出登录</string>
     <string name="current_version">当前版本：%s</string>

@@ -5,6 +5,8 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 
+import com.tencent.bugly.crashreport.CrashReport;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -44,6 +46,16 @@ public class App extends MultiDexApplication
         super.onCreate();
         instance = this;
         URL = "http://120.77.214.120:8080";
+        init();
+    }
+
+    private void init() {
+        initBugly();
+    }
+
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(),
+                getString(R.string.bugly_app_id), !BuildConfig.DEBUG);
     }
 
     public static Account getAccount() {

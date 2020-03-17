@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.epark.App;
+import cn.epark.ErrorCode;
 import cn.epark.R;
 import cn.epark.activities.SMSLoginActivity;
 import cn.epark.adapters.ModalAdapter;
@@ -56,8 +57,18 @@ public class BaseFragment extends Fragment {
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            BaseFragment.this.handleMessage(msg);
+            switch (msg.what) {
+                case SHOW_TOAST:
+                    if (msg.arg1 == ErrorCode.SERVICES_ERROR) {
+                        ToastUtil.showToast(context, getString(R.string.unknow_error));
+                    } else {
+                        ToastUtil.showToast(context, (String) msg.obj);
+                    }
+                    break;
+                default:
+                    super.handleMessage(msg);
+                    BaseFragment.this.handleMessage(msg);
+            }
         }
     };
 
@@ -144,7 +155,11 @@ public class BaseFragment extends Fragment {
 
     public void onResponseFail(int errorCode, String errorMsg, int actionCode) {
         LogUtil.e("okHttp", " errorCode:" + errorCode + " errorMsg:" +  errorMsg);
-        ToastUtil.showToast(context, errorMsg);
+        Message message = new Message();
+        message.what = SHOW_TOAST;
+        message.obj = errorMsg;
+        message.arg1 = errorCode;
+        handler.sendMessage(message);
     }
 
     //网络错误
@@ -172,7 +187,7 @@ public class BaseFragment extends Fragment {
     }
 
     public void showNetWorkToast(){
-        ToastUtil.showToast(context, getString(R.string.network_error));
+        handler.obtainMessage(SHOW_TOAST, getString(R.string.network_error)).sendToTarget();
     }
 
     public void dismissLoadingDialog(){

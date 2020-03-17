@@ -162,6 +162,10 @@ public class StringUtil {
         return PATTERN_PHONE.matcher(mobileNumber).matches();
     }
 
+    public static String hidePhoneNumber(String mobileNumber) {
+        return hidePhoneNumber(mobileNumber, 3);
+    }
+
     /**
      * 隐藏手机号码，默认显示前个三数字及后三个数字
      * @param mobileNumber 手机号码

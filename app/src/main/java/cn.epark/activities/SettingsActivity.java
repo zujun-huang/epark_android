@@ -92,7 +92,7 @@ public class SettingsActivity extends BaseAct {
                             }, null);
                     break;
                 case R.id.feedback_rl:
-                    // todo 意见
+                    startActivity(new Intent(context, feedbackActivity.class));
                     break;
                 case R.id.change_user_btn_tv:
                     break;

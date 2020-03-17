@@ -111,6 +111,21 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="设置"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.feedbackActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="意见反馈"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SetNickNameActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="修改昵称"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SetUserInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="个人资料"
+            android:screenOrientation="portrait" />
 
         <!-- 微信 -->
         <activity

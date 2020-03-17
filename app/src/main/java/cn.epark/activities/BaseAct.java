@@ -115,12 +115,6 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
         setStatusBar();
         initWx();
         initQQ();
-        initBugly();
-    }
-
-    private void initBugly() {
-        CrashReport.initCrashReport(getApplicationContext(),
-                getString(R.string.bugly_app_id), BuildConfig.DEBUG);
     }
 
     private void initQQ() {
@@ -318,7 +312,7 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
     }
 
     public void showNetWorkToast(){
-        ToastUtil.showToast(context, getString(R.string.network_error));
+        handler.obtainMessage(SHOW_TOAST, getString(R.string.network_error)).sendToTarget();
     }
 
     public void showTip(int resId) {
