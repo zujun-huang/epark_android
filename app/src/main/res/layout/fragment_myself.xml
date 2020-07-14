@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:overScrollMode="never">
+    android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="340dp">
 
         <ImageView
             android:id="@+id/my_background"
@@ -24,8 +23,8 @@
             android:id="@+id/notify_my"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="22dp"
             android:layout_marginTop="38dp"
+            android:layout_marginEnd="22dp"
             android:contentDescription="@string/notice_cd"
             android:padding="12dp"
             android:src="@mipmap/notice_icon"
@@ -49,270 +48,281 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:maxLines="1"
             android:maxWidth="180dp"
+            android:maxLines="1"
+            android:padding="10dp"
             android:text="@string/default_user_name"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/head_img" />
 
-        <LinearLayout
-            android:id="@+id/menu_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="80dp"
-            android:layout_marginEnd="14dp"
-            android:layout_marginStart="14dp"
-            android:background="@drawable/shape_shadow_bg"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/my_background">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_wallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_my_wallet"
-                    android:drawablePadding="6dp"
-                    android:gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/my_horizontal_menu_selector"
-                    android:text="@string/my_wallet"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_coupon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_coupon_vector"
-                    android:drawablePadding="4dp"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/my_horizontal_menu_selector"
-                    android:text="@string/my_coupon"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_collection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_collection_vector"
-                    android:drawablePadding="6dp"
-                    android:gravity="center"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/my_horizontal_menu_selector"
-                    android:text="@string/my_collection"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/tv_set"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_set_vector"
-                    android:drawablePadding="4dp"
-                    android:gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:textSize="14sp"
-                    android:textColor="@color/my_horizontal_menu_selector"
-                    android:text="@string/my_setting"/>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="28dp"
-            android:paddingBottom="14dp"
-            android:background="@drawable/shape_shadow_bg"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/menu_horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="19dp"
-                android:text="@string/my_services"
-                android:textColor="@color/c131313"
-                android:textSize="20sp" />
-
-            <RelativeLayout
-                android:id="@+id/rl_qd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/select_method_white2gray"
-                android:gravity="center"
-                android:paddingBottom="16dp"
-                android:paddingEnd="30dp"
-                android:paddingStart="40dp"
-                android:paddingTop="16dp">
-
-                <TextView
-                    android:id="@+id/left_qd_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="14dp"
-                    android:drawableStart="@drawable/ic_qd_my_vector"
-                    android:gravity="center"
-                    android:text="@string/daily_attendance"
-                    android:textColor="@color/c131313"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/notify_red_qd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_toEndOf="@id/left_qd_txt"
-                    android:src="@drawable/notice_red_background" />
-
-                <TextView
-                    android:id="@+id/right_qd_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/right_icon_qd"
-                    android:text="每日签到送优惠券"
-                    android:textColor="@color/c999999"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:id="@+id/right_icon_qd"
-                    android:layout_width="6dp"
-                    android:layout_height="12dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="6dp"
-                    android:src="@mipmap/more_icon" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_zd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/select_method_white2gray"
-                android:gravity="center"
-                android:paddingBottom="16dp"
-                android:paddingEnd="30dp"
-                android:paddingStart="40dp"
-                android:paddingTop="16dp">
-
-                <TextView
-                    android:id="@+id/left_zd_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="14dp"
-                    android:drawableStart="@drawable/ic_zd_vector"
-                    android:gravity="center"
-                    android:text="@string/parking_record"
-                    android:textColor="@color/c131313"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/notify_red_zd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_toEndOf="@id/left_zd_txt"
-                    android:src="@drawable/notice_red_background" />
-
-                <TextView
-                    android:id="@+id/right_zd_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/right_icon_zd"
-                    android:text=""
-                    android:textColor="@color/c999999"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/right_icon_zd"
-                    android:layout_width="6dp"
-                    android:layout_height="12dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="6dp"
-                    android:src="@mipmap/more_icon" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_car"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/select_method_white2gray"
-                android:gravity="center"
-                android:paddingBottom="20dp"
-                android:paddingEnd="30dp"
-                android:paddingStart="40dp"
-                android:paddingTop="16dp">
-
-                <TextView
-                    android:id="@+id/left_car_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="14dp"
-                    android:drawableStart="@drawable/ic_car_vector"
-                    android:gravity="center"
-                    android:text="@string/vehicle_management"
-                    android:textColor="@color/c131313"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="12dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/more_icon" />
-            </RelativeLayout>
-
-        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
-</android.support.v4.widget.NestedScrollView>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/shape_shadow_bg"
+                android:minHeight="80dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_wallet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTop="@drawable/ic_my_wallet"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="@string/my_wallet"
+                        android:textColor="@color/my_horizontal_menu_selector"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_coupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTop="@drawable/ic_coupon_vector"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:text="@string/my_coupon"
+                        android:textColor="@color/my_horizontal_menu_selector"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_collection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTop="@drawable/ic_collection_vector"
+                        android:drawablePadding="6dp"
+                        android:gravity="center"
+                        android:text="@string/my_collection"
+                        android:textColor="@color/my_horizontal_menu_selector"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_set"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:drawableTop="@drawable/ic_set_vector"
+                        android:drawablePadding="4dp"
+                        android:gravity="center"
+                        android:text="@string/my_setting"
+                        android:textColor="@color/my_horizontal_menu_selector"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_shadow_bg"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/my_services"
+                    android:textColor="@color/c131313"
+                    android:textSize="20sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_qd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/select_method_white2gray"
+                    android:gravity="center"
+                    android:paddingStart="40dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/left_qd_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableStart="@drawable/ic_qd_my_vector"
+                        android:drawablePadding="14dp"
+                        android:gravity="center"
+                        android:text="@string/daily_attendance"
+                        android:textColor="@color/c131313"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/notify_red_qd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_toEndOf="@id/left_qd_txt"
+                        android:src="@drawable/notice_red_background" />
+
+                    <TextView
+                        android:id="@+id/right_qd_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/right_icon_qd"
+                        android:text="每日签到送优惠券"
+                        android:textColor="@color/c999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/right_icon_qd"
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="6dp"
+                        android:src="@mipmap/more_icon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_zd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/select_method_white2gray"
+                    android:gravity="center"
+                    android:paddingStart="40dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/left_zd_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableStart="@drawable/ic_zd_vector"
+                        android:drawablePadding="14dp"
+                        android:gravity="center"
+                        android:text="@string/parking_record"
+                        android:textColor="@color/c131313"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/notify_red_zd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_toEndOf="@id/left_zd_txt"
+                        android:src="@drawable/notice_red_background" />
+
+                    <TextView
+                        android:id="@+id/right_zd_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/right_icon_zd"
+                        android:text=""
+                        android:textColor="@color/c999999"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/right_icon_zd"
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="6dp"
+                        android:src="@mipmap/more_icon" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_car"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/select_method_white2gray"
+                    android:gravity="center"
+                    android:paddingStart="40dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="30dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/left_car_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableStart="@drawable/ic_car_vector"
+                        android:drawablePadding="14dp"
+                        android:gravity="center"
+                        android:text="@string/vehicle_management"
+                        android:textColor="@color/c131313"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/more_icon" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

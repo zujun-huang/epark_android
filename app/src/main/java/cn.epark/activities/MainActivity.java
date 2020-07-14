@@ -127,8 +127,6 @@ public class MainActivity extends BaseAct {
                 ft.replace(R.id.fl_main_content, myselfFragment);
                 break;
             default:
-                mainFragment = new MainFragment();
-                ft.replace(R.id.fl_main_content, mainFragment);
                 break;
         }
         ft.commitAllowingStateLoss();
