@@ -1,5 +1,7 @@
 package cn.epark.bean;
 
+import cn.epark.BuildConfig;
+
 /**
  * created huangzujun on 2020/2/14
  * Describe: 应用版本信息
@@ -10,6 +12,11 @@ public class AppVersion {
     private String version; //版本号
     private String author; //更新人
     private String appDate; //更新时间
+
+    /** 是否为当前版本 */
+    public boolean isCurrentVersion() {
+        return BuildConfig.VERSION_NAME.replace("V", "").equals(version);
+    }
 
     public int getId() {
         return id;

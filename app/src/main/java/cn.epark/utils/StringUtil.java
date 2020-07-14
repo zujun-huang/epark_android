@@ -184,4 +184,7 @@ public class StringUtil {
                 mobileNumber.substring(mobileNumber.length() - n);
     }
 
+    public static boolean isEmpty(String str) {
+        return TextUtils.isEmpty(str) || str.trim().length() == 0 || "null".equalsIgnoreCase(str);
+    }
 }

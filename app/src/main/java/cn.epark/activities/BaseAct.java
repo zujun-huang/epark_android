@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -38,7 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.epark.App;
-import cn.epark.BuildConfig;
 import cn.epark.ErrorCode;
 import cn.epark.R;
 import cn.epark.adapters.ModalAdapter;
@@ -189,6 +187,10 @@ public class BaseAct extends AppCompatActivity implements NetWorkReceiver.OnNetW
 
     public void httpPost(String url, HashMap<String, String> params, int actionCode){
         httpPost(url, params, actionCode, true, true);
+    }
+
+    public void httpPost(String url, HashMap<String, String> params, int actionCode, boolean showDialog) {
+        httpPost(url, params, actionCode, showDialog, true);
     }
 
     public void httpPost(String url, HashMap<String, String> params, int actionCode, boolean showDialog, boolean autoDismiss ){

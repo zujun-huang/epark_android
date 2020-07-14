@@ -88,7 +88,7 @@ public class CacheManagerUtil {
     private String getFormatSize(double size) {
         double kiloByte = size / 1024;
         if (kiloByte < 1) {
-            return "0K";
+            return "0";
         }
         double megaByte = kiloByte / 1024;
         if (megaByte < 1) {

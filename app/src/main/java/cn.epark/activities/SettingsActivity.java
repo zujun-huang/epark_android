@@ -1,10 +1,16 @@
 package cn.epark.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -22,6 +28,7 @@ import cn.epark.R;
 import cn.epark.URLConstant;
 import cn.epark.bean.AppVersion;
 import cn.epark.utils.CacheManagerUtil;
+import cn.epark.utils.LogUtil;
 import cn.epark.utils.OnMultiClickListener;
 import cn.epark.utils.ShareUtil;
 import cn.epark.utils.StringUtil;
@@ -34,6 +41,7 @@ public class SettingsActivity extends BaseAct {
 
     private TextView phoneNumTv, clearCacheTv, appVersionTv;
     private View versionNewView;
+    private Dialog updateDialog;
 
     private AppVersion versionNew;
 
@@ -108,7 +116,7 @@ public class SettingsActivity extends BaseAct {
         HashMap<String, String> params = new HashMap<>(3);
         params.put("page", "1");
         params.put("size", "3");
-        httpPost(App.URL + URLConstant.URL_GET_APP_INFO, params, URLConstant.ACTION_GET_APP_INFO);
+        httpPost(App.URL + URLConstant.URL_GET_APP_INFO, params, URLConstant.ACTION_GET_APP_INFO, false);
     }
 
     private void loginOut() {
@@ -122,9 +130,7 @@ public class SettingsActivity extends BaseAct {
     public void handleMessage(Message msg) {
         switch (msg.what) {
             case URLConstant.ACTION_GET_APP_INFO:
-                if (versionNew != null) {
-                    versionNewView.setVisibility(View.VISIBLE);
-                }
+                versionNewView.setVisibility(versionNew != null ? View.VISIBLE : View.GONE);
                 break;
             default:
                 super.handleMessage(msg);
@@ -136,8 +142,46 @@ public class SettingsActivity extends BaseAct {
         if (versionNew == null) {
             showAlertDialog("当前已是最新版本，无需更新！", null);
         } else {
-            //todo 下载
+            showUpdateDialog(versionNew);
         }
+    }
+
+    private void showUpdateDialog(AppVersion appVersion) {
+        if (appVersion == null) {
+            return;
+        }
+        if (updateDialog == null) {
+            updateDialog = new Dialog(context);
+            Window dialogWindow = updateDialog.getWindow();
+            if (dialogWindow != null){
+                dialogWindow.setGravity(Gravity.CENTER);
+                updateDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogWindow.getDecorView().setBackgroundColor(Color.TRANSPARENT);
+                dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
+                WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialogWindow.setAttributes(lp);
+            }
+            View view = View.inflate(context, R.layout.layout_app_update_dialog, null);
+            view.findViewById(R.id.close_btn).setOnClickListener((v)-> updateDialog.dismiss());
+            view.findViewById(R.id.tv_later).setOnClickListener((v)-> updateDialog.dismiss());
+            view.findViewById(R.id.tv_update).setOnClickListener((v)-> {
+                view.findViewById(R.id.ll_container).setVisibility(View.GONE);
+                View tv_tip = view.findViewById(R.id.tv_download_tip);
+                tv_tip.setVisibility(View.VISIBLE);
+                ProgressBar progressBar = view.findViewById(R.id.progress_horizontal);
+                progressBar.setVisibility(View.VISIBLE);
+                //todo 1、显示下载通知栏  2、下载apk并更新进度条 3、完成关闭弹框及通知栏
+                
+            });
+            if (!StringUtil.isEmpty(appVersion.getVersion())) {
+                TextView tv_version = view.findViewById(R.id.tv_version);
+                tv_version.setText(String.format("新版本 V%s", appVersion.getVersion()));
+            }
+            updateDialog.setContentView(view);
+        }
+        updateDialog.show();
     }
 
     @Override
@@ -157,16 +201,11 @@ public class SettingsActivity extends BaseAct {
                     versionList.add(appVersion);
                 }
                 if (versionList.size() > 0 ) {
-                    String currentVersion = BuildConfig.VERSION_NAME.replace("V", "");
-                    if (currentVersion.equals(versionList.get(0).getVersion())) {
-                        versionNew = null;
-                    } else {
-                        versionNew = versionList.get(0);
-                    }
+                    versionNew = versionList.get(0).isCurrentVersion() ? null : versionList.get(0);
+                    handler.obtainMessage(URLConstant.ACTION_GET_APP_INFO).sendToTarget();
                 } else {
-                    handler.obtainMessage(SHOW_TOAST, getString(R.string.unknow_error)).sendToTarget();
+                    LogUtil.e(TAG, getString(R.string.no_update_info));
                 }
-                handler.obtainMessage(URLConstant.ACTION_GET_APP_INFO).sendToTarget();
                 break;
             }
             default: super.onResponseOk(data, actionCode);

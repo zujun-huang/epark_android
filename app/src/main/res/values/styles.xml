@@ -71,4 +71,11 @@
         <item name="android:paddingStart">2dp</item>
         <item name="android:paddingEnd">2dp</item>
     </style>
+
+    <!-- 横向圆角进度条 -->
+    <style name="ProgressBar_Scale" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/layer_list_progress_scale</item>
+    </style>
+
 </resources>
