@@ -109,4 +109,18 @@ public class ShareUtil {
         }
         return emptyUser;
     }
+
+    /**
+     * 设置新用户登录优惠
+     */
+    public void setNewUserLogin(Context context){
+        getShared(context, "USER_" + App.getAccount().getId()).edit().putBoolean("new_user_login", false).apply();
+    }
+
+    /**
+     * 是否为新用户登录优惠
+     */
+    public boolean isNewUser(Context context){
+        return getShared(context, "USER_" + App.getAccount().getId()).getBoolean("new_User_login", true);
+    }
 }

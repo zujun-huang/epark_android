@@ -163,7 +163,7 @@ public class SettingsActivity extends BaseAct {
                 lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
                 dialogWindow.setAttributes(lp);
             }
-            View view = View.inflate(context, R.layout.layout_app_update_dialog, null);
+            View view = View.inflate(context, R.layout.layout_dialog_app_update, null);
             view.findViewById(R.id.close_btn).setOnClickListener((v)-> updateDialog.dismiss());
             view.findViewById(R.id.tv_later).setOnClickListener((v)-> updateDialog.dismiss());
             view.findViewById(R.id.tv_update).setOnClickListener((v)-> {

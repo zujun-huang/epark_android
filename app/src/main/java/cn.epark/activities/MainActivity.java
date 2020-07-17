@@ -1,10 +1,15 @@
 package cn.epark.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -19,6 +24,7 @@ import cn.epark.fragments.MyselfFragment;
 import cn.epark.fragments.NearbyFragment;
 import cn.epark.fragments.ShareCarFragment;
 import cn.epark.utils.NetWorkReceiver;
+import cn.epark.utils.ShareUtil;
 import cn.epark.utils.ToastUtil;
 import cn.epark.utils.ToolBarUtil;
 
@@ -44,6 +50,35 @@ public class MainActivity extends BaseAct {
         initView();
         initData();
         initListener();
+        showPreferential();
+    }
+
+    private void showPreferential() {
+        if (App.getAccount().getPwdIsNull() && ShareUtil.newInstance().isNewUser(context)) {
+            //新用户首次登录优惠
+            Dialog dialog = new Dialog(context);
+            dialog.setCanceledOnTouchOutside(false);
+            Window dialogWindow = dialog.getWindow();
+            if (dialogWindow != null) {
+                dialogWindow.setGravity(Gravity.CENTER);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialogWindow.getDecorView().setBackgroundColor(Color.TRANSPARENT);
+                dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
+                WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialogWindow.setAttributes(lp);
+            }
+            View view = View.inflate(context, R.layout.layout_dialog_new_user_preferential, null);
+            view.findViewById(R.id.close_btn).setOnClickListener((v)-> dialog.dismiss());
+            view.findViewById(R.id.submit_btn).setOnClickListener((v)-> {
+                // TODO: 2020/7/17 优惠券领取
+                dialog.dismiss();
+            });
+            dialog.setContentView(view);
+            dialog.show();
+            ShareUtil.newInstance().setNewUserLogin(context);
+        }
     }
 
     private void initListener() {
