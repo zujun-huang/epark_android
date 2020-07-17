@@ -21,6 +21,7 @@
     <color name="c_e1e1e1">#e1e1e1</color>
     <color name="gececec">#ececec</color>
     <color name="cccccc">#cccccc</color>
+    <color name="dcdfe6">#dcdfe6</color>
     <color name="c7Fffffff">#7Fffffff</color>
     <color name="color_def_cancel">#b3b3b3</color>
     <color name="cB7B7B7">#B7B7B7</color>
@@ -33,6 +34,7 @@
     <color name="c555555">#555555</color>
     <color name="g303133">#303133</color>
     <color name="g333333">#333333</color>
+    <color name="e5333333">#E5333333</color>
     <color name="colorAppBlack">#383838</color>
     <color name="color90PCTBlack">#19000000</color>
     <color name="c222222">#222222</color>

@@ -78,7 +78,7 @@ public class Account {
         if (telphone == null) {
             telphone = "";
         }
-        return telphone;
+        return telphone.trim();
     }
 
     public void setTelphone(String telphone) {

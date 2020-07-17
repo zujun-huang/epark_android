@@ -1,134 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:background="@color/colorWhite"
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_base_title"
-        android:id="@+id/title_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:id="@+id/title_layout"/>
 
-    <LinearLayout
-        android:id="@+id/content"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_layout">
+        android:overScrollMode="never">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/gececec"/>
-        
-        <TextView
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/feedback_question"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"/>
+            android:descendantFocusability="afterDescendants"
+            android:clipChildren="false">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gececec"/>
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/g333333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/feedback_question" />
 
-        <EditText
-            android:id="@+id/et_question"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:gravity="top"
-            android:paddingTop="15dp"
-            android:paddingStart="18dp"
-            android:paddingEnd="20dp"
-            android:hint="@string/feedback_question_hint"
-            style="@style/EditText_input"/>
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                android:background="@color/gececec" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/feedback_question_pic"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"/>
+            <cn.epark.view.ScrollEditText
+                android:id="@+id/et_question"
+                style="@style/EditText_input"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="top"
+                android:hint="@string/feedback_question_hint"
+                android:paddingStart="18dp"
+                android:paddingTop="15dp"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1"
+                android:paddingEnd="20dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gececec"/>
+            <TextView
+                android:id="@+id/tv_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/g333333"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_question"
+                android:text="@string/feedback_question_pic" />
 
-        <LinearLayout
-            android:id="@+id/ll_pic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="horizontal">
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title2"
+                android:background="@color/gececec" />
 
-            <ImageView
-                android:id="@+id/iv_add_pic"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/ic_add_pic"/>
+            <TextView
+                android:id="@+id/tv_title3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/g333333"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_img"
+                android:text="@string/feedback_question_contact" />
 
-        </LinearLayout>
+            <View
+                android:id="@id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title3"
+                android:background="@color/gececec" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gececec"/>
+            <EditText
+                android:id="@+id/et_contact"
+                style="@style/EditText_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/feedback_contact"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingStart="20dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line3"
+                android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/feedback_question_contact"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_img"
+                android:background="@color/gececec" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gececec"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="16dp"
+                android:clipChildren="false"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2"
+                android:overScrollMode="never"/>
 
-        <EditText
-            android:id="@+id/et_contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:hint="@string/feedback_contact"
-            style="@style/EditText_input"/>
+            <TextView
+                android:id="@+id/submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/selector_base_btn_bg"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_contact"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/feedback_submit"/>
 
-    </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/submit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center"
-        android:layout_marginTop="35dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/selector_base_btn_bg"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:text="@string/feedback_submit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"/>
+    </android.support.v4.widget.NestedScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
